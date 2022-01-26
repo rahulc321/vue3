@@ -3,7 +3,7 @@
 	<div class="container isolate flex min-h-screen justify-center items-center">
 		<div class="max-w-lg min-h-3xl w-full mx-auto p-6 tablet:p-16 desktop:p-24 rounded-lg bg-white flex flex-col items-center justify-center">
 			<a href="./index.html">
-				<img src="./assets/images/logo.svg" alt="">
+				<img src="../assets/images/logo.svg" alt="">
 			</a>
 			<p class="text-2xl font-medium text-light-blue my-10">Reset Password</p>
 			<form class="flex flex-col space-y-6 w-full">
