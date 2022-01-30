@@ -14,6 +14,7 @@
     "v-toaster": "^1.0.3",
     "vue": "^3.2.25",
     "vue-axios": "^3.4.0",
+    "vue-env": "^0.2.1-moved",
     "vue-router": "^4.0.12"
   },
   "devDependencies": {

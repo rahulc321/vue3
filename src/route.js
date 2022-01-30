@@ -6,6 +6,7 @@ import Home from './Home.vue'
 import App from './App.vue'
 import Forgot from './Forgot.vue'
 import Dashboard from './Dashboard.vue'
+import Reset from './Reset.vue'
 
 
 const routes = [
@@ -23,6 +24,11 @@ const routes = [
         path: '/forgot-password',
         name: 'Forgot Password',
         component: Forgot
+    },
+    {
+        path: '/reset-password',
+        name: 'Reset Password',
+        component: Reset
     },
     {
         path: '/plans',

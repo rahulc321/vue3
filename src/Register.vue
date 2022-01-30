@@ -59,7 +59,7 @@
 </template>
 <script>
 
-import axios from 'axios'
+import auth from './auth'
 import $ from 'jquery'
 
 
@@ -105,7 +105,7 @@ export default {
    			}
    			console.log(this.post.profile_type);
    		// this.$toast.success("success");
-   		axios.post('https://dev-career-traill-37xvv.ondigitalocean.app/api/register',data).then((response) => {
+   		auth.post('register',data).then((response) => {
    		var tost = this.$toast;
    		$('.plswait').hide();
         if(response.data.status==false){

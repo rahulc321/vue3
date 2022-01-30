@@ -4,7 +4,7 @@ const token = localStorage.getItem('token');
 //const token = 'abc';
 //alert(token);
 const instance = axios.create({
-    baseURL: 'Abc.com',
+    baseURL: 'https://app.thecareertrail.com/api',
     headers: {
         Authorization: `Bearer ${token}`
     }

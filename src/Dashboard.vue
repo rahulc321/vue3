@@ -275,7 +275,7 @@ export default {
   	logout(){
   		var result = confirm("Are you sure you want to logout?");
 		if (result) {
-			auth.post('https://api.thecareertrail.com/api/logout').then((response) => {
+			auth.post('logout').then((response) => {
 			localStorage.removeItem("token");
 			this.$toast.success('You have Successfully Logout');
 			window.location.href = "/"

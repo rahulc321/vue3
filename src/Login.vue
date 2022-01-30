@@ -74,7 +74,7 @@ export default {
       $('.plswait').show();
 
    		// this.$toast.success("success");
-   		axios.post('https://dev-career-traill-37xvv.ondigitalocean.app/api/login',data).then((response) => {
+   		auth.post('login',data).then((response) => {
         $('.plswait').hide();
         //console.log(response.data.message)
         if(response.data.status==true){
@@ -92,9 +92,9 @@ export default {
         }else{
           this.$toast.error(response.data.message);
         }
-
+        return false;
       }).catch((error) => {
-          this.$toast.error("Some went Wrong !!");
+          this.$toast.error(error.response.data.message);
           $('.plswait').hide();
         })
    		 
@@ -106,10 +106,10 @@ export default {
    	}
    },
    mounted(){
-    
-   	axios.get('https://api.thecareertrail.com/api/v1/exams').then((response) => {
-        console.log(response.data)
-      })
+     // console.log(process.env.BASEURL);
+   	// axios.get('https://api.thecareertrail.com/api/v1/exams').then((response) => {
+    //     console.log(response.data)
+    //   })
  
    }
     }
