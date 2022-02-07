@@ -8,7 +8,7 @@
 			<p class="text-2xl font-medium text-light-blue my-10">Reset Password</p>
 			<form ref="anyName" class="flex flex-col space-y-6 w-full" @submit="forgot">
 				<div class="flex flex-col">
-					<p class="text-base leading-5">Enter the email address accociated with your accound and we'll send an email with instructoins to reset your password.</p>
+					<p class="text-base leading-5">Reset your password.</p>
 				</div>
 				<!-- <div class="flex flex-col">
 					<label for="email"> Email <span class="text-red-600">*</span></label>
@@ -29,7 +29,7 @@
 
 				<div class="flex flex-col">
 					<div class="mt-6">
-						<button  v-if="!isHidden" type="submit" class="py-3 px-16 font-medium bg-dark-blue text-gray-100 text-gray shadow-lg rounded-md">Send →</button>
+						<button  v-if="!isHidden" type="submit" class="py-3 px-16 font-medium bg-dark-blue text-gray-100 text-gray shadow-lg rounded-md">Reset Password →</button>
 					</div>
 				</div>
 			</form>
@@ -47,6 +47,7 @@
 </style>
 <script>
 import auth from './auth'
+import $ from 'jquery'
 
 export default {
     name: 'Forgot',
@@ -55,6 +56,7 @@ export default {
 	  },
 	  data(){
 	  	return{
+	  		errors:[],
 	  		post:{
 	  			"password":null
 	  			
@@ -77,6 +79,28 @@ export default {
    		},
 
 	  	forgot(e){
+	  		e.preventDefault();
+	  		var tost = this.$toast;
+	  		this.errors=[];
+	  		if(!this.post.password){
+        	this.errors.push('Password field is required!.');
+       		}
+       		if(this.post.password !=null){
+       		if(this.post.password.length < 8){
+	        this.errors.push('Password should be greater 8 character!.');
+	         
+	       	}
+	       	}
+
+	  		
+
+	       if(this.errors.length){
+	        $.each(this.errors, function (key, val) {
+	            tost.warning('🙃 '+val+' !!');
+	        });
+	        return
+	       }
+
 
 	  		var data = {
    				"email":this.$route.query.email, 
@@ -86,22 +110,25 @@ export default {
    			}
 
 
-	  		if(this.post.password ==null){
-	  			this.$toast.error('Both field are required !');
-	  		}else{
+	  		
 	  		 auth.post('reset-password',data).then((response) => {
 	  		 	//console.log(response.data.data.temp_token);
+
+	  		 	if(response.data.status==true){
 	  		 	this.$toast.success(response.data.message);
 	  		 	this.$refs.anyName.reset();
 	        	this.$router.push('/login');
+	        	}else{
+	        	this.$toast.error(response.data.message);
+	        	}
 	        	return false;
 	  		 }).catch((error) => {
 			    
 			    this.$toast.error(error.response.data.message);
 			    
 			});
-	  		}
-	  		e.preventDefault();
+	  		
+	  		
 	  	}
 	  }
 	}

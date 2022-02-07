@@ -10,10 +10,12 @@
 				<div class="flex flex-col">
 					<label for="name"> Name <span class="text-red-600">*</span></label>
 					<input class="rounded border-gray-300" type="text" id="name" name="name" placeholder="Name" v-model="post.name">
+          <div v-if="errors.name" class="invalid-feedback">Name is required</div>
 				</div>
 				<div class="flex flex-col">
 					<label for="email"> Email <span class="text-red-600">*</span></label>
 					<input class="rounded border-gray-300" type="email" id="email" name="email" placeholder="abc@gmail.com" v-model="post.email">
+          <div v-if="errors.email" class="invalid-feedback">Email is required</div>
 				</div>
 				<div class="flex justify-between items-center gap-2">
 					<div class="flex flex-col w-1/2">
@@ -24,9 +26,13 @@
 						<label for="password-conf"> Confirm Password <span class="text-red-600">*</span></label>
 						<input class="rounded border-gray-300" type="password" id="password-conf" name="password" placeholder="********" autocomplete="new-password" v-model="post.password" v-on:keyup="check">
 					</div>
+
+          
 					
 				</div>
 				<div class="flex flex-col">
+        <div v-if="errors.password" class="invalid-feedback">Password is required</div>
+        <div v-if="errors.passwordeight" class="invalid-feedback">Password should be greater 8 character!</div>
 				<p class="ermsg"></p>
 				</div>
 
@@ -34,8 +40,9 @@
 					<label for="profile_type"> Profile type <span class="text-red-600">*</span></label>
 					<select class="rounded-md border-gray-300" name="profile_type" id="profile_type" v-model="post.profile_type">
 						<option value="student">Student</option>
-						<option value="student">Job Seeker</option>
+						<option value="Job Seeker">Job Seeker</option>
 					</select>
+          <div v-if="errors.profile_type" class="invalid-feedback">Profile Type is required</div>
 				</div>
 
 				<div class="flex flex-col">
@@ -46,8 +53,8 @@
 
 					<div class="mt-6 w-full flex space-x-3">
 						<!-- <button class="py-3 px-8 tablet:px-16 font-medium text-gray-700 border border-gray-300 rounded-md" type="reset">Reset</button> -->
-						<button type="submit" class="py-3 px-12 tablet:px-16 font-medium bg-dark-blue text-gray-100 text-gray shadow-lg rounded-md">Register</button>
-						<p class="plswait" style="display: none;color:green">Please Wait...</p>
+						<button  type="submit" class="py-3 px-12 tablet:px-16 font-medium bg-dark-blue text-gray-100 text-gray shadow-lg rounded-md">Register</button>
+						<p  v-if="isHidden" style="color:green">Please Wait...</p>
 					</div>
 				</div>
 			</form>
@@ -57,10 +64,17 @@
 </body>
 	
 </template>
+<style type="text/css">
+  .invalid-feedback{
+    color: red;
+  }
+</style>
 <script>
 
 import auth from './auth'
 import $ from 'jquery'
+
+
 
 
 export default {
@@ -70,19 +84,23 @@ export default {
   },
    data(){
     return {
+      errors:[],
     	post:{
     		name:'',
     		email:'',
-    		password:'',
+    		password:null,
     		profile_type:''
-    	}
+    	},
+      isHidden: false,
      
   	}
    },methods:{
    	check(){
-   		console.log(this.post.cpassword)
+   		//console.log(this.post.cpassword)
 
+ 
    		if(this.post.cpassword != this.post.password){
+        this.errors.password = false;
    			$('.ermsg').html("Password and Confirm Password should be same").css('color','red');
    			$('.rounded-md').hide();
    		}else{
@@ -91,12 +109,50 @@ export default {
    		}
    	},
    	register(e){
+      e.preventDefault();
+      var tost = this.$toast;
+   		
+   		 this.errors=[];
+       if(!this.post.name){
+        this.errors.name = true;
+        this.errors.push('Name field is required!.');
+       } 
+       if(!this.post.email){
+        this.errors.email = true;
+        this.errors.push('Email field is required!.');
+         
+       }
+       if(!this.post.password){
+        this.errors.password = true;
+        this.errors.push('Password field is required!.');
+         
+       }
+       if(!this.post.cpassword){
+        this.errors.push('Confirm Password field is required!.');
+         
+       }
+       if(!this.post.profile_type){
+        this.errors.profile_type = true;
+        this.errors.push('Profile type field is required!.');
+         
+       }
+       //console.log('>>>>>>>',(this.post.cpassword).length);
+       if(this.post.password !=null){
+       if(this.post.cpassword.length < 8){
+        this.errors.passwordeight = true;
+        this.errors.push('Password should be greater 8 character!.');
+         
+       }
+      }
 
-   		$('.plswait').show();
-   		// if(this.post.email == undefined || this.post.password == undefined){
-   		// 	this.$toast.warning("Email or password both fields are required");
-   			
-   		// }else{
+       if(this.errors.length){
+        $.each(this.errors, function (key, val) {
+           // tost.warning('🙃 '+val+' !!');
+        });
+        return
+       }
+
+       this.isHidden =true;
    			var data = {
    				"name":this.post.name,
    				"email":this.post.email,
@@ -106,11 +162,12 @@ export default {
    			console.log(this.post.profile_type);
    		// this.$toast.success("success");
    		auth.post('register',data).then((response) => {
-   		var tost = this.$toast;
-   		$('.plswait').hide();
+   		
+   		//$('.plswait').hide();
+        this.isHidden =false;
         if(response.data.status==false){
         	
-        	console.log(response);
+        	//console.log(response);
         	$.each(response.data.message, function (key, val) {
         		tost.info('🙃 '+val+' !!');
     		});
@@ -124,7 +181,7 @@ export default {
         
       	})
    		 
-   		e.preventDefault();
+   		
    	}
    }
 }

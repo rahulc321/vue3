@@ -48,14 +48,14 @@
 
 					<!-- Seperator -->
 					<div class="border-t-2 border-blue-200 -ml-5 w-64"></div>
-						
-					<a class="flex gap-x-6 items-center text-gray-500 font-normal" href="#">
+					<router-link to="/change-password">	
+					<a class="flex gap-x-6 items-center text-gray-500 font-normal" href="javascript:;">
 						<!-- icon -->
 						<svg class="w-5" width="23" height="28" viewBox="0 0 23 28" fill="none" xmlns="http://www.w3.org/2000/svg">
 							<path d="M20.5655 11.8076H18.8518V7.04698C18.8518 3.16331 15.4914 0 11.3245 0C7.15762 0 3.76363 3.16331 3.76363 7.04698V11.8076H2.04983C0.907304 11.8076 0 12.6532 0 13.7181V26.1208C0 27.1857 0.907304 28.0313 2.04983 28.0313H20.5655C21.7081 28.0313 22.6154 27.1857 22.6154 26.1208V13.7181C22.6154 12.6532 21.7081 11.8076 20.5655 11.8076ZM6.61996 7.04698C6.61996 4.63535 8.737 2.66219 11.3245 2.66219C13.912 2.66219 16.029 4.63535 16.029 7.04698V11.8076H6.61996V7.04698ZM12.0302 20.2013V22.2685C12.0302 22.6443 11.6941 22.9262 11.3245 22.9262C10.9212 22.9262 10.6188 22.6443 10.6188 22.2685V20.2013C9.94674 19.9508 9.47628 19.3244 9.47628 18.604C9.47628 17.6644 10.3164 16.8814 11.3245 16.8814C12.3326 16.8814 13.1727 17.6644 13.1727 18.604C13.1727 19.3244 12.7023 19.9508 12.0302 20.2013Z" fill="#003A9B"/>
 						</svg>
 						Change Password
-					</a>
+					</a></router-link>
 					<a @click="logout" class="flex gap-x-6 items-center text-gray-500 font-normal" href="javascript:;">
 						<!-- icon -->
 						<svg class="w-5" width="22" height="23" viewBox="0 0 22 23" fill="none" xmlns="http://www.w3.org/2000/svg">
