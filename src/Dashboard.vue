@@ -1,5 +1,8 @@
 <template>
+
 <Header />
+
+
 <!--===============Intro=================-->
 	<!--===============breadcrumb=================-->
 	<section class="container">
@@ -76,7 +79,7 @@
 				<!-- Basic Information -->
 				<div class="mt-10 w-full relative" x-data="{ showForm : true }">
 					<h2 class="text-base text-dark-blue font-medium mb-7 desktop:text-xl">Basic Information</h2>
-					<button class="absolute top-0 right-0" x-on:click="showForm = !showForm">
+					<button class="absolute top-0 right-0" v-on:click="click">
 						<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 							<circle cx="12" cy="12" r="11.5" fill="#DCF6FF" stroke="#95DCF4" stroke-linecap="round"/>
 							<path d="M10.5038 15.5028L14.7278 11.2787L12.7215 9.27238L8.4974 13.4965C8.43924 13.5547 8.39793 13.6276 8.37785 13.7074L7.90967 16.0906L10.2924 15.6224C10.3724 15.6024 10.4456 15.561 10.5038 15.5028ZM16.0915 9.91511C16.2619 9.74463 16.3577 9.51344 16.3577 9.27238C16.3577 9.03133 16.2619 8.80014 16.0915 8.62966L15.3706 7.90875C15.2001 7.73832 14.9689 7.64258 14.7278 7.64258C14.4868 7.64258 14.2556 7.73832 14.0851 7.90875L13.3642 8.62966L15.3706 10.636L16.0915 9.91511Z" fill="#003A9B"/>
@@ -106,45 +109,80 @@
 						</div>
 					  </dl>
 
-					<form class="flex flex-col space-y-6 mt-10" x-show="showForm">
-						<div class="flex flex-col gap-y-1">
+					<form v-if="form1" class="flex flex-col space-y-6 mt-10" x-show="showForm">
+					<div class="flex justify-between items-center gap-2">
+						<div class="flex flex-col w-1/3 gap-y-1">
 							<label for="name"> Name <span class="text-red-600">*</span></label>
 							<input class="rounded border-gray-300" type="text" id="name" name="name" placeholder="Ashikur Rahman">
 						</div>
-		
-						<div class="flex justify-between items-center gap-2">
-							<div class="flex flex-col w-1/2 gap-y-1">
-								<label for="profile_type"> Profile type <span class="text-red-600">*</span></label>
-								<select class="rounded-md border-gray-300" name="profile_type" id="profile_type">
-									<option value="student">Student</option>
-									<option value="student">Job Seeker</option>
-								</select>
-							</div>
-							<div class="flex flex-col w-1/2 gap-y-1">
-								<label for="profile_type"> Current Grade <span class="text-red-600">*</span></label>
-								<select class="rounded-md border-gray-300" name="profile_type" id="profile_type">
-									<option value="student">12</option>
-									<option value="student">10</option>
-								</select>
-							</div>
+
+						<div class="flex flex-col w-1/3 gap-y-1">
+							<label for="name"> Email <span class="text-red-600">*</span></label>
+							<input class="rounded border-gray-300" type="text" id="name" name="name" placeholder="abc.com">
 						</div>
 
+						<div class="flex flex-col w-1/3 gap-y-1">
+								<label for="profile_type"> Date of Birth <span class="text-red-600">*</span></label>
+								<input class="rounded border-gray-300" type="text" id="name" name="name" placeholder="DOB">
+							</div>
+
+
+						</div>
+						 
+
 						<div class="flex justify-between items-center gap-2">
-							<div class="flex flex-col w-1/2 gap-y-1">
-								<label for="profile_type"> Last Exam <span class="text-red-600">*</span></label>
+
+						<div class="flex flex-col w-1/3 gap-y-1">
+								<label for="profile_type"> Gender <span class="text-red-600">*</span></label>
 								<select class="rounded-md border-gray-300" name="profile_type" id="profile_type">
-									<option value="student">Grade 12</option>
-									<option value="student">Grade 10</option>
+									<option value="male">Male</option>
+									<option value="female">Female</option>
+									<option value="other">other</option>
 								</select>
 							</div>
-							<div class="flex flex-col w-1/2 gap-y-1">
-								<label for="profile_type"> Last Exam Stream<span class="text-red-600">*</span></label>
+
+							<div class="flex flex-col w-1/3 gap-y-1">
+								<label for="profile_type"> Citizenship <span class="text-red-600">*</span></label>
+								<select class="rounded-md border-gray-300" name="profile_type" id="profile_type">
+									<option v-for="nationalitie in nationalities" :value="nationalitie.name" :key="nationalitie.id">{{nationalitie.name}}</option>
+									 
+								</select>
+							</div>
+							<div class="flex flex-col w-1/3 gap-y-1">
+								<label for="profile_type"> Select Applicable Category<span class="text-red-600">*</span></label>
 								<select class="rounded-md border-gray-300" name="profile_type" id="profile_type">
 									<option value="student">Science</option>
 									<option value="student">Arts</option>
 									<option value="student">Commerce</option>
 								</select>
 							</div>
+						</div>
+
+						<div class="flex justify-between items-center gap-2">
+						<div class="flex flex-col w-1/2 gap-y-1">
+							<label for="name"> Phone <span class="text-red-600">*</span></label>
+							<input class="rounded border-gray-300" type="text" id="name" name="name" placeholder="+91 9758463790">
+						</div>
+
+						<div class="flex flex-col w-1/2 gap-y-1">
+							<label for="profile_type"> Current Location<span class="text-red-600">*</span></label>
+								<select class="rounded-md border-gray-300" name="profile_type" id="profile_type">
+									<option v-for="location in locations" :value="location.state" :key="location.state">{{location.state}}</option>
+								</select>
+						</div>
+						
+						</div>
+
+						<div class="flex justify-between items-center gap-2">
+						<label class="">Are you appearing /qualified Class 12 or Equivalent exam this year (Y/N)? </label>
+
+						<select class="rounded-md border-gray-300" name="profile_type" id="profile_type">
+									<option value="yes">Yes</option>
+									<option value="no">No</option>
+									 
+								</select>
+
+						 
 						</div>
 
 						<div class="flex flex-col">		
@@ -250,7 +288,11 @@
 	</section>
 	<Footer />
 </template>
-
+<style type="text/css">
+	.text1{
+		font-size: 15px;
+	}
+</style>
 
 <script>
 import Header from './layout/header.vue'
@@ -270,8 +312,16 @@ export default {
   
      
   },data(){
-
+  	return {
+  		"form1":false,
+  		"nationalities":"",
+  		"locations":"",
+  	}
   },methods: {
+  	click(){
+  		this.form1 = !this.form1;
+  	},
+
   	logout(){
   		var result = confirm("Are you sure you want to logout?");
 		if (result) {
@@ -282,6 +332,15 @@ export default {
 			})
 		}
   	}
-  }
+  },mounted() {
+  		// nationalities
+        auth.get('v1/nationalities').then((response) => {
+            this.nationalities = response.data.data;
+        })
+        // Get location
+        auth.get('v1/locations').then((response) => {
+            this.locations = response.data.data;
+        })
+    }
 }
 </script>
