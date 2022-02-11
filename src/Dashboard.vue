@@ -86,7 +86,7 @@
 						</svg>						
 					</button>
 
-					<dl class="divide-y"  x-show="!showForm">
+					<dl v-if="formDetail1" class="divide-y"  x-show="!showForm">
 						<div class="grid grid-cols-2 text-xs pb-3 pt-3.5 desktop:text-base">
 							<dt class="font-light text-gray-400">Name</dt>
 							<dd class="font-normal text-gray-500">{{user.name}}</dd>
@@ -107,6 +107,19 @@
 							<dt class="font-light text-gray-400">Email</dt>
 							<dd class="font-normal text-gray-500">{{user.email}}</dd>
 						</div>
+						<div class="grid grid-cols-2 text-xs pb-3 pt-3.5 desktop:text-base">
+							<dt class="font-light text-gray-400">Citizenship</dt>
+							<dd class="font-normal text-gray-500">{{user.nationality_name}}</dd>
+						</div>
+
+						<div class="grid grid-cols-2 text-xs pb-3 pt-3.5 desktop:text-base">
+							<dt class="font-light text-gray-400">Location</dt>
+							<dd class="font-normal text-gray-500">{{user.location_state}}</dd>
+						</div>
+						<div class="grid grid-cols-2 text-xs pb-3 pt-3.5 desktop:text-base">
+							<dt class="font-light text-gray-400">Category</dt>
+							<dd class="font-normal text-gray-500">{{user.quota}}</dd>
+						</div>
 					  </dl>
 
 					<Form @submit="onSubmit" :validation-schema="schema" v-slot="{ errors }" v-if="form1">
@@ -116,7 +129,7 @@
 
 						<div class="flex flex-col w-1/3 gap-y-1">
 							<label for="name"> Name <span class="text-red-600">*</span></label>
-							<Field class="rounded border-gray-300" type="text"   name="name" placeholder="Name" :class="{ 'is-invalid': errors.name }" value="{{user.name}}"></Field>
+							<Field class="rounded border-gray-300" type="text"   name="name" placeholder="Name" :class="{ 'is-invalid': errors.name }" value="{{user.name}}" v-model="post.name"></Field>
 							<div class="invalid-feedback">{{errors.name}}</div>
 						</div>
 						<!--  -->
@@ -126,13 +139,13 @@
 						<!--  -->
 						<div class="flex flex-col w-1/3 gap-y-1">
 							<label for="name"> Email <span class="text-red-600">*</span></label>
-							<Field class="rounded border-gray-300" type="email"   name="email" placeholder="abc.com"></Field>
+							<Field class="rounded border-gray-300" type="email"   name="email" placeholder="abc.com" v-model="post.email"></Field>
 							<div class="invalid-feedback">{{errors.email}}</div>
 						</div>
 
 						<div class="flex flex-col w-1/3 gap-y-1">
 								<label for="profile_type"> Date of Birth <span class="text-red-600">*</span></label>
-								<Field class="rounded border-gray-300" type="date" name="date_of_birth" placeholder="DOB"></Field>
+								<Field class="rounded border-gray-300" type="date" name="date_of_birth" placeholder="DOB" v-model="post.date_of_birth"></Field>
 								<div class="invalid-feedback">{{errors.date_of_birth}}</div>
 							</div>
 
@@ -144,7 +157,7 @@
 
 						<div class="flex flex-col w-1/3 gap-y-1">
 								<label for="profile_type"> Gender <span class="text-red-600">*</span></label>
-								<Field as="select" class="rounded-md border-gray-300" name="gender" id="profile_type">
+								<Field as="select" class="rounded-md border-gray-300" name="gender" id="profile_type" v-model="post.gender">
 									<option value="male">Male</option>
 									<option value="female">Female</option>
 									<option value="other">other</option>
@@ -154,7 +167,7 @@
 
 							<div class="flex flex-col w-1/3 gap-y-1">
 								<label for="profile_type"> Citizenship <span class="text-red-600">*</span></label>
-								<Field as="select" class="rounded-md border-gray-300" name="nationality_id" >
+								<Field as="select" class="rounded-md border-gray-300" name="nationality_id" v-model="post.nationality_id">
 									<option v-for="nationalitie in nationalities" :value="nationalitie.id" :key="nationalitie.id">{{nationalitie.name}}</option>
 									 
 								</Field>
@@ -162,7 +175,7 @@
 							</div>
 							<div class="flex flex-col w-1/3 gap-y-1">
 								<label for="profile_type"> Select Applicable Category<span class="text-red-600">*</span></label>
-								<Field as="select" class="rounded-md border-gray-300" name="quota" >
+								<Field as="select" class="rounded-md border-gray-300" name="quota" v-model="post.quota">
 									<option v-for="(value, key) in quota[0]" :value="key" :key="key">{{value}}</option>
 								</Field>
 								<div class="invalid-feedback">{{errors.quota}}</div>
@@ -172,13 +185,13 @@
 						<div class="flex justify-between items-center gap-2">
 						<div class="flex flex-col w-1/3 gap-y-1">
 							<label for="name"> Phone <span class="text-red-600">*</span></label>
-							<Field class="rounded border-gray-300" type="text"   name="phone" placeholder="+91 9758463790"></Field>
+							<Field class="rounded border-gray-300" type="text"   name="phone" placeholder="+91 9758463790" v-model="post.phone"></Field>
 							<div class="invalid-feedback">{{errors.phone}}</div>
 						</div>
 						<div class="flex flex-col w-1/3 gap-y-1">
 							<label for="name"> profile_type <span class="text-red-600">*</span></label>
-							<Field as="select" class="rounded-md border-gray-300" name="profile_type"  >
-									<option value="student">Student</option>
+							<Field as="select" class="rounded-md border-gray-300" name="profile_type"  v-model="post.profile_type">
+									<option value="student" selected="">Student</option>
 									<option value="Job Seeker">Job Seeker</option>
 									 
 								</Field>
@@ -187,7 +200,7 @@
 
 						<div class="flex flex-col w-1/3 gap-y-1">
 							<label for="profile_type"> Current Location<span class="text-red-600">*</span></label>
-								<Field as="select" class="rounded-md border-gray-300" name="location_id"  >
+								<Field as="select" class="rounded-md border-gray-300" name="location_id"  v-model="post.location_id">
 									<option v-for="location in locations" :value="location.id" :key="location.state">{{location.state}}</option>
 								</Field>
 								<div class="invalid-feedback">{{errors.location_id}}</div>
@@ -210,7 +223,7 @@
 
 						<div class="flex flex-col">		
 							<div class="mt-2 w-full flex space-x-3">
-								<button x-on:click="showForm = !showForm" class="py-3 px-16 font-medium text-gray-700 border border-gray-300 rounded-md" type="button">Cancel</button>
+								<button v-on:click="cancel" class="py-3 px-16 font-medium text-gray-700 border border-gray-300 rounded-md" type="button">Cancel</button>
 								<button class="py-3 px-16 font-medium bg-dark-blue text-gray-100 text-gray shadow-lg rounded-md" type="submit">Save</button>
 							</div>
 						</div>
@@ -340,18 +353,8 @@ export default {
   
      
   },data(){
-  	return {
-  		"form1":false,
-  		"nationalities":"",
-  		"locations":"",
-  		"quota":"",
-  		"user":'',
-  	}
-  },setup() {
 
-
-  	 
-  	 const schema = Yup.object().shape({
+  	const schema = Yup.object().shape({
             name: Yup.string()
                 .required('Name is required'),
             email: Yup.string()
@@ -377,17 +380,46 @@ export default {
              
         });
 
-  	 function onSubmit(values){
+
+  	return {
+  		schema,
+  		"form1":false,
+  		"formDetail1":true,
+  		"nationalities":"",
+  		"locations":"",
+  		"quota":"",
+  		"user":'',
+  		"user":'',
+  		"post":{
+  			"name":'',
+  			"email":'',
+  			"date_of_birth":'',
+  			"gender":'',
+  			"nationality_id":'',
+  			"quota":'',
+  			"phone":'',
+  			"profile_type":'',
+  			"location_id":'',
+  		}
+  	}
+  },methods:{
+  	 
+  	onSubmit(values){
   	 		auth.post('v1/update_basic_step',values).then((response) => {
   	 			//console.log(response);
-  	 			userData();
+  	 			this.$toast.success("You have Successfully Updated!");
+  	 			auth.get('v1/user').then((response) => {
+  	 				this.form1 = false;
+  	 				this.formDetail1 = true;
+		            this.user = response.data.data[0];
+		        })
+
   	 		});
             // display form values on success
             // alert('SUCCESS!! :-)\n\n' + JSON.stringify(values, null, 4));
-        }
+        },
 
- 
-  	function logout(){
+  	logout(){
   		var result = confirm("Are you sure you want to logout?");
 		if (result) {
 			auth.post('logout').then((response) => {
@@ -400,52 +432,17 @@ export default {
 			window.location.href = "/"
 		});
 		}
-  	}
-
-  	return {
-            schema,
-            onSubmit,
-            logout
-        };
-
-  },methods:{
-
-  	onSubmit(){
-  		const schema = Yup.object().shape({
-            name: Yup.string()
-                .required('Name is required'),
-            email: Yup.string()
-                .required('Email is required')
-                .email('Email is invalid'),
-            date_of_birth: Yup.string()
-                .required('Date of Birth is required'), 
-
-             profile_type: Yup.string()
-                .required('Profile type is required'),
-            gender: Yup.string()
-                .required('Gender is required'),
-            nationality_id: Yup.string()
-                .required('Citizenship is required'),
-            quota: Yup.string()
-                .required('Category is required'),
-            phone: Yup.string()
-                .required('Phone is required'),
-            location_id: Yup.string()
-                .required('Current Location is required'),
-            equivalent: Yup.string()
-                .required('This Field is required'),
-             
-        });
-
-        auth.post('v1/update_basic_step',values).then((response) => {
-  	 			//console.log(response);
-  	 			userData();
-  	 		});
   	},
 
   	click(){
    		this.form1 = !this.form1;
-  		}
+   		this.formDetail1 = false;
+  		},
+
+  	cancel(){
+  		this.form1 = false;
+  		this.formDetail1 = true;
+  	}
   }
   ,mounted() {
 
@@ -468,6 +465,15 @@ export default {
 
         auth.get('v1/user').then((response) => {
              this.user = response.data.data[0];
+             this.post.name = response.data.data[0].name;
+             this.post.email = response.data.data[0].email;
+             this.post.date_of_birth = response.data.data[0].date_of_birth;
+             this.post.gender = response.data.data[0].gender;
+             this.post.nationality_id = response.data.data[0].nationality_id;
+             this.post.quota = response.data.data[0].quota;
+             this.post.phone = response.data.data[0].phone;
+             this.post.profile_type = response.data.data[0].profile_type;
+             this.post.location_id = response.data.data[0].location_id;
             console.log(response.data.data[0])
         })
     }
