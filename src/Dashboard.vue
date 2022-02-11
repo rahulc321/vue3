@@ -89,41 +89,51 @@
 					<dl class="divide-y"  x-show="!showForm">
 						<div class="grid grid-cols-2 text-xs pb-3 pt-3.5 desktop:text-base">
 							<dt class="font-light text-gray-400">Name</dt>
-							<dd class="font-normal text-gray-500">Ashiqur Rahman</dd>
+							<dd class="font-normal text-gray-500">{{user.name}}</dd>
 						</div>
 						<div class="grid grid-cols-2 text-xs pb-3 pt-3.5 desktop:text-base">
 							<dt class="font-light text-gray-400">Profile Type</dt>
-							<dd class="font-normal text-gray-500">Student</dd>
+							<dd class="font-normal text-gray-500">{{user.profile_type}}</dd>
 						</div>
 						<div class="grid grid-cols-2 text-xs pb-3 pt-3.5 desktop:text-base">
-							<dt class="font-light text-gray-400">Grade</dt>
-							<dd class="font-normal text-gray-500">12</dd>
+							<dt class="font-light text-gray-400">Gender</dt>
+							<dd class="font-normal text-gray-500">{{user.gender}}</dd>
 						</div>
 						<div class="grid grid-cols-2 text-xs pb-3 pt-3.5 desktop:text-base">
-							<dt class="font-light text-gray-400">Last Exam</dt>
-							<dd class="font-normal text-gray-500">Grade 12</dd>
+							<dt class="font-light text-gray-400">Phone</dt>
+							<dd class="font-normal text-gray-500">{{user.phone}}</dd>
 						</div>
 						<div class="grid grid-cols-2 text-xs pb-3 pt-3.5 desktop:text-base">
-							<dt class="font-light text-gray-400">Last Exam Stream</dt>
-							<dd class="font-normal text-gray-500">Science</dd>
+							<dt class="font-light text-gray-400">Email</dt>
+							<dd class="font-normal text-gray-500">{{user.email}}</dd>
 						</div>
 					  </dl>
 
-					<form v-if="form1" class="flex flex-col space-y-6 mt-10" x-show="showForm">
+					<Form @submit="onSubmit" :validation-schema="schema" v-slot="{ errors }" v-if="form1">
 					<div class="flex justify-between items-center gap-2">
-						<div class="flex flex-col w-1/3 gap-y-1">
-							<label for="name"> Name <span class="text-red-600">*</span></label>
-							<input class="rounded border-gray-300" type="text" id="name" name="name" placeholder="Ashikur Rahman">
-						</div>
+
+						 
 
 						<div class="flex flex-col w-1/3 gap-y-1">
+							<label for="name"> Name <span class="text-red-600">*</span></label>
+							<Field class="rounded border-gray-300" type="text"   name="name" placeholder="Name" :class="{ 'is-invalid': errors.name }" value="{{user.name}}"></Field>
+							<div class="invalid-feedback">{{errors.name}}</div>
+						</div>
+						<!--  -->
+						
+
+						 
+						<!--  -->
+						<div class="flex flex-col w-1/3 gap-y-1">
 							<label for="name"> Email <span class="text-red-600">*</span></label>
-							<input class="rounded border-gray-300" type="text" id="name" name="name" placeholder="abc.com">
+							<Field class="rounded border-gray-300" type="email"   name="email" placeholder="abc.com"></Field>
+							<div class="invalid-feedback">{{errors.email}}</div>
 						</div>
 
 						<div class="flex flex-col w-1/3 gap-y-1">
 								<label for="profile_type"> Date of Birth <span class="text-red-600">*</span></label>
-								<input class="rounded border-gray-300" type="text" id="name" name="name" placeholder="DOB">
+								<Field class="rounded border-gray-300" type="date" name="date_of_birth" placeholder="DOB"></Field>
+								<div class="invalid-feedback">{{errors.date_of_birth}}</div>
 							</div>
 
 
@@ -134,41 +144,53 @@
 
 						<div class="flex flex-col w-1/3 gap-y-1">
 								<label for="profile_type"> Gender <span class="text-red-600">*</span></label>
-								<select class="rounded-md border-gray-300" name="profile_type" id="profile_type">
+								<Field as="select" class="rounded-md border-gray-300" name="gender" id="profile_type">
 									<option value="male">Male</option>
 									<option value="female">Female</option>
 									<option value="other">other</option>
-								</select>
+								</Field>
+								<div class="invalid-feedback">{{errors.gender}}</div>
 							</div>
 
 							<div class="flex flex-col w-1/3 gap-y-1">
 								<label for="profile_type"> Citizenship <span class="text-red-600">*</span></label>
-								<select class="rounded-md border-gray-300" name="profile_type" id="profile_type">
-									<option v-for="nationalitie in nationalities" :value="nationalitie.name" :key="nationalitie.id">{{nationalitie.name}}</option>
+								<Field as="select" class="rounded-md border-gray-300" name="nationality_id" >
+									<option v-for="nationalitie in nationalities" :value="nationalitie.id" :key="nationalitie.id">{{nationalitie.name}}</option>
 									 
-								</select>
+								</Field>
+								<div class="invalid-feedback">{{errors.nationality_id}}</div>
 							</div>
 							<div class="flex flex-col w-1/3 gap-y-1">
 								<label for="profile_type"> Select Applicable Category<span class="text-red-600">*</span></label>
-								<select class="rounded-md border-gray-300" name="profile_type" id="profile_type">
-									<option value="student">Science</option>
-									<option value="student">Arts</option>
-									<option value="student">Commerce</option>
-								</select>
+								<Field as="select" class="rounded-md border-gray-300" name="quota" >
+									<option v-for="(value, key) in quota[0]" :value="key" :key="key">{{value}}</option>
+								</Field>
+								<div class="invalid-feedback">{{errors.quota}}</div>
 							</div>
 						</div>
 
 						<div class="flex justify-between items-center gap-2">
-						<div class="flex flex-col w-1/2 gap-y-1">
+						<div class="flex flex-col w-1/3 gap-y-1">
 							<label for="name"> Phone <span class="text-red-600">*</span></label>
-							<input class="rounded border-gray-300" type="text" id="name" name="name" placeholder="+91 9758463790">
+							<Field class="rounded border-gray-300" type="text"   name="phone" placeholder="+91 9758463790"></Field>
+							<div class="invalid-feedback">{{errors.phone}}</div>
+						</div>
+						<div class="flex flex-col w-1/3 gap-y-1">
+							<label for="name"> profile_type <span class="text-red-600">*</span></label>
+							<Field as="select" class="rounded-md border-gray-300" name="profile_type"  >
+									<option value="student">Student</option>
+									<option value="Job Seeker">Job Seeker</option>
+									 
+								</Field>
+							<div class="invalid-feedback">{{errors.profile_type}}</div>
 						</div>
 
-						<div class="flex flex-col w-1/2 gap-y-1">
+						<div class="flex flex-col w-1/3 gap-y-1">
 							<label for="profile_type"> Current Location<span class="text-red-600">*</span></label>
-								<select class="rounded-md border-gray-300" name="profile_type" id="profile_type">
-									<option v-for="location in locations" :value="location.state" :key="location.state">{{location.state}}</option>
-								</select>
+								<Field as="select" class="rounded-md border-gray-300" name="location_id"  >
+									<option v-for="location in locations" :value="location.id" :key="location.state">{{location.state}}</option>
+								</Field>
+								<div class="invalid-feedback">{{errors.location_id}}</div>
 						</div>
 						
 						</div>
@@ -176,19 +198,20 @@
 						<div class="flex justify-between items-center gap-2">
 						<label class="">Are you appearing /qualified Class 12 or Equivalent exam this year (Y/N)? </label>
 
-						<select class="rounded-md border-gray-300" name="profile_type" id="profile_type">
+						<Field as="select" class="rounded-md border-gray-300" name="equivalent"  >
 									<option value="yes">Yes</option>
 									<option value="no">No</option>
 									 
-								</select>
-
+								</Field>
+						
 						 
 						</div>
+						<div class="invalid-feedback">{{errors.equivalent}}</div>
 
 						<div class="flex flex-col">		
 							<div class="mt-2 w-full flex space-x-3">
 								<button x-on:click="showForm = !showForm" class="py-3 px-16 font-medium text-gray-700 border border-gray-300 rounded-md" type="button">Cancel</button>
-								<button class="py-3 px-16 font-medium bg-dark-blue text-gray-100 text-gray shadow-lg rounded-md" type="button">Save</button>
+								<button class="py-3 px-16 font-medium bg-dark-blue text-gray-100 text-gray shadow-lg rounded-md" type="submit">Save</button>
 							</div>
 						</div>
 					</form>
@@ -300,6 +323,9 @@ import Footer from './layout/footer.vue'
 import App from './App.vue'
 import auth from './auth'
 
+import { Form, Field } from 'vee-validate';
+import * as Yup from 'yup';
+
 
 export default {
 
@@ -308,7 +334,9 @@ export default {
   components: {
    Header,
    Footer,
-   App
+   App,
+   Form,
+   Field,
   
      
   },data(){
@@ -316,23 +344,113 @@ export default {
   		"form1":false,
   		"nationalities":"",
   		"locations":"",
+  		"quota":"",
+  		"user":'',
   	}
-  },methods: {
-  	click(){
-  		this.form1 = !this.form1;
-  	},
+  },setup() {
 
-  	logout(){
+
+  	 
+  	 const schema = Yup.object().shape({
+            name: Yup.string()
+                .required('Name is required'),
+            email: Yup.string()
+                .required('Email is required')
+                .email('Email is invalid'),
+            date_of_birth: Yup.string()
+                .required('Date of Birth is required'), 
+
+             profile_type: Yup.string()
+                .required('Profile type is required'),
+            gender: Yup.string()
+                .required('Gender is required'),
+            nationality_id: Yup.string()
+                .required('Citizenship is required'),
+            quota: Yup.string()
+                .required('Category is required'),
+            phone: Yup.string()
+                .required('Phone is required'),
+            location_id: Yup.string()
+                .required('Current Location is required'),
+            equivalent: Yup.string()
+                .required('This Field is required'),
+             
+        });
+
+  	 function onSubmit(values){
+  	 		auth.post('v1/update_basic_step',values).then((response) => {
+  	 			//console.log(response);
+  	 			userData();
+  	 		});
+            // display form values on success
+            // alert('SUCCESS!! :-)\n\n' + JSON.stringify(values, null, 4));
+        }
+
+ 
+  	function logout(){
   		var result = confirm("Are you sure you want to logout?");
 		if (result) {
 			auth.post('logout').then((response) => {
 			localStorage.removeItem("token");
-			this.$toast.success('You have Successfully Logout');
+			//this.$toast.success('You have Successfully Logout');
 			window.location.href = "/"
-			})
+		}).catch(error => {
+			localStorage.removeItem("token");
+			//this.$toast.success('You have Successfully Logout');
+			window.location.href = "/"
+		});
 		}
   	}
-  },mounted() {
+
+  	return {
+            schema,
+            onSubmit,
+            logout
+        };
+
+  },methods:{
+
+  	onSubmit(){
+  		const schema = Yup.object().shape({
+            name: Yup.string()
+                .required('Name is required'),
+            email: Yup.string()
+                .required('Email is required')
+                .email('Email is invalid'),
+            date_of_birth: Yup.string()
+                .required('Date of Birth is required'), 
+
+             profile_type: Yup.string()
+                .required('Profile type is required'),
+            gender: Yup.string()
+                .required('Gender is required'),
+            nationality_id: Yup.string()
+                .required('Citizenship is required'),
+            quota: Yup.string()
+                .required('Category is required'),
+            phone: Yup.string()
+                .required('Phone is required'),
+            location_id: Yup.string()
+                .required('Current Location is required'),
+            equivalent: Yup.string()
+                .required('This Field is required'),
+             
+        });
+
+        auth.post('v1/update_basic_step',values).then((response) => {
+  	 			//console.log(response);
+  	 			userData();
+  	 		});
+  	},
+
+  	click(){
+   		this.form1 = !this.form1;
+  		}
+  }
+  ,mounted() {
+
+
+  		 
   		// nationalities
         auth.get('v1/nationalities').then((response) => {
             this.nationalities = response.data.data;
@@ -340,6 +458,17 @@ export default {
         // Get location
         auth.get('v1/locations').then((response) => {
             this.locations = response.data.data;
+        })
+
+        // Get Quota
+        auth.get('v1/quota').then((response) => {
+            this.quota = response.data.data;
+             
+        })
+
+        auth.get('v1/user').then((response) => {
+             this.user = response.data.data[0];
+            console.log(response.data.data[0])
         })
     }
 }
