@@ -72,8 +72,10 @@
 			<div class="w-full tablet:pl-9 tablet:pr-12 tablet:py-12 desktop:pl-16 desktop:pr-56 desktop:py-9">
 				<!-- Avatar -->
 				<div class="flex gap-x-10 items-center">
-					<img class="rounded-full h-24 w-24 object-cover object-top" src="./assets/images/avatar_full.png" alt="">
-					<button class="text-base leading-5 bg-trail-tail border border-blue-200 px-6 py-2 rounded-md">Change photo</button>
+					<!-- <img class="rounded-full h-24 w-24 object-cover object-top" src="./assets/images/avatar_full.png" alt=""> -->
+					<img class="rounded-full h-24 w-24 object-cover object-top" :src="image"  alt="">
+					 
+					<input  class="text-base leading-5 bg-trail-tail border border-blue-200 px-6 py-2 rounded-md" type="file" name="" v-on:change="file">
 				</div>
 
 				<!-- Basic Information -->
@@ -120,6 +122,8 @@
 							<dt class="font-light text-gray-400">Category</dt>
 							<dd class="font-normal text-gray-500">{{user.quota}}</dd>
 						</div>
+
+						 
 					  </dl>
 
 					<Form @submit="onSubmit" :validation-schema="schema" v-slot="{ errors }" v-if="form1">
@@ -158,6 +162,7 @@
 						<div class="flex flex-col w-1/3 gap-y-1">
 								<label for="profile_type"> Gender <span class="text-red-600">*</span></label>
 								<Field as="select" class="rounded-md border-gray-300" name="gender" id="profile_type" v-model="post.gender">
+								<option value="" selectted>Select</option>
 									<option value="male">Male</option>
 									<option value="female">Female</option>
 									<option value="other">other</option>
@@ -168,6 +173,7 @@
 							<div class="flex flex-col w-1/3 gap-y-1">
 								<label for="profile_type"> Citizenship <span class="text-red-600">*</span></label>
 								<Field as="select" class="rounded-md border-gray-300" name="nationality_id" v-model="post.nationality_id">
+								<option value="" selectted>Select</option>
 									<option v-for="nationalitie in nationalities" :value="nationalitie.id" :key="nationalitie.id">{{nationalitie.name}}</option>
 									 
 								</Field>
@@ -176,6 +182,7 @@
 							<div class="flex flex-col w-1/3 gap-y-1">
 								<label for="profile_type"> Select Applicable Category<span class="text-red-600">*</span></label>
 								<Field as="select" class="rounded-md border-gray-300" name="quota" v-model="post.quota">
+								<option value="" selectted>Select</option>
 									<option v-for="(value, key) in quota[0]" :value="key" :key="key">{{value}}</option>
 								</Field>
 								<div class="invalid-feedback">{{errors.quota}}</div>
@@ -191,6 +198,7 @@
 						<div class="flex flex-col w-1/3 gap-y-1">
 							<label for="name"> profile_type <span class="text-red-600">*</span></label>
 							<Field as="select" class="rounded-md border-gray-300" name="profile_type"  v-model="post.profile_type">
+									<option value="" selectted>Select</option>
 									<option value="student" selected="">Student</option>
 									<option value="Job Seeker">Job Seeker</option>
 									 
@@ -201,6 +209,7 @@
 						<div class="flex flex-col w-1/3 gap-y-1">
 							<label for="profile_type"> Current Location<span class="text-red-600">*</span></label>
 								<Field as="select" class="rounded-md border-gray-300" name="location_id"  v-model="post.location_id">
+								<option value="" selectted>Select</option>
 									<option v-for="location in locations" :value="location.id" :key="location.state">{{location.state}}</option>
 								</Field>
 								<div class="invalid-feedback">{{errors.location_id}}</div>
@@ -209,17 +218,18 @@
 						</div>
 
 						<div class="flex justify-between items-center gap-2">
-						<label class="">Are you appearing /qualified Class 12 or Equivalent exam this year (Y/N)? </label>
+						<label class="">Are you appearing /qualified Class 12 or Equivalent exam this year (Y/N)?<span class="text-red-600">*</span> </label>
 
-						<Field as="select" class="rounded-md border-gray-300" name="equivalent"  >
-									<option value="yes">Yes</option>
-									<option value="no">No</option>
+						<Field as="select" class="rounded-md border-gray-300" name="is_current_12ex"  v-model="post.is_current_12ex">
+									<option value="" selectted>Select</option>
+									<option value="true">Yes</option>
+									<option value="false">No</option>
 									 
 								</Field>
 						
 						 
 						</div>
-						<div class="invalid-feedback">{{errors.equivalent}}</div>
+						<div class="invalid-feedback">{{errors.is_current_12ex}}</div>
 
 						<div class="flex flex-col">		
 							<div class="mt-2 w-full flex space-x-3">
@@ -328,6 +338,9 @@
 	.text1{
 		font-size: 15px;
 	}
+	.gap-y-1 {
+    row-gap: 10px !important;
+}
 </style>
 
 <script>
@@ -354,29 +367,33 @@ export default {
      
   },data(){
 
+  	const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/
   	const schema = Yup.object().shape({
             name: Yup.string()
-                .required('Name is required'),
+                .required('Name is required').nullable(),
             email: Yup.string()
                 .required('Email is required')
-                .email('Email is invalid'),
+                .email('Email is invalid').nullable(),
             date_of_birth: Yup.string()
-                .required('Date of Birth is required'), 
+                .required('Date of Birth is required').nullable(), 
 
              profile_type: Yup.string()
-                .required('Profile type is required'),
+                .required('Profile type is required').nullable(),
             gender: Yup.string()
-                .required('Gender is required'),
+                .required('Gender is required').nullable(),
             nationality_id: Yup.string()
-                .required('Citizenship is required'),
+                .required('Citizenship is required').nullable(),
             quota: Yup.string()
-                .required('Category is required'),
+                .required('Category is required').nullable(),
             phone: Yup.string()
-                .required('Phone is required'),
+            	.min(10, "Must be more than 10 characters")
+            	.max(10, "Must be 10 characters")
+            	.matches(phoneRegExp, 'Please enter digit only')
+                .required('Phone is required').nullable(),
             location_id: Yup.string()
-                .required('Current Location is required'),
-            equivalent: Yup.string()
-                .required('This Field is required'),
+                .required('Current Location is required').nullable(),
+            is_current_12ex: Yup.string()
+                .required('This Field is required').nullable(),
              
         });
 
@@ -390,7 +407,9 @@ export default {
   		"quota":"",
   		"user":'',
   		"user":'',
+  		"image":'',
   		"post":{
+  			 
   			"name":'',
   			"email":'',
   			"date_of_birth":'',
@@ -400,11 +419,41 @@ export default {
   			"phone":'',
   			"profile_type":'',
   			"location_id":'',
+  			"is_current_12ex":'',
   		}
   	}
   },methods:{
-  	 
+
+  	file(e){
+  		const image = e.target.files[0];
+  		const config = {
+                    headers: {
+                        'content-type': 'multipart/form-data'
+                    }
+                }
+        let data = new FormData();
+        data.append('image', image);
+
+  		
+  		 
+  		auth.post('v1/updateImage',data, config).then((response) => {
+  	 			//console.log(response);
+  	 			this.$toast.success("You have Successfully Updated!");
+  	 			auth.get('v1/user').then((response) => {
+  	 				this.image = 'http://127.0.0.1:8000/images/'+response.data.data[0].image;
+  	 				// this.form1 = false;
+  	 				// this.formDetail1 = true;
+		      //       this.user = response.data.data[0];
+		        })
+
+  	 	});
+
+  	},
   	onSubmit(values){
+
+  			// const image = e.target.files[0];
+  			// console.log(image); return false;
+
   	 		auth.post('v1/update_basic_step',values).then((response) => {
   	 			//console.log(response);
   	 			this.$toast.success("You have Successfully Updated!");
@@ -446,7 +495,7 @@ export default {
   }
   ,mounted() {
 
-
+  		
   		 
   		// nationalities
         auth.get('v1/nationalities').then((response) => {
@@ -464,17 +513,22 @@ export default {
         })
 
         auth.get('v1/user').then((response) => {
+        	//alert(response.data.data[0].date_of_birth);
              this.user = response.data.data[0];
              this.post.name = response.data.data[0].name;
              this.post.email = response.data.data[0].email;
-             this.post.date_of_birth = response.data.data[0].date_of_birth;
+             if(response.data.data[0].date_of_birth !=null){
+             this.post.date_of_birth = response.data.data[0].date_of_birth.substring(0, 10);
+         	}
              this.post.gender = response.data.data[0].gender;
              this.post.nationality_id = response.data.data[0].nationality_id;
              this.post.quota = response.data.data[0].quota;
              this.post.phone = response.data.data[0].phone;
              this.post.profile_type = response.data.data[0].profile_type;
              this.post.location_id = response.data.data[0].location_id;
-            console.log(response.data.data[0])
+             this.post.is_current_12ex = response.data.data[0].is_current_12ex;
+             this.image = 'http://127.0.0.1:8000/images/'+response.data.data[0].image;
+ 
         })
     }
 }

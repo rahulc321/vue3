@@ -64,7 +64,7 @@ export default {
     },
     methods: {
         login(e) {
-                
+                this.loading = true;
                 this.errors=[];
                 if(!this.post.email){
                 this.errors.email = true;
