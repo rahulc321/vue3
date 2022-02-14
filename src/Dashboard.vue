@@ -440,7 +440,7 @@ export default {
   	 			//console.log(response);
   	 			this.$toast.success("You have Successfully Updated!");
   	 			auth.get('v1/user').then((response) => {
-  	 				this.image = 'http://127.0.0.1:8000/images/'+response.data.data[0].image;
+  	 				this.image = 'https://app.thecareertrail.com/images/'+response.data.data[0].image;
   	 				// this.form1 = false;
   	 				// this.formDetail1 = true;
 		      //       this.user = response.data.data[0];
@@ -527,7 +527,7 @@ export default {
              this.post.profile_type = response.data.data[0].profile_type;
              this.post.location_id = response.data.data[0].location_id;
              this.post.is_current_12ex = response.data.data[0].is_current_12ex;
-             this.image = 'http://127.0.0.1:8000/images/'+response.data.data[0].image;
+             this.image = 'https://app.thecareertrail.com/images/'+response.data.data[0].image;
  
         })
     }

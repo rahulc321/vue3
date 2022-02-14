@@ -69,10 +69,12 @@ export default {
                 if(!this.post.email){
                 this.errors.email = true;
                 this.errors.push('email is required!.');
+                this.loading = false;
                 }
 
                 if(!this.post.password){
                 this.errors.password = true;
+                this.loading = false;
                 this.errors.push('password field is required!.');
                 }
 
