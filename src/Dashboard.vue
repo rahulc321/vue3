@@ -69,7 +69,7 @@
 				</nav>
 			</div>
 			<!-- Dashboard content -->
-			<div class="w-full tablet:pl-9 tablet:pr-12 tablet:py-12 desktop:pl-16 desktop:pr-56 desktop:py-9">
+			<div class="w-full tablet:pl-9 tablet:pr-12 tablet:py-12 desktop:pl-16  desktop:py-9">
 				<!-- Avatar -->
 				<div class="flex gap-x-10 items-center">
 					<!-- <img class="rounded-full h-24 w-24 object-cover object-top" src="./assets/images/avatar_full.png" alt=""> -->
@@ -244,12 +244,157 @@
 				<!-- Education & Career -->
 				<div class="mt-10 w-full relative">
 					<h2 class="text-base text-dark-blue font-medium  mb-7 desktop:text-xl">Education & Career</h2>
-					<button class="absolute top-0 right-0">
+					<button class="absolute top-0 right-0" v-on:click="click1">
 						<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 							<circle cx="12" cy="12" r="11.5" fill="#DCF6FF" stroke="#95DCF4" stroke-linecap="round"/>
 							<path d="M10.5038 15.5028L14.7278 11.2787L12.7215 9.27238L8.4974 13.4965C8.43924 13.5547 8.39793 13.6276 8.37785 13.7074L7.90967 16.0906L10.2924 15.6224C10.3724 15.6024 10.4456 15.561 10.5038 15.5028ZM16.0915 9.91511C16.2619 9.74463 16.3577 9.51344 16.3577 9.27238C16.3577 9.03133 16.2619 8.80014 16.0915 8.62966L15.3706 7.90875C15.2001 7.73832 14.9689 7.64258 14.7278 7.64258C14.4868 7.64258 14.2556 7.73832 14.0851 7.90875L13.3642 8.62966L15.3706 10.636L16.0915 9.91511Z" fill="#003A9B"/>
 						</svg>						
 					</button>
+
+
+					<!-- Second step start -->
+					<Form   :validation-schema="schema" v-slot="{ errors }" v-if="form2">
+					<div class="flex justify-between items-center gap-2">
+
+						 
+
+						<div class="flex flex-col w-1/3 gap-y-1">
+							<label for="name"> Last Qualifying Exam <span class="text-red-600">*</span></label>
+							<Field as="select" class="rounded-md border-gray-300" name="lastQualiyingExam" v-model="post.lastQualiyingExam">
+								<option value="" selectted>Select</option>
+							 
+								</Field>
+							<div class="invalid-feedback">{{errors.lastQualiyingExam}}</div>
+						</div>
+						<!--  -->
+
+						<div class="flex flex-col w-1/3 gap-y-1">
+							<label for="name">Exam Stream<span class="text-red-600">*</span></label>
+							<Field as="select" class="rounded-md border-gray-300" name="lastQualiyingExamStream" v-model="post.lastQualiyingExamStream">
+								<option value="" selectted>Select</option>
+							 
+								</Field>
+							<div class="invalid-feedback">{{errors.lastQualiyingExamStream}}</div>
+						</div>
+						 
+
+						<div class="flex flex-col w-1/6 gap-y-1">
+								<label for="profile_type"> Score<span class="text-red-600">*</span></label>
+								<Field class="rounded border-gray-300" type="text"   name="score" placeholder="80" ></Field>
+								<div class="invalid-feedback">{{errors.score}}</div>
+						</div>
+
+						<div class="flex flex-col w-1/6 gap-y-1">
+							<label for="name">Score Type<span class="text-red-600">*</span></label>
+							<Field as="select" class="rounded-md border-gray-300" name="lastQualiyingExamStream" v-model="post.lastQualiyingExamStream">
+								<option value="" selectted>Select</option>
+							 
+								</Field>
+							<div class="invalid-feedback">{{errors.lastQualiyingExamStream}}</div>
+						</div>
+
+						
+
+						 						
+
+
+						</div>
+						 
+
+						<div class="flex justify-between items-center gap-2">
+
+						<div class="flex flex-col w-1/2 gap-y-1">
+								<label for="profile_type"> current Career </label>
+								<Field as="select" class="rounded-md border-gray-300" name="" >
+								<option value="" selectted>Select</option>
+									<option value="male">Male</option>
+									 
+								</Field>
+								 
+							</div>
+
+
+							<div class="flex flex-col w-1/2 gap-y-1">
+								<label for="profile_type">Career Location Preference (Select two)</label>
+								<Field as="select" class="rounded-md border-gray-300" name="" >
+								<option value="" selectted>Select</option>
+									<option value="male">Male</option>
+									 
+								</Field>
+								 
+							</div>
+
+							 
+							 
+						</div>
+
+
+						<div class="flex justify-between items-center gap-2">
+
+						<div class="flex flex-col w-1/2 gap-y-1">
+								<label for="profile_type">College Location Prefrence (Select two)</label>
+								<Field as="select" class="rounded-md border-gray-300" name=" " >
+								<option value="" selectted>Select</option>
+									<option value="male">Male</option>
+									 
+								</Field>
+								 
+							</div>
+
+
+							<div class="flex flex-col w-1/2 gap-y-1">
+								<label for="profile_type">Course Preference (Select multiple)</label>
+								<Field as="select" class="rounded-md border-gray-300" name=" " >
+								<option value="" selectted>Select</option>
+									<option value="male">Male</option>
+									 
+								</Field>
+								 
+							</div>
+
+							 
+							 
+						</div>
+
+						<div class="flex justify-between items-center gap-2">
+
+						<div class="flex flex-col w-1/2 gap-y-1">
+								<label for="profile_type">Current Certification (Select multiple)</label>
+								<Field as="select" class="rounded-md border-gray-300" name=" " >
+								<option value="" selectted>Select</option>
+									<option value="male">Male</option>
+									 
+								</Field>
+								 
+							</div>
+
+
+							<div class="flex flex-col w-1/2 gap-y-1">
+								<label for="profile_type">Career Sector Prefrence</label>
+								<Field as="select" class="rounded-md border-gray-300" name="gender" >
+								<option value="" selectted>Select</option>
+									<option value="male">Male</option>
+									 
+								</Field>
+								 
+							</div>
+
+							 
+							 
+						</div>
+
+
+						 
+
+						 
+						<div class="flex flex-col">		
+							<div class="mt-2 w-full flex space-x-3">
+								<button v-on:click="cancel" class="py-3 px-16 font-medium text-gray-700 border border-gray-300 rounded-md" type="button">Cancel</button>
+								<button class="py-3 px-16 font-medium bg-dark-blue text-gray-100 text-gray shadow-lg rounded-md" type="submit">Save</button>
+							</div>
+						</div>
+					</form>
+					<!-- Second step start -->
 
 					<dl class="divide-y">
 						<div class="grid grid-cols-2 text-xs pb-3 pt-3.5 desktop:text-base">
@@ -339,7 +484,7 @@
 		font-size: 15px;
 	}
 	.gap-y-1 {
-    row-gap: 10px !important;
+   row-gap: 0.25rem !important;
 }
 </style>
 
@@ -401,6 +546,7 @@ export default {
   	return {
   		schema,
   		"form1":false,
+  		"form2":false,
   		"formDetail1":true,
   		"nationalities":"",
   		"locations":"",
@@ -486,6 +632,9 @@ export default {
   	click(){
    		this.form1 = !this.form1;
    		this.formDetail1 = false;
+  		},
+  	click1(){
+   		 this.form2 = !this.form2;
   		},
 
   	cancel(){
