@@ -262,6 +262,7 @@
 							<label for="name"> Last Qualifying Exam <span class="text-red-600">*</span></label>
 							<Field as="select" class="rounded-md border-gray-300" name="lastQualiyingExam" v-model="post.lastQualiyingExam">
 								<option value="" selectted>Select</option>
+								<option  v-for="exam in exams" :value="exam.id" :key="exam.id">{{exam.name}}</option>
 							 
 								</Field>
 							<div class="invalid-feedback">{{errors.lastQualiyingExam}}</div>
@@ -272,6 +273,7 @@
 							<label for="name">Exam Stream<span class="text-red-600">*</span></label>
 							<Field as="select" class="rounded-md border-gray-300" name="lastQualiyingExamStream" v-model="post.lastQualiyingExamStream">
 								<option value="" selectted>Select</option>
+								<option value="" v-for="stream in streams" :value="stream.id" :key="stream.id">{{stream.name}}</option>
 							 
 								</Field>
 							<div class="invalid-feedback">{{errors.lastQualiyingExamStream}}</div>
@@ -316,9 +318,9 @@
 
 							<div class="flex flex-col w-1/2 gap-y-1">
 								<label for="profile_type">Career Location Preference (Select two)</label>
-								<Field as="select" class="rounded-md border-gray-300" name="" >
-								<option value="" selectted>Select</option>
-									<option value="male">Male</option>
+								<Field as="select" class="rounded-md border-gray-300" name="career_location" >
+									<option value="" selected>Select</option>
+									<option v-for="location in locations" :value="location.id" :key="location.id">{{location.state}}</option>
 									 
 								</Field>
 								 
@@ -333,9 +335,9 @@
 
 						<div class="flex flex-col w-1/2 gap-y-1">
 								<label for="profile_type">College Location Prefrence (Select two)</label>
-								<Field as="select" class="rounded-md border-gray-300" name=" " >
-								<option value="" selectted>Select</option>
-									<option value="male">Male</option>
+								<Field as="select" class="rounded-md border-gray-300" name="colllege_location" >
+									<option value="" selected>Select</option>
+									<option v-for="location in locations" :value="location.id" :key="location.id">{{location.state}}</option>
 									 
 								</Field>
 								 
@@ -372,8 +374,8 @@
 							<div class="flex flex-col w-1/2 gap-y-1">
 								<label for="profile_type">Career Sector Prefrence</label>
 								<Field as="select" class="rounded-md border-gray-300" name="gender" >
-								<option value="" selectted>Select</option>
-									<option value="male">Male</option>
+									<option value="" selected>Select</option>
+									<option v-for="industrie in industries" :value="industrie.id" :key="industrie.id">{{industrie.name}}</option>
 									 
 								</Field>
 								 
@@ -546,7 +548,13 @@ export default {
   	return {
   		schema,
   		"form1":false,
-  		"form2":false,
+  		"form2":true,
+  		"exams":"",
+  		"streams":"",
+  		"careers":"",
+  		"locations":"",
+  		"industries":"",
+  		"courses":"",
   		"formDetail1":true,
   		"nationalities":"",
   		"locations":"",
@@ -659,6 +667,40 @@ export default {
         auth.get('v1/quota').then((response) => {
             this.quota = response.data.data;
              
+        })
+
+         // Get Exam
+        auth.get('v1/exams').then((response) => {
+            this.exams = response.data.data;
+            //console.log(response);   
+        })
+
+         // Get Education streams
+        auth.get('v1/education-streams').then((response) => {
+            this.streams = response.data.data;
+            //console.log(response);   
+        })
+
+         // Get Education careers
+        auth.get('v1/careers').then((response) => {
+            this.careers = response.data.data;
+            console.log('carer',response);   
+        })
+
+         // Get Education locations
+        auth.get('v1/locations').then((response) => {
+            this.locations = response.data.data;
+            console.log('locations',response);   
+        })
+         // Get Education courses
+        auth.get('v1/courses').then((response) => {
+            this.courses = response.data.data;
+            console.log('courses',response);   
+        })
+         // Get industries
+        auth.get('v1/industries').then((response) => {
+            this.industries = response.data.data;
+            console.log('courses',response);   
         })
 
         auth.get('v1/user').then((response) => {
