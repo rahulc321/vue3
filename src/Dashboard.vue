@@ -253,46 +253,47 @@
 
 
 					<!-- Second step start -->
-					<Form   :validation-schema="schema" v-slot="{ errors }" v-if="form2">
+					<Form @submit="onSubmit2" v-if="form2" :validation-schema="schema2" v-slot="{ errors }">
 					<div class="flex justify-between items-center gap-2">
 
 						 
 
 						<div class="flex flex-col w-1/3 gap-y-1">
 							<label for="name"> Last Qualifying Exam <span class="text-red-600">*</span></label>
-							<Field as="select" class="rounded-md border-gray-300" name="lastQualiyingExam" v-model="post.lastQualiyingExam">
+							<Field as="select" class="rounded-md border-gray-300" name="qualifying_exam_id" >
 								<option value="" selectted>Select</option>
 								<option  v-for="exam in exams" :value="exam.id" :key="exam.id">{{exam.name}}</option>
 							 
 								</Field>
-							<div class="invalid-feedback">{{errors.lastQualiyingExam}}</div>
+							 
 						</div>
 						<!--  -->
 
 						<div class="flex flex-col w-1/3 gap-y-1">
 							<label for="name">Exam Stream<span class="text-red-600">*</span></label>
-							<Field as="select" class="rounded-md border-gray-300" name="lastQualiyingExamStream" v-model="post.lastQualiyingExamStream">
+							<Field as="select" class="rounded-md border-gray-300" name="qualifying_exam_stream_id" >
 								<option value="" selectted>Select</option>
-								<option value="" v-for="stream in streams" :value="stream.id" :key="stream.id">{{stream.name}}</option>
+								<option  v-for="stream in streams" :value="stream.id" :key="stream.id">{{stream.name}}</option>
 							 
 								</Field>
-							<div class="invalid-feedback">{{errors.lastQualiyingExamStream}}</div>
+							 
 						</div>
 						 
 
 						<div class="flex flex-col w-1/6 gap-y-1">
 								<label for="profile_type"> Score<span class="text-red-600">*</span></label>
-								<Field class="rounded border-gray-300" type="text"   name="score" placeholder="80" ></Field>
-								<div class="invalid-feedback">{{errors.score}}</div>
+								<Field class="rounded border-gray-300" type="text"   name="score_in_grade" placeholder="A" ></Field>
+								 
 						</div>
 
 						<div class="flex flex-col w-1/6 gap-y-1">
 							<label for="name">Score Type<span class="text-red-600">*</span></label>
-							<Field as="select" class="rounded-md border-gray-300" name="lastQualiyingExamStream" v-model="post.lastQualiyingExamStream">
-								<option value="" selectted>Select</option>
+							<Field as="select" class="rounded-md border-gray-300" name="score_type" v-model="post.lastQualiyingExamStream">
+								<option value="">Select</option>
+								<option value="grade" selectted>grade</option>
 							 
 								</Field>
-							<div class="invalid-feedback">{{errors.lastQualiyingExamStream}}</div>
+							 
 						</div>
 
 						
@@ -307,9 +308,9 @@
 
 						<div class="flex flex-col w-1/2 gap-y-1">
 								<label for="profile_type"> current Career </label>
-								<Field as="select" class="rounded-md border-gray-300" name="" >
+								<Field as="select" class="rounded-md border-gray-300" name="career_id" >
 								<option value="" selectted>Select</option>
-									<option value="male">Male</option>
+									<option value="1">test</option>
 									 
 								</Field>
 								 
@@ -318,8 +319,8 @@
 
 							<div class="flex flex-col w-1/2 gap-y-1">
 								<label for="profile_type">Career Location Preference (Select two)</label>
-								<Field as="select" class="rounded-md border-gray-300" name="career_location" >
-									<option value="" selected>Select</option>
+								<Field as="select" class="collegeLocation rounded-md border-gray-300"   name="preferred_college_locations[]" multiple="multiple">
+									<option value="" hidden>Select</option>
 									<option v-for="location in locations" :value="location.id" :key="location.id">{{location.state}}</option>
 									 
 								</Field>
@@ -334,10 +335,10 @@
 						<div class="flex justify-between items-center gap-2">
 
 						<div class="flex flex-col w-1/2 gap-y-1">
-								<label for="profile_type">College Location Prefrence (Select two)</label>
-								<Field as="select" class="rounded-md border-gray-300" name="colllege_location" >
-									<option value="" selected>Select</option>
-									<option v-for="location in locations" :value="location.id" :key="location.id">{{location.state}}</option>
+								<label for="profile_type">College22 Location Prefrence (Select two)</label>
+								<Field as="select" class="rounded-md border-gray-300 collegeLocation"   name="preferred_college_locations1[]" multiple="multiple">
+									 
+									<option v-for="location in locations" v-bind:value="location.id" :key="location.id">{{location.state}}</option>
 									 
 								</Field>
 								 
@@ -346,8 +347,12 @@
 
 							<div class="flex flex-col w-1/2 gap-y-1">
 								<label for="profile_type">Course Preference (Select multiple)</label>
-								<Field as="select" class="rounded-md border-gray-300" name=" " >
+								<Field as="select" class="rounded-md border-gray-300 selec1"   name="states" >
 								<option value="" selectted>Select</option>
+									<option value="male">Male</option>
+									<option value="male">Male</option>
+									<option value="male">Male</option>
+									<option value="male">Male</option>
 									<option value="male">Male</option>
 									 
 								</Field>
@@ -362,7 +367,7 @@
 
 						<div class="flex flex-col w-1/2 gap-y-1">
 								<label for="profile_type">Current Certification (Select multiple)</label>
-								<Field as="select" class="rounded-md border-gray-300" name=" " >
+								<Field as="select" class="rounded-md border-gray-300" name="cc" >
 								<option value="" selectted>Select</option>
 									<option value="male">Male</option>
 									 
@@ -500,6 +505,7 @@ import { Form, Field } from 'vee-validate';
 import * as Yup from 'yup';
 
 
+
 export default {
 
 
@@ -541,12 +547,16 @@ export default {
                 .required('Current Location is required').nullable(),
             is_current_12ex: Yup.string()
                 .required('This Field is required').nullable(),
+            
              
         });
+
+  	const schema2 = Yup.object().shape({});
 
 
   	return {
   		schema,
+  		schema2,
   		"form1":false,
   		"form2":true,
   		"exams":"",
@@ -622,6 +632,10 @@ export default {
             // alert('SUCCESS!! :-)\n\n' + JSON.stringify(values, null, 4));
         },
 
+    onSubmit2(values2){
+    	console.log(values2);
+    },
+
   	logout(){
   		var result = confirm("Are you sure you want to logout?");
 		if (result) {
@@ -652,7 +666,8 @@ export default {
   }
   ,mounted() {
 
-  		
+  		 $('.selec1').select2({maximumSelectionLength: 2});
+  		 $('.collegeLocation').select2({maximumSelectionLength: 2});
   		 
   		// nationalities
         auth.get('v1/nationalities').then((response) => {
