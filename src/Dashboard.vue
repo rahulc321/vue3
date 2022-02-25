@@ -265,6 +265,8 @@
 								<option  v-for="exam in exams" :value="exam.id" :key="exam.id">{{exam.name}}</option>
 							 
 								</Field>
+
+								<div class="invalid-feedback">{{errors.qualifying_exam_id}}</div>
 							 
 						</div>
 						<!--  -->
@@ -276,23 +278,26 @@
 								<option  v-for="stream in streams" :value="stream.id" :key="stream.id">{{stream.name}}</option>
 							 
 								</Field>
+
+								<div class="invalid-feedback">{{errors.qualifying_exam_stream_id}}</div>
 							 
 						</div>
 						 
 
 						<div class="flex flex-col w-1/6 gap-y-1">
 								<label for="profile_type"> Score<span class="text-red-600">*</span></label>
-								<Field class="rounded border-gray-300" type="text"   name="score_in_grade" placeholder="A" ></Field>
-								 
+								<Field class="rounded border-gray-300" type="text"   name="score_in_grade" placeholder="A" v-model="score"></Field>
+								<div class="invalid-feedback">{{errors.score_in_grade}}</div>
 						</div>
 
 						<div class="flex flex-col w-1/6 gap-y-1">
 							<label for="name">Score Type<span class="text-red-600">*</span></label>
-							<Field as="select" class="rounded-md border-gray-300" name="score_type" v-model="post.lastQualiyingExamStream">
+							<Field as="select" class="rounded-md border-gray-300" name="score_type" v-model="score_type">
 								<option value="">Select</option>
-								<option value="grade" selectted>grade</option>
+								<option value="grade" >grade</option>
 							 
 								</Field>
+							<div class="invalid-feedback">{{errors.score_type}}</div>
 							 
 						</div>
 
@@ -308,22 +313,25 @@
 
 						<div class="flex flex-col w-1/2 gap-y-1">
 								<label for="profile_type"> current Career </label>
-								<Field as="select" class="rounded-md border-gray-300" name="career_id" >
+								<Field as="select" class="rounded-md border-gray-300" name="career_id"  v-model="current_career_id">
 								<option value="" selectted>Select</option>
-									<option value="1">test</option>
+									<option v-for="carrer in careers" :value="carrer.id" :key="carrer.id">{{carrer.name}}</option>
 									 
 								</Field>
 								 
+								 <div class="invalid-feedback">{{errors.career_id}}</div>
 							</div>
 
 
 							<div class="flex flex-col w-1/2 gap-y-1">
 								<label for="profile_type">Career Location Preference (Select two)</label>
-								<Field as="select" class="collegeLocation rounded-md border-gray-300"   name="preferred_college_locations[]" multiple="multiple">
+								<Field as="select" class="rounded-md border-gray-300 cl"   name="preferred_college_locations_test" multiple="multiple">
 									<option value="" hidden>Select</option>
 									<option v-for="location in locations" :value="location.id" :key="location.id">{{location.state}}</option>
 									 
 								</Field>
+
+								<div class="invalid-feedback">{{errors.preferred_college_locations_test}}</div>
 								 
 							</div>
 
@@ -335,25 +343,22 @@
 						<div class="flex justify-between items-center gap-2">
 
 						<div class="flex flex-col w-1/2 gap-y-1">
-								<label for="profile_type">College22 Location Prefrence (Select two)</label>
-								<Field as="select" class="rounded-md border-gray-300 collegeLocation"   name="preferred_college_locations1[]" multiple="multiple">
+								<label for="profile_type">College Location Prefrence (Select two)</label>
+								<Field as="select" class="rounded-md border-gray-300 collegeLocation" id="collegeLocation"   name="multiple" multiple="multiple">
 									 
 									<option v-for="location in locations" v-bind:value="location.id" :key="location.id">{{location.state}}</option>
 									 
 								</Field>
+
+								<div class="invalid-feedback">{{errors.multiple}}</div>
 								 
 							</div>
 
 
 							<div class="flex flex-col w-1/2 gap-y-1">
 								<label for="profile_type">Course Preference (Select multiple)</label>
-								<Field as="select" class="rounded-md border-gray-300 selec1"   name="states" >
-								<option value="" selectted>Select</option>
-									<option value="male">Male</option>
-									<option value="male">Male</option>
-									<option value="male">Male</option>
-									<option value="male">Male</option>
-									<option value="male">Male</option>
+								<Field as="select" class="rounded-md border-gray-300 cp"   name="states" multiple>
+								<option v-for="course in courses" v-bind:value="course.id" :key="course.id">{{course.title}}</option>
 									 
 								</Field>
 								 
@@ -367,9 +372,8 @@
 
 						<div class="flex flex-col w-1/2 gap-y-1">
 								<label for="profile_type">Current Certification (Select multiple)</label>
-								<Field as="select" class="rounded-md border-gray-300" name="cc" >
-								<option value="" selectted>Select</option>
-									<option value="male">Male</option>
+								<Field as="select" class="rounded-md border-gray-300 cc" name="cc" multiple>
+								<option v-for="certification in certifications" v-bind:value="certification.id" :key="certification.id">{{certification.name}}</option>
 									 
 								</Field>
 								 
@@ -378,12 +382,13 @@
 
 							<div class="flex flex-col w-1/2 gap-y-1">
 								<label for="profile_type">Career Sector Prefrence</label>
-								<Field as="select" class="rounded-md border-gray-300" name="gender" >
+								<Field as="select" class="rounded-md border-gray-300" name="sector_preference" v-model="sector_preference">
 									<option value="" selected>Select</option>
-									<option v-for="industrie in industries" :value="industrie.id" :key="industrie.id">{{industrie.name}}</option>
+									<option value="public">Public</option>
+									<option value="private">Private</option>
 									 
 								</Field>
-								 
+								 <div class="invalid-feedback">{{errors.sector_preference}}</div>
 							</div>
 
 							 
@@ -398,6 +403,8 @@
 							<div class="mt-2 w-full flex space-x-3">
 								<button v-on:click="cancel" class="py-3 px-16 font-medium text-gray-700 border border-gray-300 rounded-md" type="button">Cancel</button>
 								<button class="py-3 px-16 font-medium bg-dark-blue text-gray-100 text-gray shadow-lg rounded-md" type="submit">Save</button>
+
+								<p v-if="loading" class="plswait" style="color:green">Please Wait...</p>
 							</div>
 						</div>
 					</form>
@@ -413,24 +420,24 @@
 							<dd class="font-normal text-gray-500">Engineering, Nursing</dd>
 						</div>
 						<div class="grid grid-cols-2 text-xs pb-3 pt-3.5 desktop:text-base">
-							<dt class="font-light text-gray-400">Last Exam Percentage</dt>
-							<dd class="font-normal text-gray-500">86</dd>
+							<dt class="font-light text-gray-400">Score</dt>
+							<dd class="font-normal text-gray-500">{{score}}</dd>
 						</div>
 						<div class="grid grid-cols-2 text-xs pb-3 pt-3.5 desktop:text-base">
 							<dt class="font-light text-gray-400">Career Location</dt>
-							<dd class="font-normal text-gray-500">Andaman and Nicobar Islands, Orrissa</dd>
+							<dd class="font-normal text-gray-500"><span v-for="preferred_career_location in preferred_career_locations" v-bind:value="preferred_career_location.id" :key="preferred_career_location.id">{{preferred_career_location.state}},</span></dd>
 						</div>
 						<div class="grid grid-cols-2 text-xs pb-3 pt-3.5 desktop:text-base">
 							<dt class="font-light text-gray-400">College Location</dt>
-							<dd class="font-normal text-gray-500">Delhi, Andaman and Nicobar Islands</dd>
+							<dd class="font-normal text-gray-500"><span v-for="preferred_college_location in preferred_college_locations" v-bind:value="preferred_college_location.id" :key="preferred_college_location.id">{{preferred_college_location.state}},</span></dd>
 						</div>
 						<div class="grid grid-cols-2 text-xs pb-3 pt-3.5 desktop:text-base">
 							<dt class="font-light text-gray-400">Current Career</dt>
-							<dd class="font-normal text-gray-500">Business Analyst</dd>
+							<dd class="font-normal text-gray-500">{{current_career.name}}</dd>
 						</div>
 						<div class="grid grid-cols-2 text-xs pb-3 pt-3.5 desktop:text-base">
 							<dt class="font-light text-gray-400">Current Certifications</dt>
-							<dd class="font-normal text-gray-500">AWS Cloud Practitioner, Adobe InDesign Professional </dd>
+							<dd class="font-normal text-gray-500"><span v-for="current_certification in current_certifications" v-bind:value="current_certification.id" :key="current_certification.id">{{current_certification.name}},</span></dd>
 						</div>
 					  </dl>
 				</div>
@@ -551,15 +558,45 @@ export default {
              
         });
 
-  	const schema2 = Yup.object().shape({});
+  	const schema2 = Yup.object().shape({
+  			qualifying_exam_id: Yup.string()
+                .required('This is required').nullable(),
+			qualifying_exam_stream_id: Yup.string()
+                .required('This is required').nullable(),
+            score_in_grade: Yup.string()
+                .required('This is required').nullable(),
+            score_type: Yup.string()
+                .required('This is required').nullable(),
+            career_id: Yup.string()
+                .required('This is required').nullable(),
+           // preferred_college_locations_test: Yup.string()
+                //.required('This is required').nullable(),
+            sector_preference: Yup.string()
+                .required('This is required').nullable(),
+
+  	});
 
 
   	return {
   		schema,
   		schema2,
+  		// Step2
+  		loading: false,
+  		"score":"",
+  		"preferred_career_locations":"",
+  		"preferred_college_locations":"",
+  		"current_career":"",
+  		"current_career_id":"",
+  		"current_certifications":"",
+  		"last_qualifying_exam":"",
+  		"last_qualifying_exam_stream":"",
+  		"score_type":"",
+  		"sector_preference":"",
+  		// Step2
   		"form1":false,
   		"form2":true,
   		"exams":"",
+  		"certifications":"",
   		"streams":"",
   		"careers":"",
   		"locations":"",
@@ -632,8 +669,32 @@ export default {
             // alert('SUCCESS!! :-)\n\n' + JSON.stringify(values, null, 4));
         },
 
-    onSubmit2(values2){
-    	console.log(values2);
+    onSubmit2(val){
+    	this.loading = true;
+    	//console.log(val);
+    	let obj = {
+    		"sector_preference":val.sector_preference,
+    		"score_type":val.score_type,
+    		"score_in_grade":val.score_in_grade,
+    		 "qualifying_exam_id":val.qualifying_exam_id,
+    		 "qualifying_exam_stream_id":val.qualifying_exam_stream_id,
+    		 "career_id":val.career_id,
+    		"preferred_career_locations":$(".cl").val(),
+    		 "preferred_college_locations":$("#collegeLocation").val(),
+    		 "preferred_courses":$(".cp").val(),
+    		// "preferred_career_locations":,
+    		"current_certifications":$('.cc').val(),
+    	}
+    	console.log(obj);
+    	auth.post('v1/update_extended_step',obj).then((response) => {
+    		this.abc();
+  	 		this.loading = false;
+  	 		this.$toast.success("You have Successfully Updated!");
+  	 		});
+
+    	//console.log(obj);
+
+    	
     },
 
   	logout(){
@@ -662,16 +723,84 @@ export default {
   	cancel(){
   		this.form1 = false;
   		this.formDetail1 = true;
+  	},
+
+  	abc(){
+
+  		
+  		// Get Second step
+        auth.get('v1/get_extended_profile').then((response) => {
+        	let res =response.data.data;
+        	this.score = res.score_in_grade;
+        	this.preferred_career_locations = res.preferred_career_locations;
+        	this.preferred_college_locations = res.preferred_college_locations;
+        	this.current_career = res.current_career;
+        	this.current_career_id = res.current_career.id;
+        	this.current_certifications = res.current_certifications;
+        	this.last_qualifying_exam = res.last_qualifying_exam;
+        	this.last_qualifying_exam_stream = res.last_qualifying_exam_stream;
+        	this.score_type = res.score_type;
+        	this.sector_preference = res.sector_preference;
+        	let preferred_courses = res.preferred_courses;
+
+        	// Selected Cl value
+        	var cl=[];
+        	for (let i = 0; i < this.preferred_career_locations.length; i++) {	
+        		cl.push(this.preferred_career_locations[i].id);
+        	}
+        	$('.cl').val(cl).select2();
+        	// College Location Prefrence
+        	var collegeLocation=[];
+        	for (let k = 0; k < this.preferred_college_locations.length; k++) {	
+        		collegeLocation.push(this.preferred_college_locations[k].id);
+        	}
+
+        	$('.collegeLocation').val(collegeLocation).select2();
+
+        	// preferred_courses
+        	var cp =[];
+        	for (let j = 0; j < res.preferred_courses.length; j++) {	
+        		cp.push(res.preferred_courses[j].id);
+        	}
+
+        	$('.cp').val([1]).select2();
+
+        	// current_certifications
+
+        	var cc1 =[];
+        	for (let j = 0; j < res.current_certifications.length; j++) {	
+        		cc1.push(res.current_certifications[j].id);
+        	}
+
+        	$('.cc').val(cc1).select2();
+
+
+
+            console.log(cp);
+        })
+
+        $('#collegeLocation').select2({maximumSelectionLength: 2});
+		$('.cl').select2({maximumSelectionLength: 2});
+		$('.cp').select2({maximumSelectionLength: 2});
+		$('.cc').select2();
   	}
   }
   ,mounted() {
+  		
+  		 // $('.selec1').select2({maximumSelectionLength: 2});
+  		
 
-  		 $('.selec1').select2({maximumSelectionLength: 2});
-  		 $('.collegeLocation').select2({maximumSelectionLength: 2});
+
   		 
   		// nationalities
         auth.get('v1/nationalities').then((response) => {
             this.nationalities = response.data.data;
+        })
+
+        
+
+        auth.get('v1/exams/certifications').then((response) => {
+            this.certifications = response.data.data;
         })
         // Get location
         auth.get('v1/locations').then((response) => {
@@ -703,10 +832,7 @@ export default {
         })
 
          // Get Education locations
-        auth.get('v1/locations').then((response) => {
-            this.locations = response.data.data;
-            console.log('locations',response);   
-        })
+
          // Get Education courses
         auth.get('v1/courses').then((response) => {
             this.courses = response.data.data;
@@ -736,6 +862,16 @@ export default {
              this.image = 'https://app.thecareertrail.com/images/'+response.data.data[0].image;
  
         })
+
+         auth.get('v1/states').then((response) => {
+            this.locations = response.data.data;
+            this.abc();
+            console.log('locations',response);   
+        })
+
+
+
+		
     }
 }
 </script>
