@@ -70,17 +70,19 @@
 			</div>
 			<!-- Dashboard content -->
 			<div class="w-full tablet:pl-9 tablet:pr-12 tablet:py-12 desktop:pl-16  desktop:py-9">
+
+
 				<!-- Avatar -->
 				<div class="flex gap-x-10 items-center">
 					<!-- <img class="rounded-full h-24 w-24 object-cover object-top" src="./assets/images/avatar_full.png" alt=""> -->
-					<img class="rounded-full h-24 w-24 object-cover object-top" :src="image"  alt="">
+					<img class="rounded-full h-24 w-24 object-cover object-top" :src="image"  alt=""  onerror="this.src='http://localhost:3002/src/assets/images/avatar_full.png'">
 					 
 					<input  class="text-base leading-5 bg-trail-tail border border-blue-200 px-6 py-2 rounded-md" type="file" name="" v-on:change="file">
 				</div>
 
 				<!-- Basic Information -->
 				<div class="mt-10 w-full relative" x-data="{ showForm : true }">
-					<h2 class="text-base text-dark-blue font-medium mb-7 desktop:text-xl">Basic Information</h2>
+					<h2 class="text-base text-dark-blue font-medium mb-7 desktop:text-xl">Basic Information <i v-if="loaderOne" class="fa fa-spinner fa-spin" style="color:green;font-size:24px"></i></h2>
 					<button class="absolute top-0 right-0" v-on:click="click">
 						<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 							<circle cx="12" cy="12" r="11.5" fill="#DCF6FF" stroke="#95DCF4" stroke-linecap="round"/>
@@ -260,7 +262,7 @@
 
 						<div class="flex flex-col w-1/3 gap-y-1">
 							<label for="name"> Last Qualifying Exam <span class="text-red-600">*</span></label>
-							<Field as="select" class="rounded-md border-gray-300" name="qualifying_exam_id" >
+							<Field as="select" class="rounded-md border-gray-300" name="qualifying_exam_id" v-model="last_qualifying_exam.id">
 								<option value="" selectted>Select</option>
 								<option  v-for="exam in exams" :value="exam.id" :key="exam.id">{{exam.name}}</option>
 							 
@@ -273,7 +275,7 @@
 
 						<div class="flex flex-col w-1/3 gap-y-1">
 							<label for="name">Exam Stream<span class="text-red-600">*</span></label>
-							<Field as="select" class="rounded-md border-gray-300" name="qualifying_exam_stream_id" >
+							<Field as="select" class="rounded-md border-gray-300" name="qualifying_exam_stream_id" v-model="last_qualifying_exam_stream.id">
 								<option value="" selectted>Select</option>
 								<option  v-for="stream in streams" :value="stream.id" :key="stream.id">{{stream.name}}</option>
 							 
@@ -401,10 +403,10 @@
 						 
 						<div class="flex flex-col">		
 							<div class="mt-2 w-full flex space-x-3">
-								<button v-on:click="cancel" class="py-3 px-16 font-medium text-gray-700 border border-gray-300 rounded-md" type="button">Cancel</button>
+								<button v-on:click="cancel2" class="py-3 px-16 font-medium text-gray-700 border border-gray-300 rounded-md" type="button">Cancel</button>
 								<button class="py-3 px-16 font-medium bg-dark-blue text-gray-100 text-gray shadow-lg rounded-md" type="submit">Save</button>
 
-								<p v-if="loading" class="plswait" style="color:green">Please Wait...</p>
+								<p v-if="loading" class="plswait" style="color:green">Please Wait...<i class="fa fa-spinner fa-spin" style="font-size:24px"></i></p>
 							</div>
 						</div>
 					</form>
@@ -413,11 +415,11 @@
 					<dl class="divide-y">
 						<div class="grid grid-cols-2 text-xs pb-3 pt-3.5 desktop:text-base">
 							<dt class="font-light text-gray-400">Last Exam Taken</dt>
-							<dd class="font-normal text-gray-500">Tamilnadu, Orrissa, Delhi</dd>
+							<dd class="font-normal text-gray-500">{{last_qualifying_exam.name}}</dd>
 						</div>
 						<div class="grid grid-cols-2 text-xs pb-3 pt-3.5 desktop:text-base">
 							<dt class="font-light text-gray-400">Last Exam Stream</dt>
-							<dd class="font-normal text-gray-500">Engineering, Nursing</dd>
+							<dd class="font-normal text-gray-500">{{last_qualifying_exam_stream.name}}</dd>
 						</div>
 						<div class="grid grid-cols-2 text-xs pb-3 pt-3.5 desktop:text-base">
 							<dt class="font-light text-gray-400">Score</dt>
@@ -499,6 +501,9 @@
 	}
 	.gap-y-1 {
    row-gap: 0.25rem !important;
+}
+li.select2-results__option.select2-results__message {
+    color: red;
 }
 </style>
 
@@ -582,6 +587,7 @@ export default {
   		schema2,
   		// Step2
   		loading: false,
+  		"loaderOne":true,
   		"score":"",
   		"preferred_career_locations":"",
   		"preferred_college_locations":"",
@@ -594,7 +600,7 @@ export default {
   		"sector_preference":"",
   		// Step2
   		"form1":false,
-  		"form2":true,
+  		"form2":false,
   		"exams":"",
   		"certifications":"",
   		"streams":"",
@@ -689,6 +695,7 @@ export default {
     	auth.post('v1/update_extended_step',obj).then((response) => {
     		this.abc();
   	 		this.loading = false;
+  	 		this.form2 = false;
   	 		this.$toast.success("You have Successfully Updated!");
   	 		});
 
@@ -714,16 +721,22 @@ export default {
 
   	click(){
    		this.form1 = !this.form1;
-   		this.formDetail1 = false;
+   		//this.formDetail1 = false;
   		},
   	click1(){
+  		this.abc();
    		 this.form2 = !this.form2;
   		},
 
   	cancel(){
   		this.form1 = false;
-  		this.formDetail1 = true;
+  		//this.formDetail1 = true;
   	},
+  	cancel2(){
+  		this.form2 = false;
+  		//this.formDetail1 = true;
+  	},
+
 
   	abc(){
 
@@ -748,14 +761,14 @@ export default {
         	for (let i = 0; i < this.preferred_career_locations.length; i++) {	
         		cl.push(this.preferred_career_locations[i].id);
         	}
-        	$('.cl').val(cl).select2();
+        	$('.cl').val(cl).select2({maximumSelectionLength: 2,placeholder: "Select"});
         	// College Location Prefrence
         	var collegeLocation=[];
         	for (let k = 0; k < this.preferred_college_locations.length; k++) {	
         		collegeLocation.push(this.preferred_college_locations[k].id);
         	}
 
-        	$('.collegeLocation').val(collegeLocation).select2();
+        	$('.collegeLocation').val(collegeLocation).select2({maximumSelectionLength: 2,placeholder: "Select"});
 
         	// preferred_courses
         	var cp =[];
@@ -763,7 +776,7 @@ export default {
         		cp.push(res.preferred_courses[j].id);
         	}
 
-        	$('.cp').val([1]).select2();
+        	$('.cp').val([1]).select2({maximumSelectionLength: 2,placeholder: "Select"});
 
         	// current_certifications
 
@@ -772,23 +785,24 @@ export default {
         		cc1.push(res.current_certifications[j].id);
         	}
 
-        	$('.cc').val(cc1).select2();
+        	$('.cc').val(cc1).select2({placeholder: "Select"});
 
 
 
             console.log(cp);
         })
 
-        $('#collegeLocation').select2({maximumSelectionLength: 2});
-		$('.cl').select2({maximumSelectionLength: 2});
-		$('.cp').select2({maximumSelectionLength: 2});
-		$('.cc').select2();
+        $('#collegeLocation').select2({maximumSelectionLength: 2,placeholder: "Select"});
+		$('.cl').select2({maximumSelectionLength: 2,placeholder: "Select"});
+		$('.cp').select2({maximumSelectionLength: 2,placeholder: "Select"});
+		$('.cc').select2({placeholder: "Select"});
   	}
   }
   ,mounted() {
-  		
+  		 
   		 // $('.selec1').select2({maximumSelectionLength: 2});
   		
+
 
 
   		 
@@ -828,7 +842,7 @@ export default {
          // Get Education careers
         auth.get('v1/careers').then((response) => {
             this.careers = response.data.data;
-            console.log('carer',response);   
+            //console.log('carer',response);   
         })
 
          // Get Education locations
@@ -836,12 +850,12 @@ export default {
          // Get Education courses
         auth.get('v1/courses').then((response) => {
             this.courses = response.data.data;
-            console.log('courses',response);   
+            //console.log('courses',response);   
         })
          // Get industries
         auth.get('v1/industries').then((response) => {
             this.industries = response.data.data;
-            console.log('courses',response);   
+            //console.log('courses',response);   
         })
 
         auth.get('v1/user').then((response) => {
@@ -865,11 +879,13 @@ export default {
 
          auth.get('v1/states').then((response) => {
             this.locations = response.data.data;
-            this.abc();
-            console.log('locations',response);   
+            this.abc(); 
+            this.loaderOne= false; 
         })
 
-
+         
+         // Hide loader
+         
 
 		
     }
