@@ -57,7 +57,7 @@
 						<svg class="w-5" width="23" height="28" viewBox="0 0 23 28" fill="none" xmlns="http://www.w3.org/2000/svg">
 							<path d="M20.5655 11.8076H18.8518V7.04698C18.8518 3.16331 15.4914 0 11.3245 0C7.15762 0 3.76363 3.16331 3.76363 7.04698V11.8076H2.04983C0.907304 11.8076 0 12.6532 0 13.7181V26.1208C0 27.1857 0.907304 28.0313 2.04983 28.0313H20.5655C21.7081 28.0313 22.6154 27.1857 22.6154 26.1208V13.7181C22.6154 12.6532 21.7081 11.8076 20.5655 11.8076ZM6.61996 7.04698C6.61996 4.63535 8.737 2.66219 11.3245 2.66219C13.912 2.66219 16.029 4.63535 16.029 7.04698V11.8076H6.61996V7.04698ZM12.0302 20.2013V22.2685C12.0302 22.6443 11.6941 22.9262 11.3245 22.9262C10.9212 22.9262 10.6188 22.6443 10.6188 22.2685V20.2013C9.94674 19.9508 9.47628 19.3244 9.47628 18.604C9.47628 17.6644 10.3164 16.8814 11.3245 16.8814C12.3326 16.8814 13.1727 17.6644 13.1727 18.604C13.1727 19.3244 12.7023 19.9508 12.0302 20.2013Z" fill="#003A9B"/>
 						</svg>
-						Change Password
+						Change Password 
 					</a></router-link>
 					<a @click="logout" class="flex gap-x-6 items-center text-gray-500 font-normal" href="javascript:;">
 						<!-- icon -->
@@ -75,7 +75,7 @@
 				<!-- Avatar -->
 				<div class="flex gap-x-10 items-center">
 					<!-- <img class="rounded-full h-24 w-24 object-cover object-top" src="./assets/images/avatar_full.png" alt=""> -->
-					<img class="rounded-full h-24 w-24 object-cover object-top" :src="image"  alt=""  onerror="this.src='http://localhost:3002/src/assets/images/avatar_full.png'">
+					<img class="rounded-full h-24 w-24 object-cover object-top" :src="image"  alt=""  onerror="this.src='https://i.ibb.co/wrKHWJ4/avatar-full.png'">
 					 
 					<input  class="text-base leading-5 bg-trail-tail border border-blue-200 px-6 py-2 rounded-md" type="file" name="" v-on:change="file">
 				</div>
@@ -90,45 +90,7 @@
 						</svg>						
 					</button>
 
-					<dl v-if="formDetail1" class="divide-y"  x-show="!showForm">
-						<div class="grid grid-cols-2 text-xs pb-3 pt-3.5 desktop:text-base">
-							<dt class="font-light text-gray-400">Name</dt>
-							<dd class="font-normal text-gray-500">{{user.name}}</dd>
-						</div>
-						<div class="grid grid-cols-2 text-xs pb-3 pt-3.5 desktop:text-base">
-							<dt class="font-light text-gray-400">Profile Type</dt>
-							<dd class="font-normal text-gray-500">{{user.profile_type}}</dd>
-						</div>
-						<div class="grid grid-cols-2 text-xs pb-3 pt-3.5 desktop:text-base">
-							<dt class="font-light text-gray-400">Gender</dt>
-							<dd class="font-normal text-gray-500">{{user.gender}}</dd>
-						</div>
-						<div class="grid grid-cols-2 text-xs pb-3 pt-3.5 desktop:text-base">
-							<dt class="font-light text-gray-400">Phone</dt>
-							<dd class="font-normal text-gray-500">{{user.phone}}</dd>
-						</div>
-						<div class="grid grid-cols-2 text-xs pb-3 pt-3.5 desktop:text-base">
-							<dt class="font-light text-gray-400">Email</dt>
-							<dd class="font-normal text-gray-500">{{user.email}}</dd>
-						</div>
-						<div class="grid grid-cols-2 text-xs pb-3 pt-3.5 desktop:text-base">
-							<dt class="font-light text-gray-400">Citizenship</dt>
-							<dd class="font-normal text-gray-500">{{user.nationality_name}}</dd>
-						</div>
-
-						<div class="grid grid-cols-2 text-xs pb-3 pt-3.5 desktop:text-base">
-							<dt class="font-light text-gray-400">Location</dt>
-							<dd class="font-normal text-gray-500">{{user.location_state}}</dd>
-						</div>
-						<div class="grid grid-cols-2 text-xs pb-3 pt-3.5 desktop:text-base">
-							<dt class="font-light text-gray-400">Category</dt>
-							<dd class="font-normal text-gray-500">{{user.quota}}</dd>
-						</div>
-
-						 
-					  </dl>
-
-					<Form @submit="onSubmit" :validation-schema="schema" v-slot="{ errors }" v-if="form1">
+					<Form @submit="onSubmit" :validation-schema="schema" v-slot="{ errors }" v-if="form1" class="formstyle">
 					<div class="flex justify-between items-center gap-2">
 
 						 
@@ -173,7 +135,7 @@
 							</div>
 
 							<div class="flex flex-col w-1/3 gap-y-1">
-								<label for="profile_type"> Citizenship <span class="text-red-600">*</span></label>
+								<label for="profile_type"> Citizenship <span class="text-red-600"> *</span></label>
 								<Field as="select" class="rounded-md border-gray-300" name="nationality_id" v-model="post.nationality_id">
 								<option value="" selectted>Select</option>
 									<option v-for="nationalitie in nationalities" :value="nationalitie.id" :key="nationalitie.id">{{nationalitie.name}}</option>
@@ -182,7 +144,7 @@
 								<div class="invalid-feedback">{{errors.nationality_id}}</div>
 							</div>
 							<div class="flex flex-col w-1/3 gap-y-1">
-								<label for="profile_type"> Select Applicable Category<span class="text-red-600">*</span></label>
+								<label for="profile_type"> Select Applicable Category<span class="text-red-600"> *</span></label>
 								<Field as="select" class="rounded-md border-gray-300" name="quota" v-model="post.quota">
 								<option value="" selectted>Select</option>
 									<option v-for="(value, key) in quota[0]" :value="key" :key="key">{{value}}</option>
@@ -209,7 +171,7 @@
 						</div>
 
 						<div class="flex flex-col w-1/3 gap-y-1">
-							<label for="profile_type"> Current Location<span class="text-red-600">*</span></label>
+							<label for="profile_type"> Current Location<span class="text-red-600"> *</span></label>
 								<Field as="select" class="rounded-md border-gray-300" name="location_id"  v-model="post.location_id">
 								<option value="" selectted>Select</option>
 									<option v-for="location in locations" :value="location.id" :key="location.state">{{location.state}}</option>
@@ -241,6 +203,51 @@
 						</div>
 					</form>
 
+					<dl v-if="formDetail1" class="divide-y"  x-show="!showForm">
+						<div class="grid grid-cols-2 text-xs pb-3 pt-3.5 desktop:text-base">
+							<dt class="font-light text-gray-400">Name</dt>
+							<dd class="font-normal text-gray-500">{{user.name}}</dd>
+						</div>
+						<div class="grid grid-cols-2 text-xs pb-3 pt-3.5 desktop:text-base">
+							<dt class="font-light text-gray-400">Profile Type</dt>
+							<dd class="font-normal text-gray-500">{{user.profile_type}}</dd>
+						</div>
+						<div class="grid grid-cols-2 text-xs pb-3 pt-3.5 desktop:text-base">
+							<dt class="font-light text-gray-400">Gender</dt>
+							<dd class="font-normal text-gray-500">{{user.gender}}</dd>
+						</div>
+						<div class="grid grid-cols-2 text-xs pb-3 pt-3.5 desktop:text-base">
+							<dt class="font-light text-gray-400">Phone</dt>
+							<dd class="font-normal text-gray-500">{{user.phone}}</dd>
+						</div>
+						<div class="grid grid-cols-2 text-xs pb-3 pt-3.5 desktop:text-base">
+							<dt class="font-light text-gray-400">Email</dt>
+							<dd class="font-normal text-gray-500">{{user.email}}</dd>
+						</div>
+						<div class="grid grid-cols-2 text-xs pb-3 pt-3.5 desktop:text-base">
+							<dt class="font-light text-gray-400">Citizenship</dt>
+							<dd class="font-normal text-gray-500">{{user.nationality_name}}</dd>
+						</div>
+
+						<div class="grid grid-cols-2 text-xs pb-3 pt-3.5 desktop:text-base">
+							<dt class="font-light text-gray-400">Location</dt>
+							<dd class="font-normal text-gray-500">{{user.location_state}}</dd>
+						</div>
+						<div class="grid grid-cols-2 text-xs pb-3 pt-3.5 desktop:text-base">
+							<dt class="font-light text-gray-400">Category</dt>
+							<dd class="font-normal text-gray-500">{{user.quota}}</dd>
+						</div>
+
+						<div class="grid grid-cols-2 text-xs pb-3 pt-3.5 desktop:text-base">
+							<dt class="font-light text-gray-400">Date of Birth</dt>
+							<dd class="font-normal text-gray-500" v-if="user.date_of_birth != null">{{user.date_of_birth}}</dd>
+						</div>
+
+						 
+					  </dl>
+
+					
+
 				</div>
 
 				<!-- Education & Career -->
@@ -255,14 +262,14 @@
 
 
 					<!-- Second step start -->
-					<Form @submit="onSubmit2" v-if="form2" :validation-schema="schema2" v-slot="{ errors }">
+					<Form @submit="onSubmit2" v-if="form2" :validation-schema="schema2" v-slot="{ errors }" class="formstyle">
 					<div class="flex justify-between items-center gap-2">
 
 						 
 
 						<div class="flex flex-col w-1/3 gap-y-1">
 							<label for="name"> Last Qualifying Exam <span class="text-red-600">*</span></label>
-							<Field as="select" class="rounded-md border-gray-300" name="qualifying_exam_id" v-model="last_qualifying_exam.id">
+							<Field as="select" class="rounded-md border-gray-300" name="qualifying_exam_id" v-model="last_qualifying_exam_id">
 								<option value="" selectted>Select</option>
 								<option  v-for="exam in exams" :value="exam.id" :key="exam.id">{{exam.name}}</option>
 							 
@@ -274,8 +281,8 @@
 						<!--  -->
 
 						<div class="flex flex-col w-1/3 gap-y-1">
-							<label for="name">Exam Stream<span class="text-red-600">*</span></label>
-							<Field as="select" class="rounded-md border-gray-300" name="qualifying_exam_stream_id" v-model="last_qualifying_exam_stream.id">
+							<label for="name">Exam Stream<span class="text-red-600"> *</span></label>
+							<Field as="select" class="rounded-md border-gray-300" name="qualifying_exam_stream_id" v-model="last_qualifying_exam_stream_id">
 								<option value="" selectted>Select</option>
 								<option  v-for="stream in streams" :value="stream.id" :key="stream.id">{{stream.name}}</option>
 							 
@@ -287,13 +294,13 @@
 						 
 
 						<div class="flex flex-col w-1/6 gap-y-1">
-								<label for="profile_type"> Score<span class="text-red-600">*</span></label>
+								<label for="profile_type"> Score<span class="text-red-600"> *</span></label>
 								<Field class="rounded border-gray-300" type="text"   name="score_in_grade" placeholder="A" v-model="score"></Field>
 								<div class="invalid-feedback">{{errors.score_in_grade}}</div>
 						</div>
 
 						<div class="flex flex-col w-1/6 gap-y-1">
-							<label for="name">Score Type<span class="text-red-600">*</span></label>
+							<label for="name">Score Type<span class="text-red-600"> *</span></label>
 							<Field as="select" class="rounded-md border-gray-300" name="score_type" v-model="score_type">
 								<option value="">Select</option>
 								<option value="grade" >grade</option>
@@ -345,14 +352,14 @@
 						<div class="flex justify-between items-center gap-2">
 
 						<div class="flex flex-col w-1/2 gap-y-1">
-								<label for="profile_type">College Location Prefrence (Select two)</label>
+								<label for="profile_type">College Location Preference (Select two)</label>
 								<Field as="select" class="rounded-md border-gray-300 collegeLocation" id="collegeLocation"   name="multiple" multiple="multiple">
 									 
 									<option v-for="location in locations" v-bind:value="location.id" :key="location.id">{{location.state}}</option>
 									 
 								</Field>
 
-								<div class="invalid-feedback">{{errors.multiple}}</div>
+								<div class="invalid-feedback"></div>
 								 
 							</div>
 
@@ -363,7 +370,7 @@
 								<option v-for="course in courses" v-bind:value="course.id" :key="course.id">{{course.title}}</option>
 									 
 								</Field>
-								 
+								 <div class="invalid-feedback"></div>
 							</div>
 
 							 
@@ -378,12 +385,12 @@
 								<option v-for="certification in certifications" v-bind:value="certification.id" :key="certification.id">{{certification.name}}</option>
 									 
 								</Field>
-								 
+								 <div class="invalid-feedback"></div>
 							</div>
 
 
 							<div class="flex flex-col w-1/2 gap-y-1">
-								<label for="profile_type">Career Sector Prefrence</label>
+								<label for="profile_type">Career Sector Preference</label>
 								<Field as="select" class="rounded-md border-gray-300" name="sector_preference" v-model="sector_preference">
 									<option value="" selected>Select</option>
 									<option value="public">Public</option>
@@ -414,40 +421,76 @@
 
 					<dl class="divide-y">
 						<div class="grid grid-cols-2 text-xs pb-3 pt-3.5 desktop:text-base">
-							<dt class="font-light text-gray-400">Last Exam Taken</dt>
-							<dd class="font-normal text-gray-500">{{last_qualifying_exam.name}}</dd>
+							<dt class="font-light text-gray-400">Last Qualifying Exam</dt>
+							<dd class="font-normal text-gray-500" v-if="last_qualifying_exam != null">{{last_qualifying_exam.name}}</dd>
 						</div>
 						<div class="grid grid-cols-2 text-xs pb-3 pt-3.5 desktop:text-base">
-							<dt class="font-light text-gray-400">Last Exam Stream</dt>
-							<dd class="font-normal text-gray-500">{{last_qualifying_exam_stream.name}}</dd>
+							<dt class="font-light text-gray-400">Exam Stream</dt>
+							<dd class="font-normal text-gray-500" v-if="last_qualifying_exam_stream != null">{{last_qualifying_exam_stream.name}}</dd>
 						</div>
 						<div class="grid grid-cols-2 text-xs pb-3 pt-3.5 desktop:text-base">
 							<dt class="font-light text-gray-400">Score</dt>
-							<dd class="font-normal text-gray-500">{{score}}</dd>
+							<dd class="font-normal text-gray-500" v-if="score != null">{{score}}</dd>
 						</div>
 						<div class="grid grid-cols-2 text-xs pb-3 pt-3.5 desktop:text-base">
-							<dt class="font-light text-gray-400">Career Location</dt>
-							<dd class="font-normal text-gray-500"><span v-for="preferred_career_location in preferred_career_locations" v-bind:value="preferred_career_location.id" :key="preferred_career_location.id">{{preferred_career_location.state}},</span></dd>
+							<dt class="font-light text-gray-400">Career Location Preference</dt>
+							<dd class="font-normal text-gray-500"><span v-for="(preferred_career_location,i) in preferred_career_locations" v-bind:value="preferred_career_location.id" :key="preferred_career_location.id">
+							<span v-if="i != 0">, </span>{{preferred_career_location.state}}</span></dd>
 						</div>
 						<div class="grid grid-cols-2 text-xs pb-3 pt-3.5 desktop:text-base">
-							<dt class="font-light text-gray-400">College Location</dt>
-							<dd class="font-normal text-gray-500"><span v-for="preferred_college_location in preferred_college_locations" v-bind:value="preferred_college_location.id" :key="preferred_college_location.id">{{preferred_college_location.state}},</span></dd>
+							<dt class="font-light text-gray-400">College Location Preference</dt>
+							<dd class="font-normal text-gray-500"><span v-for="(preferred_college_location,i) in preferred_college_locations" v-bind:value="preferred_college_location.id" :key="preferred_college_location.id">
+							<span v-if="i != 0">, </span>
+							{{preferred_college_location.state}}</span></dd>
 						</div>
+
+						<!-- Course Prefrence -->
+
+						<div class="grid grid-cols-2 text-xs pb-3 pt-3.5 desktop:text-base">
+							<dt class="font-light text-gray-400">Course Preference</dt>
+							<dd class="font-normal text-gray-500"><span v-for="(preferred_course,i) in preferred_courses" v-bind:value="preferred_course.id" :key="preferred_course.id">
+							<span v-if="i != 0">, </span>
+							{{preferred_course.title}}</span></dd>
+						</div>
+
+
 						<div class="grid grid-cols-2 text-xs pb-3 pt-3.5 desktop:text-base">
 							<dt class="font-light text-gray-400">Current Career</dt>
-							<dd class="font-normal text-gray-500">{{current_career.name}}</dd>
+							<dd class="font-normal text-gray-500" v-if="current_career != null">{{current_career.name}}</dd>
 						</div>
+
+						<div class="grid grid-cols-2 text-xs pb-3 pt-3.5 desktop:text-base">
+							<dt class="font-light text-gray-400">Score Type</dt>
+							<dd class="font-normal text-gray-500" v-if="score_type != null">{{score_type}}</dd>
+						</div>
+
 						<div class="grid grid-cols-2 text-xs pb-3 pt-3.5 desktop:text-base">
 							<dt class="font-light text-gray-400">Current Certifications</dt>
-							<dd class="font-normal text-gray-500"><span v-for="current_certification in current_certifications" v-bind:value="current_certification.id" :key="current_certification.id">{{current_certification.name}},</span></dd>
+							<dd class="font-normal text-gray-500"><span v-for="(current_certification, i) in current_certifications" v-bind:value="current_certification.id" :key="current_certification.id">
+
+							<span v-if="i != 0">, </span>
+							{{current_certification.name}}</span></dd>
 						</div>
+
+						<div class="grid grid-cols-2 text-xs pb-3 pt-3.5 desktop:text-base">
+							<dt class="font-light text-gray-400">Career Sector Preference</dt>
+							<dd class="font-normal text-gray-500" v-if="sector_preference != null">{{sector_preference}}</dd>
+						</div>
+
+
 					  </dl>
 				</div>
-
+				 
 				<!-- Skills & Interests -->
 				<div class="mt-10 w-full relative">
 					<h2 class="text-base text-dark-blue font-medium  mb-7 desktop:text-xl">Skills & Interests</h2>
-					<button class="absolute top-0 right-0">
+
+					<!-- Step 30 -->
+					<div v-if="step3">
+					 <stepthree />
+					 </div>
+
+					<button class="absolute top-0 right-0" v-on:click="click3">
 						<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 							<circle cx="12" cy="12" r="11.5" fill="#DCF6FF" stroke="#95DCF4" stroke-linecap="round"/>
 							<path d="M10.5038 15.5028L14.7278 11.2787L12.7215 9.27238L8.4974 13.4965C8.43924 13.5547 8.39793 13.6276 8.37785 13.7074L7.90967 16.0906L10.2924 15.6224C10.3724 15.6024 10.4456 15.561 10.5038 15.5028ZM16.0915 9.91511C16.2619 9.74463 16.3577 9.51344 16.3577 9.27238C16.3577 9.03133 16.2619 8.80014 16.0915 8.62966L15.3706 7.90875C15.2001 7.73832 14.9689 7.64258 14.7278 7.64258C14.4868 7.64258 14.2556 7.73832 14.0851 7.90875L13.3642 8.62966L15.3706 10.636L16.0915 9.91511Z" fill="#003A9B"/>
@@ -505,12 +548,17 @@
 li.select2-results__option.select2-results__message {
     color: red;
 }
+.invalid-feedback {
+    font-size: 14px;
+    height: 18px !important;
+}
 </style>
 
 <script>
 import Header from './layout/header.vue'
 import Footer from './layout/footer.vue'
 import App from './App.vue'
+import stepthree from './stepthree.vue'
 import auth from './auth'
 
 import { Form, Field } from 'vee-validate';
@@ -528,6 +576,7 @@ export default {
    App,
    Form,
    Field,
+   stepthree,
   
      
   },data(){
@@ -551,9 +600,9 @@ export default {
             quota: Yup.string()
                 .required('Category is required').nullable(),
             phone: Yup.string()
-            	.min(10, "Must be more than 10 characters")
-            	.max(10, "Must be 10 characters")
-            	.matches(phoneRegExp, 'Please enter digit only')
+            	.min(10, "Invalid Format")
+            	.max(10, "Invalid Format")
+            	.matches(phoneRegExp, 'Invalid Format')
                 .required('Phone is required').nullable(),
             location_id: Yup.string()
                 .required('Current Location is required').nullable(),
@@ -572,12 +621,12 @@ export default {
                 .required('This is required').nullable(),
             score_type: Yup.string()
                 .required('This is required').nullable(),
-            career_id: Yup.string()
-                .required('This is required').nullable(),
+           // career_id: Yup.string()
+                //.required('This is required').nullable(),
            // preferred_college_locations_test: Yup.string()
                 //.required('This is required').nullable(),
-            sector_preference: Yup.string()
-                .required('This is required').nullable(),
+           // sector_preference: Yup.string()
+              //  .required('This is required').nullable(),
 
   	});
 
@@ -595,12 +644,16 @@ export default {
   		"current_career_id":"",
   		"current_certifications":"",
   		"last_qualifying_exam":"",
+  		"last_qualifying_exam_id":null,
+  		"last_qualifying_exam_stream_id":null,
   		"last_qualifying_exam_stream":"",
   		"score_type":"",
   		"sector_preference":"",
+  		"preferred_courses":"",
   		// Step2
   		"form1":false,
   		"form2":false,
+  		"step3":false,
   		"exams":"",
   		"certifications":"",
   		"streams":"",
@@ -697,7 +750,10 @@ export default {
   	 		this.loading = false;
   	 		this.form2 = false;
   	 		this.$toast.success("You have Successfully Updated!");
-  	 		});
+			}).catch(error => {
+			this.loading = false;
+			this.$toast.error(error.response.data.message);
+			});;
 
     	//console.log(obj);
 
@@ -736,11 +792,13 @@ export default {
   		this.form2 = false;
   		//this.formDetail1 = true;
   	},
+  	click3(){
+  		this.step3 = !this.step3;
+  		//this.formDetail1 = true;
+  	},
 
 
   	abc(){
-
-  		
   		// Get Second step
         auth.get('v1/get_extended_profile').then((response) => {
         	let res =response.data.data;
@@ -748,11 +806,29 @@ export default {
         	this.preferred_career_locations = res.preferred_career_locations;
         	this.preferred_college_locations = res.preferred_college_locations;
         	this.current_career = res.current_career;
+        	if(res.current_career != null){
         	this.current_career_id = res.current_career.id;
+        	}
         	this.current_certifications = res.current_certifications;
         	this.last_qualifying_exam = res.last_qualifying_exam;
         	this.last_qualifying_exam_stream = res.last_qualifying_exam_stream;
         	this.score_type = res.score_type;
+
+
+        	if(res.last_qualifying_exam != null){
+        	this.last_qualifying_exam_id = res.last_qualifying_exam.id;
+        	
+        	}
+
+        	if(res.preferred_courses != null){
+        	this.preferred_courses = res.preferred_courses;
+        	
+        	}
+
+        	if(res.last_qualifying_exam_stream != null){
+        	this.last_qualifying_exam_stream_id = res.last_qualifying_exam_stream.id;
+        	}
+        	//console.log('>>>>>>',this.qualifying_exam_id)
         	this.sector_preference = res.sector_preference;
         	let preferred_courses = res.preferred_courses;
 
@@ -776,7 +852,7 @@ export default {
         		cp.push(res.preferred_courses[j].id);
         	}
 
-        	$('.cp').val([1]).select2({maximumSelectionLength: 2,placeholder: "Select"});
+        	$('.cp').val(cp).select2({maximumSelectionLength: 2,placeholder: "Select"});
 
         	// current_certifications
 
@@ -828,13 +904,13 @@ export default {
         })
 
          // Get Exam
-        auth.get('v1/exams').then((response) => {
+        auth.get('v1/qualifying-exams').then((response) => {
             this.exams = response.data.data;
             //console.log(response);   
         })
 
          // Get Education streams
-        auth.get('v1/education-streams').then((response) => {
+        auth.get('v1/qualifying-exam-streams').then((response) => {
             this.streams = response.data.data;
             //console.log(response);   
         })
@@ -859,6 +935,7 @@ export default {
         })
 
         auth.get('v1/user').then((response) => {
+        	this.abc();
         	//alert(response.data.data[0].date_of_birth);
              this.user = response.data.data[0];
              this.post.name = response.data.data[0].name;
@@ -877,9 +954,9 @@ export default {
  
         })
 
-         auth.get('v1/states').then((response) => {
+        auth.get('v1/states').then((response) => {
             this.locations = response.data.data;
-            this.abc(); 
+             
             this.loaderOne= false; 
         })
 

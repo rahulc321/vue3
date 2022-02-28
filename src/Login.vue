@@ -27,7 +27,7 @@
 
                     <div class="mt-6">
                         <button type="submit" class="py-3 px-16 bg-dark-blue font-medium text-gray-100 text-gray shadow-lg rounded-md">Log in</button>
-                        <p v-if="loading" class="plswait" style="color:green">Please Wait...</p>
+                        <p v-if="loading" class="plswait" style="color:green">Please Wait...<i class="fa fa-spinner fa-spin" style="font-size:24px"></i></p>
                     </div>
                 </div>
             </form>
