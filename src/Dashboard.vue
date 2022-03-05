@@ -240,7 +240,7 @@
 
 						<div class="grid grid-cols-2 text-xs pb-3 pt-3.5 desktop:text-base">
 							<dt class="font-light text-gray-400">Date of Birth</dt>
-							<dd class="font-normal text-gray-500" v-if="user.date_of_birth != null">{{user.date_of_birth}}</dd>
+							<dd class="font-normal text-gray-500" v-if="user.date_of_birth != null">{{dob}}</dd>
 						</div>
 
 						 
@@ -560,6 +560,7 @@ import Footer from './layout/footer.vue'
 import App from './App.vue'
 import stepthree from './stepthree.vue'
 import auth from './auth'
+import moment from "moment";
 
 import { Form, Field } from 'vee-validate';
 import * as Yup from 'yup';
@@ -653,8 +654,9 @@ export default {
   		// Step2
   		"form1":false,
   		"form2":false,
-  		"step3":false,
+  		"step3":true,
   		"exams":"",
+  		"dob":"",
   		"certifications":"",
   		"streams":"",
   		"careers":"",
@@ -721,6 +723,11 @@ export default {
   	 				this.form1 = false;
   	 				this.formDetail1 = true;
 		            this.user = response.data.data[0];
+
+					if(this.user.date_of_birth != null){
+					//this.dob = user.date_of_birth;
+					this.dob = moment(response.data.data[0].date_of_birth).format('YYYY-MM-DD');
+					}
 		        })
 
   	 		});
@@ -943,6 +950,12 @@ export default {
              if(response.data.data[0].date_of_birth !=null){
              this.post.date_of_birth = response.data.data[0].date_of_birth.substring(0, 10);
          	}
+
+         	if(this.user.date_of_birth != null){
+         		//this.dob = user.date_of_birth;
+         		this.dob = moment(response.data.data[0].date_of_birth).format('YYYY-MM-DD');
+         	}
+
              this.post.gender = response.data.data[0].gender;
              this.post.nationality_id = response.data.data[0].nationality_id;
              this.post.quota = response.data.data[0].quota;
