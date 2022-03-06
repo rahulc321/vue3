@@ -500,35 +500,44 @@
 					<dl class="divide-y">
 						<div class="grid grid-cols-2 text-xs pb-3 pt-3.5 desktop:text-base">
 							<dt class="font-light text-gray-400">Stream Interests</dt>
-							<dd class="font-normal text-gray-500">Tamilnadu, Orrissa, Delhi</dd>
+							<dd class="font-normal text-gray-500"><span v-for="(education_stream,i) in education_streams" >
+							<span v-if="i != 0">, </span>{{education_stream.name}}</span></dd>
 						</div>
 						<div class="grid grid-cols-2 text-xs pb-3 pt-3.5 desktop:text-base">
 							<dt class="font-light text-gray-400">Specialization Interests</dt>
-							<dd class="font-normal text-gray-500">Engineering, Nursing</dd>
+							<dd class="font-normal text-gray-500"><span v-for="(specialization_interest,i) in specialization_interests" >
+							<span v-if="i != 0">, </span>{{specialization_interest.name}}</span></dd>
 						</div>
 						<div class="grid grid-cols-2 text-xs pb-3 pt-3.5 desktop:text-base">
 							<dt class="font-light text-gray-400">Career Interests</dt>
-							<dd class="font-normal text-gray-500">Business Analyst</dd>
+							<dd class="font-normal text-gray-500"><span v-for="(career,i) in careersStep3" >
+							<span v-if="i != 0">, </span>{{career.name}}</span></dd>
 						</div>
 					</dl>
 
-					<h2 class="text-sm text-gray-500 font-medium mt-8 mb-4 desktop:text-lg">Entrance Exam Details</h2>
+					<h2 class="text-base text-dark-blue font-medium  mb-7 desktop:text-xl">Entrance Exam Details</h2>
 					<dl class="divide-y">
-						<div class="grid grid-cols-2 text-xs pb-3 pt-3.5 desktop:text-base">
-							<dt class="font-light text-gray-400">NEET</dt>
-							<dd class="font-normal text-gray-500">85%</dd>
+						<div class="grid grid-cols-2 text-xs pb-3 pt-3.5 desktop:text-base" v-for="(entrance_exam,i) in entrance_exams">
+							<dt class="font-light text-gray-400">{{entrance_exam.entrance_exam_name}}</dt>
+							<dd class="font-normal text-gray-500" v-if="entrance_exam.score_type=='percentage'">{{entrance_exam.score_in_percentage}}%</dd>
+
+							<dd class="font-normal text-gray-500" v-else-if="entrance_exam.score_type=='grade'">{{entrance_exam.score_in_grade}}</dd>
+
+							<dd class="font-normal text-gray-500" v-else-if="entrance_exam.score_type=='cgpa'">{{entrance_exam.score_in_cgpa}}</dd>
 						</div>
-						<div class="grid grid-cols-2 text-xs pb-3 pt-3.5 desktop:text-base">
+						<!-- <div class="grid grid-cols-2 text-xs pb-3 pt-3.5 desktop:text-base">
 							<dt class="font-light text-gray-400">AIEEE</dt>
 							<dd class="font-normal text-gray-500">90%</dd>
-						</div>
+						</div> -->
 						<div class="grid grid-cols-2 text-xs pb-3 pt-3.5 desktop:text-base">
 							<dt class="font-light text-gray-400">Your Interests</dt>
-							<dd class="font-normal text-gray-500">Engineering, Nursing</dd>
+							<dd class="font-normal text-gray-500"><span v-for="(hard_skill,i) in hard_skills" >
+							<span v-if="i != 0">, </span>{{hard_skill.name}}</span></dd>
 						</div>
 						<div class="grid grid-cols-2 text-xs pb-3 pt-3.5 desktop:text-base">
 							<dt class="font-light text-gray-400">Top 3 Skills</dt>
-							<dd class="font-normal text-gray-500">Coding, Gaming, Problem Solving</dd>
+							<dd class="font-normal text-gray-500"><span v-for="(soft_skill,i) in soft_skills" >
+							<span v-if="i != 0">, </span>{{soft_skill.name}}</span></dd>
 						</div>
 					</dl>
 				</div>
@@ -652,9 +661,19 @@ export default {
   		"sector_preference":"",
   		"preferred_courses":"",
   		// Step2
+
+  		//step3
+  		"education_streams":'',
+  		"specialization_interests":'',
+  		"careersStep3":'',
+  		"soft_skills":'',
+  		"soft_skills":'',
+  		"hard_skills":'',
+  		"entrance_exams":'',
+  		//step3
   		"form1":false,
   		"form2":false,
-  		"step3":true,
+  		"step3":false,
   		"exams":"",
   		"dob":"",
   		"certifications":"",
@@ -870,9 +889,16 @@ export default {
 
         	$('.cc').val(cc1).select2({placeholder: "Select"});
 
+        	// Step3*******************************************/
+        	this.education_streams = res.education_streams;
+        	this.specialization_interests = res.specialization_interests;
+        	this.careersStep3 = res.careers;
+        	this.hard_skills = res.hard_skills;
+        	this.soft_skills = res.soft_skills;
+        	this.entrance_exams = res.entrance_exams;
+        	// Step3*******************************************/
 
-
-            console.log(cp);
+            
         })
 
         $('#collegeLocation').select2({maximumSelectionLength: 2,placeholder: "Select"});

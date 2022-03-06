@@ -1,5 +1,6 @@
 <template>
 <div v-if="step3">
+<p v-if="loading1" class="plswait" style="color:green">Please Wait...<i class="fa fa-spinner fa-spin" style="font-size:24px"></i></p>
 <Form @submit="onSubmit" ref="ref"  v-slot="{ errors }" class="formstyle">
                     
                         <div class="flex justify-between items-center gap-2">
@@ -7,7 +8,7 @@
                             <!-- Industries -->
                             <div class="flex flex-col w-1/2 gap-y-1">
                                 <label for="profile_type">Sector/ Industry Interests (Select Multiple)</label>
-                                <Field as="select" class="rounded-md border-gray-300 sectorIn"   name="preferred_college_locations_test" multiple="multiple">
+                                <Field as="select" class="rounded-md border-gray-300 sectorIn"   name="preferred_college_locations_test" multiple="multiple" v-model="careersStep3_id">
                                     <option v-for="industrie in industries" v-bind:value="industrie.id" :key="industrie.id"> {{industrie.name}}</option>
                                      
                                       
@@ -39,7 +40,7 @@
                             <!-- Specialization specialization-->
                             <div class="flex flex-col w-1/2 gap-y-1">
                                 <label for="profile_type">Specialization Interests (Select Multiple)</label>
-                                <Field as="select" class="rounded-md border-gray-300 specIn"   name="preferred_college_locations_test" multiple="multiple">
+                                <Field as="select" class="rounded-md border-gray-300 specIn specIn1"   name="preferred_college_locations_test" multiple="multiple">
                                      <option v-for="special in specialization" v-bind:value="special.id" :key="special.id"> {{special.name}}</option>
                                       
                                 </Field>
@@ -81,7 +82,7 @@
                             <!-- Career  careers-->
                             <div class="flex flex-col w-1/2 gap-y-1">
                                 <label for="profile_type">Select Your Top 3 Skills</label>
-                                <Field as="select" class="rounded-md border-gray-300 cI sftskill"   name="preferred_college_locations_test" multiple="multiple">
+                                <Field as="select" class="rounded-md border-gray-300 sftskill"   name="preferred_college_locations_test" multiple="multiple">
                                     <option v-for="softskill in softskills" v-bind:value="softskill.id" :key="softskill.id"> {{softskill.name}}</option>
                                       
                                 </Field>
@@ -94,12 +95,79 @@
                              
                         </div>
                         <h3>Qualified Entrance Exam</h3>
+                        <div class="updateData" v-for="(entrance_exam,k) in entrance_exams">
+                         <div class="flex justify-between items-center gap-2" >
+
+                            <!-- Specialization specialization-->
+                            <div class="flex flex-col w-1/3 gap-y-1 kk">
+                                <label for="profile_type">Exam {{k+1}}</label>
+                                <select as="select" class="rounded-md border-gray-300 exam ff"   name="preferred_college_locations_test" :id="'sel_'+k">
+                                    <option value="" selected>Select</option>
+                                     <option v-for="exam in exams" v-bind:value="exam.id" :key="exam.id" :selected="exam.id == entrance_exam.entrance_exam_id"> {{exam.name}}</option>
+                                      
+                                </select>
+
+                                 
+                                 
+                                 
+                            </div>
+
+
+                             <div class="flex flex-col w-1/3 gap-y-1 kk" style="">
+                                <label for="profile_type">Score Type</label>
+                                
+                                <select as="select" class="rounded-md border-gray-300 type"   name="preferred_college_locations_test" :id="k">
+                                     <option value="" selected>select</option>
+                                     <option value="percentage" :selected="'percentage' == entrance_exam.score_type">Percentage</option>
+                                     <option value="grade" :selected="'grade' == entrance_exam.score_type">Grade</option>
+                                     <option value="cgpa" :selected="'cgpa'  == entrance_exam.score_type">Cgpa</option>
+                                      
+                                </select>
+                                  
+                                 
+                                 
+                            </div>
+
+
+
+                            <!-- Career  careers-->
+                            <div class="flex flex-col w-1/3 gap-y-1 kk">
+                                <label for="profile_type">Score</label>
+                                <div :class='"common A"+k' v-if="entrance_exam.score_type =='percentage'">
+                                    <Field :class="'rounded border-gray-300 d p'+k" type="text"   name="percentagea" placeholder="71.4%" :value="entrance_exam.score_in_percentage"></Field>
+                                </div>
+
+
+                                <div :class='"common B"+k' v-if="entrance_exam.score_type =='grade'">
+                                    <select as="select" :class="'rounded border-gray-300 d g'+k"   name="grade">
+                                     <option  v-for="(g, i) in grade" :value="g" :selected="g == entrance_exam.score_in_grade">{{g}}</option>
+                                      
+                                      
+                                </select>
+                                </div>
+                                
+                                <div :class='"common C"+k' v-if="entrance_exam.score_type =='cgpa'">
+                                    <select as="select" :class="'rounded border-gray-300 d c'+k"   name="cgpa">
+                                     <option  v-for="(n, i) in 10" :value="n" :selected="n == entrance_exam.score_in_cgpa">{{i+1}}</option>
+                                      
+                                      
+                                </select>
+                                </div>
+                                 
+                                 
+                            </div>
+                        
+                        </div>
+                        </div>
+                        <br>
+                        <!-- Add new  -->
+                        <h3>Add Entrance Exam</h3>
                          <div class="flex justify-between items-center gap-2" v-for="(input,k) in inputs" :key="k">
 
                             <!-- Specialization specialization-->
                             <div class="flex flex-col w-1/3 gap-y-1">
-                                <label for="profile_type">Exam {{k+1}}</label>
-                                <select as="select" class="rounded-md border-gray-300 exam ff"   name="preferred_college_locations_test" :id="'sel_'+k">
+                                <label for="profile_type">Exam {{entrance_exams.length+1+k}}</label>
+                                <select as="select" class="rounded-md border-gray-300 exam ff"   name="preferred_college_locations_test" :id="'sel_'+(entrance_exams.length+k)">
                                     <option value="" selected>Select</option>
                                      <option v-for="exam in exams" v-bind:value="exam.id" :key="exam.id"> {{exam.name}}</option>
                                       
@@ -117,7 +185,7 @@
                              <div class="flex flex-col w-1/3 gap-y-1" style="">
                                 <label for="profile_type">Score Type</label>
                                 
-                                <select as="select" class="rounded-md border-gray-300 type"   name="preferred_college_locations_test" :id="k">
+                                <select as="select" class="rounded-md border-gray-300 type"   name="preferred_college_locations_test" :id="entrance_exams.length+k">
                                      <option value="" selected>select</option>
                                      <option value="percentage">Percentage</option>
                                      <option value="grade">Grade</option>
@@ -138,21 +206,21 @@
                             <!-- Career  careers-->
                             <div class="flex flex-col w-1/3 gap-y-1">
                                 <label for="profile_type">Score</label>
-                                <div :class='"common A"+k'>
-                                    <Field :class="'rounded border-gray-300 d score'+k" type="text"   name="percentage" placeholder="71.4%" ></Field>
+                                <div :class="'common A'+(entrance_exams.length+k)">
+                                    <Field :class="'rounded border-gray-300 d p'+ (entrance_exams.length+k)" type="text"   :name="'percentagess'+k" placeholder="71.4%" ></Field>
                                 </div>
 
 
-                                <div :class='"common B"+k' style="display: none">
-                                    <Field as="select" :class="'rounded border-gray-300 d score'+k"   name="preferred_college_locations_test">
+                                <div :class='"common B"+(entrance_exams.length+k)' style="display: none">
+                                    <Field as="select" :class="'rounded border-gray-300 d g'+(entrance_exams.length+k)"   name="grade">
                                      <option  v-for="(g, i) in grade" :value="g">{{g}}</option>
                                       
                                       
                                 </Field>
                                 </div>
                                 
-                                <div :class='"common C"+k' style="display: none">
-                                    <Field as="select" :class="'rounded border-gray-300 d score'+k"   name="preferred_college_locations_test">
+                                <div :class='"common C"+(entrance_exams.length+k)' style="display: none">
+                                    <Field as="select" :class="'rounded border-gray-300 d c'+(entrance_exams.length+k)"   name="cgpa">
                                      <option  v-for="(n, i) in 10" :value="n">{{i+1}}</option>
                                       
                                       
@@ -165,18 +233,8 @@
 
                             </span>
                             </div>
-                        
-
-                            
-                                 
-                             
-
-                            
-                             
-
-                             
-                             
                         </div>
+                        
 
 
 
@@ -201,7 +259,7 @@
                          
                         <div class="flex flex-col">     
                             <div class="mt-2 w-full flex space-x-3">
-                                <button v-on:click="cancel2" class="py-3 px-16 font-medium text-gray-700 border border-gray-300 rounded-md" type="button">Cancel</button>
+                                <button style="height: 55px;" v-on:click="cancel2" class="py-3 px-16 font-medium text-gray-700 border border-gray-300 rounded-md" type="button">Cancel</button>
                                 <button class="py-3 px-16 font-medium bg-dark-blue text-gray-100 text-gray shadow-lg rounded-md" type="submit">Save</button>
 
                                 <p v-if="loading" class="plswait" style="color:green">Please Wait...<i class="fa fa-spinner fa-spin" style="font-size:24px"></i></p>
@@ -226,6 +284,10 @@
 }
 select.rounded.border-gray-300.d {
     width: 275px;
+}
+
+.kk {
+    margin-top: 18px;
 }
 </style>
 
@@ -289,6 +351,7 @@ export default {
 
      
     return {
+        loading1: true,
         loading: false,
         "step3": true,
         "industries":'',
@@ -300,6 +363,16 @@ export default {
         "careers":'',
         "softskills":'',
         "hard_skills":'',
+        "education_streams":'',
+        "entrance_exams":'',
+        // Step3 v-model
+        "education_streams_id":'',
+        "specialization_interests_id":'',
+        "careersStep3_id":'',
+        "soft_skills_id":'',
+        "hard_skills_id":'',
+        "entrance_exams_id":'',
+        // Step3 v-model
 
         inputs: [
             {
@@ -339,17 +412,22 @@ export default {
     onSubmit(values){
 
         var examId =[];
-        $('.ff').each(function(index, value) {
-            var val1 = $("#sel_"+index).val();
+        $('.ff').each(function(index1, value) {
+            var current = $(this).attr('id');
+            
+            var strarray = current.split('_');
+           // console.log(strarray[1]); return
+            var index = strarray[1];
             var type = $("#"+index).val();
             var score = $(".score"+index).val();
+            var val1 = $("#sel_"+index).val();
 
             if(type =="grade"){
 
                 var obj = {
                 "entrance_exam_id":val1,
                 "score_type":type,
-                "score_in_grade":score,
+                "score_in_grade":$(".g"+index).val(),
                 }
 
                  
@@ -357,14 +435,14 @@ export default {
                 var obj = {
                 "entrance_exam_id":val1,
                 "score_type":type,
-                "score_in_cgpa":score,
+                "score_in_cgpa":$(".c"+index).val(),
                 }
                 
             }else if(type =="percentage"){
                  var obj = {
                 "entrance_exam_id":val1,
                 "score_type":type,
-                "score_in_percentage":score,
+                "score_in_percentage":$(".p"+index).val(),
                 }
             }
 
@@ -373,8 +451,12 @@ export default {
             examId.push(obj);
         });
 
-            //  var examId =[];
+        var examId = examId.filter(function (el) {
+    return el != null && el != "";
+  });
 
+            //  var examId =[];
+         //console.log(examId); return
             // examId.push($('.exam').val());
             let array = {
                 "hard_skills":$('.sp').val(),
@@ -397,7 +479,11 @@ export default {
                 //console.log(response);
                 this.$toast.success("You have Successfully Updated!");
                 // auth.get('v1/user').then((response) => {
-                //     this.form1 = false;
+                   //this.step3 = false;
+                   //component('Dashboard');
+                   this.step3 = false;
+                   this.abc();
+                   this.$router.push('/dashboard');
                 //     this.formDetail1 = true;
                 //     this.user = response.data.data[0];
                 // })
@@ -417,6 +503,59 @@ export default {
         //  alert();
         this.step3 = false;
         //this.formDetail1 = true;
+    },
+
+    updatedData(){
+        auth.get('v1/get_extended_profile').then((response) => {
+            let res =response.data.data;
+             
+            // Sector/ Industry Interests
+            var sectorIds=[];
+            for (let i = 0; i < res.careers.length; i++) {  
+                sectorIds.push(res.careers[i].id);
+            }
+            $('.sectorIn').val(sectorIds).select2({placeholder: "Select"})
+            
+            // Stream Interests
+            var streamIds=[];
+            for (let i = 0; i < res.education_streams.length; i++) {  
+                streamIds.push(res.education_streams[i].id);
+            }
+            $('.streamIn').val(streamIds).select2({placeholder: "Select"})
+
+            // Specialization Interests
+            var spIds=[];
+            for (let i = 0; i < res.specialization_interests.length; i++) {  
+                spIds.push(res.specialization_interests[i].id);
+            }
+            $('.specIn1').val(spIds).select2({placeholder: "Select"})
+
+            // Career Interests
+            var cI=[];
+            for (let i = 0; i < res.careers.length; i++) {  
+                cI.push(res.careers[i].id);
+            }
+            $('.cI').val(cI).select2({placeholder: "Select"})
+
+
+            // Hard skills
+            var sp=[];
+            for (let i = 0; i < res.hard_skills.length; i++) {  
+                sp.push(res.hard_skills[i].id);
+            }
+            $('.sp').val(sp).select2({placeholder: "Select"})
+
+            // Soft skills
+            var sftskill=[];
+            for (let i = 0; i < res.soft_skills.length; i++) {  
+                sftskill.push(res.soft_skills[i].id);
+            }
+            $('.sftskill').val(sftskill).select2({placeholder: "Select"})
+
+            this.entrance_exams = res.entrance_exams;
+            this.loading1 =false; 
+             console.log('>>this.entrance_exams>>>>',this.entrance_exams);
+            })
     }
      
 
@@ -476,13 +615,16 @@ export default {
         auth.get('v1/exams').then((response) => {
             this.exams = response.data.data;
             //console.log('>>>>>>>>',this.exams)
+            this.updatedData();
         })
      
         $('.sectorIn').select2({placeholder: "Select"});
         $('.streamIn').select2({placeholder: "Select"});
         $('.specIn').select2({placeholder: "Select"});
+        $('.specIn1').select2({placeholder: "Select"});
         $('.cI').select2({placeholder: "Select"});
         this.refresh();
+        
        // $('#sel_0 option[value="51"]').prop('selected', true)
         //$("#sel_0 option[value='1']").attr('selected', 'selected');
 
