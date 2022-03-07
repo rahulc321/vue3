@@ -139,11 +139,13 @@
 
 
                                 <div :class='"common B"+k' v-if="entrance_exam.score_type =='grade'">
-                                    <select as="select" :class="'rounded border-gray-300 d g'+k"   name="grade">
+                                   <!--  <select as="select" :class="'rounded border-gray-300 d g'+k"   name="grade">
                                      <option  v-for="(g, i) in grade" :value="g" :selected="g == entrance_exam.score_in_grade">{{g}}</option>
                                       
                                       
-                                </select>
+                                </select> -->
+                                <Field :class="'rounded border-gray-300 d g'+k" type="text"   :name="'grade'+k" placeholder="A+" :value="entrance_exam.score_in_grade"></Field>
+
                                 </div>
                                 
                                 <div :class='"common C"+k' v-if="entrance_exam.score_type =='cgpa'">
@@ -153,6 +155,35 @@
                                       
                                 </select>
                                 </div>
+
+
+                                <!-- /*************************/ -->
+                                <!-- /*************************/ -->
+                                <div :class="'common A'+k" style="display: none" v-if="entrance_exam.score_type !='percentage'">
+                                    <Field :class="'rounded border-gray-300 d p'+k" type="text"   :name="'percentagess'+k" placeholder="71.4%" ></Field>
+                                </div>
+
+
+                                <div :class='"common B"+k' style="display: none" v-if="entrance_exam.score_type !='grade'">
+                                    <!-- <Field as="select" :class="'rounded border-gray-300 d g'+(entrance_exams.length+k)"   name="grade">
+                                     <option  v-for="(g, i) in grade" :value="g">{{g}}</option>
+                                      
+                                      
+                                    </Field> -->
+
+                                    <Field :class="'rounded border-gray-300 d g'+k" type="text"   :name="'grade'+k" placeholder="A+" ></Field>
+
+                                </div>
+                                
+                                <div :class='"common C"+k' style="display: none" v-if="entrance_exam.score_type !='cgpa'">
+                                    <Field as="select" :class="'rounded border-gray-300 d c'+k"   name="cgpa">
+                                     <option  v-for="(n, i) in 10" :value="n">{{i+1}}</option>
+                                      
+                                      
+                                </Field>
+                                </div>
+                                <!-- /*************************/ -->
+                                <!-- /*************************/ -->
                                  
                                  
                             </div>
@@ -160,8 +191,7 @@
                         </div>
                         </div>
                         <br>
-                        <!-- Add new  -->
-                        <h3>Add Entrance Exam</h3>
+                       <!-- Add new  -->
                          <div class="flex justify-between items-center gap-2" v-for="(input,k) in inputs" :key="k">
 
                             <!-- Specialization specialization-->
@@ -212,11 +242,14 @@
 
 
                                 <div :class='"common B"+(entrance_exams.length+k)' style="display: none">
-                                    <Field as="select" :class="'rounded border-gray-300 d g'+(entrance_exams.length+k)"   name="grade">
+                                    <!-- <Field as="select" :class="'rounded border-gray-300 d g'+(entrance_exams.length+k)"   name="grade">
                                      <option  v-for="(g, i) in grade" :value="g">{{g}}</option>
                                       
                                       
-                                </Field>
+                                    </Field> -->
+
+                                    <Field :class="'rounded border-gray-300 d g'+(entrance_exams.length+k)" type="text"   :name="'grade'+k" placeholder="A+" ></Field>
+
                                 </div>
                                 
                                 <div :class='"common C"+(entrance_exams.length+k)' style="display: none">
@@ -482,8 +515,9 @@ export default {
                    //this.step3 = false;
                    //component('Dashboard');
                    this.step3 = false;
-                   this.abc();
-                   this.$router.push('/dashboard');
+                   //this.abc();
+                   window.location.href = "/dashboard"
+                   //this.$router.push('/dashboard');
                 //     this.formDetail1 = true;
                 //     this.user = response.data.data[0];
                 // })

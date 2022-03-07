@@ -196,8 +196,8 @@
 						<div class="invalid-feedback">{{errors.is_current_12ex}}</div>
 
 						<div class="flex flex-col">		
-							<div class="mt-2 w-full flex space-x-3">
-								<button v-on:click="cancel" class="py-3 px-16 font-medium text-gray-700 border border-gray-300 rounded-md" type="button">Cancel</button>
+							<div  class="mt-2 w-full flex space-x-3">
+								<button style="height: 55px;" v-on:click="cancel" class="py-3 px-16 font-medium text-gray-700 border border-gray-300 rounded-md" type="button">Cancel</button>
 								<button class="py-3 px-16 font-medium bg-dark-blue text-gray-100 text-gray shadow-lg rounded-md" type="submit">Save</button>
 							</div>
 						</div>
@@ -209,39 +209,51 @@
 							<dd class="font-normal text-gray-500">{{user.name}}</dd>
 						</div>
 						<div class="grid grid-cols-2 text-xs pb-3 pt-3.5 desktop:text-base">
-							<dt class="font-light text-gray-400">Profile Type</dt>
-							<dd class="font-normal text-gray-500">{{user.profile_type}}</dd>
-						</div>
-						<div class="grid grid-cols-2 text-xs pb-3 pt-3.5 desktop:text-base">
-							<dt class="font-light text-gray-400">Gender</dt>
-							<dd class="font-normal text-gray-500">{{user.gender}}</dd>
-						</div>
-						<div class="grid grid-cols-2 text-xs pb-3 pt-3.5 desktop:text-base">
-							<dt class="font-light text-gray-400">Phone</dt>
-							<dd class="font-normal text-gray-500">{{user.phone}}</dd>
-						</div>
-						<div class="grid grid-cols-2 text-xs pb-3 pt-3.5 desktop:text-base">
 							<dt class="font-light text-gray-400">Email</dt>
 							<dd class="font-normal text-gray-500">{{user.email}}</dd>
-						</div>
-						<div class="grid grid-cols-2 text-xs pb-3 pt-3.5 desktop:text-base">
-							<dt class="font-light text-gray-400">Citizenship</dt>
-							<dd class="font-normal text-gray-500">{{user.nationality_name}}</dd>
-						</div>
-
-						<div class="grid grid-cols-2 text-xs pb-3 pt-3.5 desktop:text-base">
-							<dt class="font-light text-gray-400">Location</dt>
-							<dd class="font-normal text-gray-500">{{user.location_state}}</dd>
-						</div>
-						<div class="grid grid-cols-2 text-xs pb-3 pt-3.5 desktop:text-base">
-							<dt class="font-light text-gray-400">Category</dt>
-							<dd class="font-normal text-gray-500">{{user.quota}}</dd>
 						</div>
 
 						<div class="grid grid-cols-2 text-xs pb-3 pt-3.5 desktop:text-base">
 							<dt class="font-light text-gray-400">Date of Birth</dt>
 							<dd class="font-normal text-gray-500" v-if="user.date_of_birth != null">{{dob}}</dd>
 						</div>
+
+						<div class="grid grid-cols-2 text-xs pb-3 pt-3.5 desktop:text-base">
+							<dt class="font-light text-gray-400">Gender</dt>
+							<dd class="font-normal text-gray-500">{{user.gender}}</dd>
+						</div>
+
+						<div class="grid grid-cols-2 text-xs pb-3 pt-3.5 desktop:text-base">
+							<dt class="font-light text-gray-400">Citizenship</dt>
+							<dd class="font-normal text-gray-500">{{user.nationality_name}}</dd>
+						</div>
+
+						<div class="grid grid-cols-2 text-xs pb-3 pt-3.5 desktop:text-base">
+							<dt class="font-light text-gray-400">Category</dt>
+							<dd class="font-normal text-gray-500">{{user.quota}}</dd>
+						</div>
+
+						<div class="grid grid-cols-2 text-xs pb-3 pt-3.5 desktop:text-base">
+							<dt class="font-light text-gray-400">Phone</dt>
+							<dd class="font-normal text-gray-500">{{user.phone}}</dd>
+						</div>
+
+						<div class="grid grid-cols-2 text-xs pb-3 pt-3.5 desktop:text-base">
+							<dt class="font-light text-gray-400">Profile Type</dt>
+							<dd class="font-normal text-gray-500">{{user.profile_type}}</dd>
+						</div>
+						
+						
+						
+						
+
+						<div class="grid grid-cols-2 text-xs pb-3 pt-3.5 desktop:text-base">
+							<dt class="font-light text-gray-400">Location</dt>
+							<dd class="font-normal text-gray-500">{{user.location_state}}</dd>
+						</div>
+						
+
+						
 
 						 
 					  </dl>
@@ -410,7 +422,7 @@
 						 
 						<div class="flex flex-col">		
 							<div class="mt-2 w-full flex space-x-3">
-								<button v-on:click="cancel2" class="py-3 px-16 font-medium text-gray-700 border border-gray-300 rounded-md" type="button">Cancel</button>
+								<button style="height: 55px;" v-on:click="cancel2" class="py-3 px-16 font-medium text-gray-700 border border-gray-300 rounded-md" type="button">Cancel</button>
 								<button class="py-3 px-16 font-medium bg-dark-blue text-gray-100 text-gray shadow-lg rounded-md" type="submit">Save</button>
 
 								<p v-if="loading" class="plswait" style="color:green">Please Wait...<i class="fa fa-spinner fa-spin" style="font-size:24px"></i></p>
@@ -979,7 +991,7 @@ export default {
 
          	if(this.user.date_of_birth != null){
          		//this.dob = user.date_of_birth;
-         		this.dob = moment(response.data.data[0].date_of_birth).format('YYYY-MM-DD');
+         		this.dob = moment(response.data.data[0].date_of_birth).format('DD-MM-YYYY');
          	}
 
              this.post.gender = response.data.data[0].gender;
