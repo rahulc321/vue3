@@ -59,10 +59,13 @@ export default {
   			"image":'',
   		}
   },mounted(){
+  	if(tkn ==1){
   	 auth.get('v1/user').then((response) => {
              this.image = 'https://app.thecareertrail.com/images/'+response.data.data[0].image;
  
         })
+
+  	}
   }
 }
 </script>

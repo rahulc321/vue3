@@ -53,8 +53,8 @@
 
 					<div class="mt-6 w-full flex space-x-3">
 						<!-- <button class="py-3 px-8 tablet:px-16 font-medium text-gray-700 border border-gray-300 rounded-md" type="reset">Reset</button> -->
-						<button  type="submit" class="py-3 px-12 tablet:px-16 font-medium bg-dark-blue text-gray-100 text-gray shadow-lg rounded-md">Register</button>
-						<p  v-if="isHidden" style="color:green">Please Wait...</p>
+						<button  type="submit" class="py-3 px-16 tablet:px-16 font-medium bg-dark-blue text-gray-100 text-gray shadow-lg rounded-md">Register</button>
+						<p  v-if="isHidden" style="color:green;    font-size: 15px;">Please Wait...<i class="fa fa-spinner fa-spin" style="font-size:24px"></i></p>
 					</div>
 				</div>
 			</form>

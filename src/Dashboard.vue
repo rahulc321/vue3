@@ -113,7 +113,7 @@
 
 						<div class="flex flex-col w-1/3 gap-y-1">
 								<label for="profile_type"> Date of Birth <span class="text-red-600">*</span></label>
-								<Field class="rounded border-gray-300" type="date" name="date_of_birth" placeholder="DOB" v-model="post.date_of_birth"></Field>
+								<Field class="rounded border-gray-300" type="date" name="date_of_birth" placeholder="DOB" v-model="post.date_of_birth" id="txtDate"></Field>
 								<div class="invalid-feedback">{{errors.date_of_birth}}</div>
 							</div>
 
@@ -279,7 +279,7 @@
 
 						 
 
-						<div class="flex flex-col w-1/3 gap-y-1">
+						<div class="flex flex-col w-1/2 gap-y-1">
 							<label for="name"> Last Qualifying Exam <span class="text-red-600">*</span></label>
 							<Field as="select" class="rounded-md border-gray-300" name="qualifying_exam_id" v-model="last_qualifying_exam_id">
 								<option value="" selectted>Select</option>
@@ -292,7 +292,7 @@
 						</div>
 						<!--  -->
 
-						<div class="flex flex-col w-1/3 gap-y-1">
+						<div class="flex flex-col w-1/2 gap-y-1">
 							<label for="name">Exam Stream<span class="text-red-600"> *</span></label>
 							<Field as="select" class="rounded-md border-gray-300" name="qualifying_exam_stream_id" v-model="last_qualifying_exam_stream_id">
 								<option value="" selectted>Select</option>
@@ -304,28 +304,6 @@
 							 
 						</div>
 						 
-
-						<div class="flex flex-col w-1/6 gap-y-1">
-								<label for="profile_type"> Score<span class="text-red-600"> *</span></label>
-								<Field class="rounded border-gray-300" type="text"   name="score_in_grade" placeholder="A" v-model="score"></Field>
-								<div class="invalid-feedback">{{errors.score_in_grade}}</div>
-						</div>
-
-						<div class="flex flex-col w-1/6 gap-y-1">
-							<label for="name">Score Type<span class="text-red-600"> *</span></label>
-							<Field as="select" class="rounded-md border-gray-300" name="score_type" v-model="score_type">
-								<option value="">Select</option>
-								<option value="grade" >grade</option>
-							 
-								</Field>
-							<div class="invalid-feedback">{{errors.score_type}}</div>
-							 
-						</div>
-
-						
-
-						 						
-
 
 						</div>
 						 
@@ -415,6 +393,27 @@
 							 
 							 
 						</div>
+
+						<!--  -->
+						<div class="flex justify-between items-center gap-2">
+						<div class="flex flex-col w-1/2 gap-y-1">
+								<label for="profile_type"> Score<span class="text-red-600"> *</span></label>
+								<Field class="rounded border-gray-300" type="text"   name="score_in_grade" placeholder="A" v-model="score"></Field>
+								<div class="invalid-feedback">{{errors.score_in_grade}}</div>
+						</div>
+
+						<div class="flex flex-col w-1/2 gap-y-1">
+							<label for="name">Score Type<span class="text-red-600"> *</span></label>
+							<Field as="select" class="rounded-md border-gray-300" name="score_type" v-model="score_type">
+								<option value="" selected="">Select</option>
+								<option value="grade" >grade</option>
+							 
+								</Field>
+							<div class="invalid-feedback">{{errors.score_type}}</div>
+							 
+						</div>
+						</div>
+						<!--  -->
 
 
 						 
@@ -525,6 +524,19 @@
 							<dd class="font-normal text-gray-500"><span v-for="(career,i) in careersStep3" >
 							<span v-if="i != 0">, </span>{{career.name}}</span></dd>
 						</div>
+
+						<div class="grid grid-cols-2 text-xs pb-3 pt-3.5 desktop:text-base">
+							<dt class="font-light text-gray-400">Your Interests</dt>
+							<dd class="font-normal text-gray-500"><span v-for="(hard_skill,i) in hard_skills" >
+							<span v-if="i != 0">, </span>{{hard_skill.name}}</span></dd>
+						</div>
+						<div class="grid grid-cols-2 text-xs pb-3 pt-3.5 desktop:text-base">
+							<dt class="font-light text-gray-400">Top 3 Skills</dt>
+							<dd class="font-normal text-gray-500"><span v-for="(soft_skill,i) in soft_skills" >
+							<span v-if="i != 0">, </span>{{soft_skill.name}}</span></dd>
+						</div>
+
+
 					</dl>
 
 					<h2 class="text-base text-dark-blue font-medium  mb-7 desktop:text-xl">Entrance Exam Details</h2>
@@ -541,16 +553,7 @@
 							<dt class="font-light text-gray-400">AIEEE</dt>
 							<dd class="font-normal text-gray-500">90%</dd>
 						</div> -->
-						<div class="grid grid-cols-2 text-xs pb-3 pt-3.5 desktop:text-base">
-							<dt class="font-light text-gray-400">Your Interests</dt>
-							<dd class="font-normal text-gray-500"><span v-for="(hard_skill,i) in hard_skills" >
-							<span v-if="i != 0">, </span>{{hard_skill.name}}</span></dd>
-						</div>
-						<div class="grid grid-cols-2 text-xs pb-3 pt-3.5 desktop:text-base">
-							<dt class="font-light text-gray-400">Top 3 Skills</dt>
-							<dd class="font-normal text-gray-500"><span v-for="(soft_skill,i) in soft_skills" >
-							<span v-if="i != 0">, </span>{{soft_skill.name}}</span></dd>
-						</div>
+						
 					</dl>
 				</div>
 			</div>
@@ -570,7 +573,7 @@ li.select2-results__option.select2-results__message {
     color: red;
 }
 .invalid-feedback {
-    font-size: 14px;
+    font-size: 12px;
     height: 18px !important;
 }
 </style>
@@ -923,7 +926,21 @@ export default {
   		 
   		 // $('.selec1').select2({maximumSelectionLength: 2});
   		
+		$(function(){
+		var dtToday = new Date();
 
+		var month = dtToday.getMonth() + 1;
+		var day = dtToday.getDate();
+		var year = dtToday.getFullYear();
+
+		if(month < 10)
+		month = '0' + month.toString();
+		if(day < 10)
+		day = '0' + day.toString();
+
+		var maxDate = year + '-' + month + '-' + day;    
+		$('#txtDate').attr('max', maxDate);
+		});
 
 
   		 

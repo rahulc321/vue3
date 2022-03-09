@@ -33,11 +33,12 @@
 
 				<div class="flex flex-col">
 					<div class="mt-6">
-						<button  v-if="!isHidden" type="submit" class="py-3 px-16 font-medium bg-dark-blue text-gray-100 text-gray shadow-lg rounded-md">Send →</button>
+						<button  v-if="!isHidden" type="submit" class="py-3 px-5 font-medium bg-dark-blue text-gray-100 text-gray shadow-lg rounded-md">Change Password</button>
+						&nbsp;
+						<router-link to="/dashboard"><button style="background-color: red"   class="py-3 px-5 font-medium bg-dark-blue text-gray-100 text-gray shadow-lg rounded-md">Back</button></router-link>
 						<p v-if="isHiddenText" style="color: green">Please wait....</p>
 						<br>
-						<router-link to="/dashboard"><a href="javascript:;" >← Back</a>
-						</router-link>
+						 
 					</div>
 				</div>
 			</form>
