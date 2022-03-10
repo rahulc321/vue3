@@ -237,7 +237,7 @@
                             <div class="flex flex-col w-1/3 gap-y-1">
                                 <label for="profile_type">Score</label>
                                 <div :class="'common A'+(entrance_exams.length+k)">
-                                    <Field :class="'rounded border-gray-300 d p'+ (entrance_exams.length+k)" type="text"   :name="'percentagess'+k" placeholder="71.4%" ></Field>
+                                    <Field :class="'rounded border-gray-300 d p'+ (entrance_exams.length+k)" type="text"   :name="'percentagess'+k" placeholder="0.00%" ></Field>
                                 </div>
 
 
@@ -445,7 +445,7 @@ export default {
     onSubmit(values){
 
         var examId =[];
-        $('.ff').each(function(index1, value) {
+        $('.ff').each(function(index1, value,e) {
             var current = $(this).attr('id');
             
             var strarray = current.split('_');
@@ -454,6 +454,11 @@ export default {
             var type = $("#"+index).val();
             var score = $(".score"+index).val();
             var val1 = $("#sel_"+index).val();
+            if(val1 ==''){
+                alert('Please Select Exam');
+                e.preventDefault();
+            }
+
 
             if(type =="grade"){
 
@@ -485,8 +490,8 @@ export default {
         });
 
         var examId = examId.filter(function (el) {
-    return el != null && el != "";
-  });
+            return el != null && el != "";
+        });
 
             //  var examId =[];
          //console.log(examId); return

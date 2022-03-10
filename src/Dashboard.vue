@@ -328,7 +328,7 @@
 						</div>
 						</div>
 						<!--  -->
-						
+
 						 
 
 						<div class="flex justify-between items-center gap-2">
@@ -445,7 +445,7 @@
 						</div>
 						<div class="grid grid-cols-2 text-xs pb-3 pt-3.5 desktop:text-base">
 							<dt class="font-light text-gray-400">Score</dt>
-							<dd class="font-normal text-gray-500" v-if="score != null">{{score}}</dd>
+							<dd class="font-normal text-gray-500 upercase" v-if="score != null">{{score}}</dd>
 						</div>
 						<div class="grid grid-cols-2 text-xs pb-3 pt-3.5 desktop:text-base">
 							<dt class="font-light text-gray-400">Career Location Preference</dt>
@@ -476,7 +476,7 @@
 
 						<div class="grid grid-cols-2 text-xs pb-3 pt-3.5 desktop:text-base">
 							<dt class="font-light text-gray-400">Score Type</dt>
-							<dd class="font-normal text-gray-500" v-if="score_type != null">{{score_type}}</dd>
+							<dd class="font-normal text-gray-500 upercase" v-if="score_type != null">{{score_type}}</dd>
 						</div>
 
 						<div class="grid grid-cols-2 text-xs pb-3 pt-3.5 desktop:text-base">
@@ -489,7 +489,7 @@
 
 						<div class="grid grid-cols-2 text-xs pb-3 pt-3.5 desktop:text-base">
 							<dt class="font-light text-gray-400">Career Sector Preference</dt>
-							<dd class="font-normal text-gray-500" v-if="sector_preference != null">{{sector_preference}}</dd>
+							<dd class="font-normal text-gray-500 upercase" v-if="sector_preference != null">{{sector_preference}}</dd>
 						</div>
 
 
@@ -825,11 +825,13 @@ export default {
   	},
 
   	click(){
+  		this.allapiData();
    		this.form1 = !this.form1;
    		//this.formDetail1 = false;
   		},
   	click1(){
   		this.abc();
+  		this.allapiData();
    		 this.form2 = !this.form2;
   		},
 
@@ -842,12 +844,76 @@ export default {
   		//this.formDetail1 = true;
   	},
   	click3(){
+  		
   		this.step3 = !this.step3;
   		//this.formDetail1 = true;
   	},
 
 
-  	abc(){
+  	allapiData(){
+  		// nationalities
+        auth.get('v1/nationalities').then((response) => {
+            this.nationalities = response.data.data;
+        })
+
+        
+
+        auth.get('v1/exams/certifications').then((response) => {
+            this.certifications = response.data.data;
+        })
+        // Get location
+        auth.get('v1/locations').then((response) => {
+            this.locations = response.data.data;
+        })
+
+        // Get Quota
+        auth.get('v1/quota').then((response) => {
+            this.quota = response.data.data;
+             
+        })
+
+         // Get Exam
+        auth.get('v1/qualifying-exams').then((response) => {
+            this.exams = response.data.data;
+            //console.log(response);   
+        })
+
+         // Get Education streams
+        auth.get('v1/qualifying-exam-streams').then((response) => {
+            this.streams = response.data.data;
+            //console.log(response);   
+        })
+
+         // Get Education careers
+        auth.get('v1/careers').then((response) => {
+            this.careers = response.data.data;
+            //console.log('carer',response);   
+        })
+
+         // Get Education locations
+
+         // Get Education courses
+        auth.get('v1/courses').then((response) => {
+            this.courses = response.data.data;
+            //console.log('courses',response);   
+        })
+         // Get industries
+        auth.get('v1/industries').then((response) => {
+            this.industries = response.data.data;
+            //console.log('courses',response);   
+        })
+
+        
+
+        
+
+        auth.get('v1/states').then((response) => {
+            this.locations = response.data.data;
+             
+            this.loaderOne= false; 
+        })
+
+  	},abc(){
   		// Get Second step
         auth.get('v1/get_extended_profile').then((response) => {
         	let res =response.data.data;
@@ -953,61 +1019,8 @@ export default {
 		//$('#txtDate').attr("max", 123);
 		//document.getElementById("txtDate").setAttribute("max", today);
 
-  		 
-  		// nationalities
-        auth.get('v1/nationalities').then((response) => {
-            this.nationalities = response.data.data;
-        })
-
-        
-
-        auth.get('v1/exams/certifications').then((response) => {
-            this.certifications = response.data.data;
-        })
-        // Get location
-        auth.get('v1/locations').then((response) => {
-            this.locations = response.data.data;
-        })
-
-        // Get Quota
-        auth.get('v1/quota').then((response) => {
-            this.quota = response.data.data;
-             
-        })
-
-         // Get Exam
-        auth.get('v1/qualifying-exams').then((response) => {
-            this.exams = response.data.data;
-            //console.log(response);   
-        })
-
-         // Get Education streams
-        auth.get('v1/qualifying-exam-streams').then((response) => {
-            this.streams = response.data.data;
-            //console.log(response);   
-        })
-
-         // Get Education careers
-        auth.get('v1/careers').then((response) => {
-            this.careers = response.data.data;
-            //console.log('carer',response);   
-        })
-
-         // Get Education locations
-
-         // Get Education courses
-        auth.get('v1/courses').then((response) => {
-            this.courses = response.data.data;
-            //console.log('courses',response);   
-        })
-         // Get industries
-        auth.get('v1/industries').then((response) => {
-            this.industries = response.data.data;
-            //console.log('courses',response);   
-        })
-
-        auth.get('v1/user').then((response) => {
-        	this.abc();
+  		auth.get('v1/user').then((response) => {
+        	//this.abc();
         	//alert(response.data.data[0].date_of_birth);
              this.user = response.data.data[0];
              this.post.name = response.data.data[0].name;
@@ -1029,14 +1042,12 @@ export default {
              this.post.location_id = response.data.data[0].location_id;
              this.post.is_current_12ex = response.data.data[0].is_current_12ex;
              this.image = 'https://app.thecareertrail.com/images/'+response.data.data[0].image;
- 
-        })
 
-        auth.get('v1/states').then((response) => {
-            this.locations = response.data.data;
-             
-            this.loaderOne= false; 
-        })
+            this.abc();
+             this.loaderOne= false;
+ 
+        }) 
+  		
 
          
          // Hide loader
