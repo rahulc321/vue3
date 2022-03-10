@@ -510,7 +510,7 @@ export default {
              
             auth.post('v1/update_extended_skills_interests',array).then((response) => {
                 //console.log(response);
-                this.$toast.success("You have Successfully Updated!");
+                this.$toast.success("Profile updated successfully");
                 // auth.get('v1/user').then((response) => {
                    //this.step3 = false;
                    //component('Dashboard');

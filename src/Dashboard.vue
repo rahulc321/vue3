@@ -113,7 +113,7 @@
 
 						<div class="flex flex-col w-1/3 gap-y-1">
 								<label for="profile_type"> Date of Birth <span class="text-red-600">*</span></label>
-								<Field class="rounded border-gray-300" type="date" name="date_of_birth" placeholder="DOB" v-model="post.date_of_birth" id="txtDate"></Field>
+								<Field class="rounded border-gray-300" type="date" name="date_of_birth" :max="max" placeholder="DOB" v-model="post.date_of_birth" id="txtDate"></Field>
 								<div class="invalid-feedback">{{errors.date_of_birth}}</div>
 							</div>
 
@@ -220,17 +220,17 @@
 
 						<div class="grid grid-cols-2 text-xs pb-3 pt-3.5 desktop:text-base">
 							<dt class="font-light text-gray-400">Gender</dt>
-							<dd class="font-normal text-gray-500">{{user.gender}}</dd>
+							<dd class="font-normal text-gray-500 upercase">{{user.gender}}</dd>
 						</div>
 
 						<div class="grid grid-cols-2 text-xs pb-3 pt-3.5 desktop:text-base">
 							<dt class="font-light text-gray-400">Citizenship</dt>
-							<dd class="font-normal text-gray-500">{{user.nationality_name}}</dd>
+							<dd class="font-normal text-gray-500 upercase">{{user.nationality_name}}</dd>
 						</div>
 
 						<div class="grid grid-cols-2 text-xs pb-3 pt-3.5 desktop:text-base">
 							<dt class="font-light text-gray-400">Category</dt>
-							<dd class="font-normal text-gray-500">{{user.quota}}</dd>
+							<dd class="font-normal text-gray-500 upercase">{{user.quota}}</dd>
 						</div>
 
 						<div class="grid grid-cols-2 text-xs pb-3 pt-3.5 desktop:text-base">
@@ -240,7 +240,7 @@
 
 						<div class="grid grid-cols-2 text-xs pb-3 pt-3.5 desktop:text-base">
 							<dt class="font-light text-gray-400">Profile Type</dt>
-							<dd class="font-normal text-gray-500">{{user.profile_type}}</dd>
+							<dd class="font-normal text-gray-500 upercase">{{user.profile_type}}</dd>
 						</div>
 						
 						
@@ -306,6 +306,29 @@
 						 
 
 						</div>
+
+
+						<!--  -->
+						<div class="flex justify-between items-center gap-2">
+						<div class="flex flex-col w-1/2 gap-y-1">
+								<label for="profile_type"> Score<span class="text-red-600"> *</span></label>
+								<Field class="rounded border-gray-300" type="text"   name="score_in_grade" placeholder="A" v-model="score"></Field>
+								<div class="invalid-feedback">{{errors.score_in_grade}}</div>
+						</div>
+
+						<div class="flex flex-col w-1/2 gap-y-1">
+							<label for="name">Score Type<span class="text-red-600"> *</span></label>
+							<Field as="select" class="rounded-md border-gray-300" name="score_type" v-model="score_type">
+								<option value="" selected="">Select</option>
+								<option value="grade" >grade</option>
+							 
+								</Field>
+							<div class="invalid-feedback">{{errors.score_type}}</div>
+							 
+						</div>
+						</div>
+						<!--  -->
+						
 						 
 
 						<div class="flex justify-between items-center gap-2">
@@ -394,26 +417,7 @@
 							 
 						</div>
 
-						<!--  -->
-						<div class="flex justify-between items-center gap-2">
-						<div class="flex flex-col w-1/2 gap-y-1">
-								<label for="profile_type"> Score<span class="text-red-600"> *</span></label>
-								<Field class="rounded border-gray-300" type="text"   name="score_in_grade" placeholder="A" v-model="score"></Field>
-								<div class="invalid-feedback">{{errors.score_in_grade}}</div>
-						</div>
-
-						<div class="flex flex-col w-1/2 gap-y-1">
-							<label for="name">Score Type<span class="text-red-600"> *</span></label>
-							<Field as="select" class="rounded-md border-gray-300" name="score_type" v-model="score_type">
-								<option value="" selected="">Select</option>
-								<option value="grade" >grade</option>
-							 
-								</Field>
-							<div class="invalid-feedback">{{errors.score_type}}</div>
-							 
-						</div>
-						</div>
-						<!--  -->
+						
 
 
 						 
@@ -539,7 +543,7 @@
 
 					</dl>
 
-					<h2 class="text-base text-dark-blue font-medium  mb-7 desktop:text-xl">Entrance Exam Details</h2>
+					<h2 class="text-base text-dark-black font-medium  mb-7 desktop:text-xl">Entrance Exam Details</h2>
 					<dl class="divide-y">
 						<div class="grid grid-cols-2 text-xs pb-3 pt-3.5 desktop:text-base" v-for="(entrance_exam,i) in entrance_exams">
 							<dt class="font-light text-gray-400">{{entrance_exam.entrance_exam_name}}</dt>
@@ -575,6 +579,9 @@ li.select2-results__option.select2-results__message {
 .invalid-feedback {
     font-size: 12px;
     height: 18px !important;
+}
+.upercase:first-letter {
+  text-transform: uppercase
 }
 </style>
 
@@ -662,6 +669,7 @@ export default {
   		// Step2
   		loading: false,
   		"loaderOne":true,
+  		"max":"",
   		"score":"",
   		"preferred_career_locations":"",
   		"preferred_college_locations":"",
@@ -752,7 +760,7 @@ export default {
 
   	 		auth.post('v1/update_basic_step',values).then((response) => {
   	 			//console.log(response);
-  	 			this.$toast.success("You have Successfully Updated!");
+  	 			this.$toast.success("Profile updated successfully");
   	 			auth.get('v1/user').then((response) => {
   	 				this.form1 = false;
   	 				this.formDetail1 = true;
@@ -790,7 +798,7 @@ export default {
     		this.abc();
   	 		this.loading = false;
   	 		this.form2 = false;
-  	 		this.$toast.success("You have Successfully Updated!");
+  	 		this.$toast.success("Profile updated successfully");
 			}).catch(error => {
 			this.loading = false;
 			this.$toast.error(error.response.data.message);
@@ -926,22 +934,24 @@ export default {
   		 
   		 // $('.selec1').select2({maximumSelectionLength: 2});
   		
-		$(function(){
-		var dtToday = new Date();
+		 
 
-		var month = dtToday.getMonth() + 1;
-		var day = dtToday.getDate();
-		var year = dtToday.getFullYear();
 
-		if(month < 10)
-		month = '0' + month.toString();
-		if(day < 10)
-		day = '0' + day.toString();
+		var today = new Date();
+		var dd = today.getDate();
+		var mm = today.getMonth()+1; //January is 0!
+		var yyyy = today.getFullYear();
+		if(dd<10){
+		dd='0'+dd
+		} 
+		if(mm<10){
+		mm='0'+mm
+		} 
 
-		var maxDate = year + '-' + month + '-' + day;    
-		$('#txtDate').attr('max', maxDate);
-		});
-
+		today = yyyy+'-'+mm+'-'+dd;
+		this.max = today;
+		//$('#txtDate').attr("max", 123);
+		//document.getElementById("txtDate").setAttribute("max", today);
 
   		 
   		// nationalities
