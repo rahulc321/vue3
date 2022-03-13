@@ -156,11 +156,11 @@
 						<div class="flex justify-between items-center gap-2">
 						<div class="flex flex-col w-1/3 gap-y-1">
 							<label for="name"> Phone <span class="text-red-600">*</span></label>
-							<Field class="rounded border-gray-300" type="text"   name="phone" placeholder="+91 9758463790" v-model="post.phone"></Field>
+							<Field class="rounded border-gray-300" type="text"   name="phone" placeholder="9758463790" v-model="post.phone"></Field>
 							<div class="invalid-feedback">{{errors.phone}}</div>
 						</div>
 						<div class="flex flex-col w-1/3 gap-y-1">
-							<label for="name"> profile_type <span class="text-red-600">*</span></label>
+							<label for="name"> profile type <span class="text-red-600">*</span></label>
 							<Field as="select" class="rounded-md border-gray-300" name="profile_type"  v-model="post.profile_type">
 									<option value="" selectted>Select</option>
 									<option value="student" selected="">Student</option>
@@ -368,7 +368,7 @@
 								<label for="profile_type">College Location Preference (Select two)</label>
 								<Field as="select" class="rounded-md border-gray-300 collegeLocation" id="collegeLocation"   name="multiple" multiple="multiple">
 									 
-									<option v-for="location in locations" v-bind:value="location.id" :key="location.id">{{location.state}}</option>
+									<option v-for="location in locations" :value="location.id" :key="location.id">{{location.state}}</option>
 									 
 								</Field>
 
@@ -380,7 +380,7 @@
 							<div class="flex flex-col w-1/2 gap-y-1">
 								<label for="profile_type">Course Preference (Select multiple)</label>
 								<Field as="select" class="rounded-md border-gray-300 cp"   name="states" multiple>
-								<option v-for="course in courses" v-bind:value="course.id" :key="course.id">{{course.title}}</option>
+								<option v-for="course in courses" :value="course.id" :key="course.id">{{course.title}}</option>
 									 
 								</Field>
 								 <div class="invalid-feedback"></div>
@@ -395,7 +395,7 @@
 						<div class="flex flex-col w-1/2 gap-y-1">
 								<label for="profile_type">Current Certification (Select multiple)</label>
 								<Field as="select" class="rounded-md border-gray-300 cc" name="cc" multiple>
-								<option v-for="certification in certifications" v-bind:value="certification.id" :key="certification.id">{{certification.name}}</option>
+								<option v-for="certification in certifications" :value="certification.id" :key="certification.id">{{certification.name}}</option>
 									 
 								</Field>
 								 <div class="invalid-feedback"></div>
@@ -447,14 +447,28 @@
 							<dt class="font-light text-gray-400">Score</dt>
 							<dd class="font-normal text-gray-500 upercase" v-if="score != null">{{score}}</dd>
 						</div>
+
+						<div class="grid grid-cols-2 text-xs pb-3 pt-3.5 desktop:text-base">
+							<dt class="font-light text-gray-400">Score Type</dt>
+							<dd class="font-normal text-gray-500 upercase" v-if="score_type != null">{{score_type}}</dd>
+						</div>
+
+						<div class="grid grid-cols-2 text-xs pb-3 pt-3.5 desktop:text-base">
+							<dt class="font-light text-gray-400">Current Career</dt>
+							<dd class="font-normal text-gray-500" v-if="current_career != null">{{current_career.name}}</dd>
+						</div>
+
+
+
+
 						<div class="grid grid-cols-2 text-xs pb-3 pt-3.5 desktop:text-base">
 							<dt class="font-light text-gray-400">Career Location Preference</dt>
-							<dd class="font-normal text-gray-500"><span v-for="(preferred_career_location,i) in preferred_career_locations" v-bind:value="preferred_career_location.id" :key="preferred_career_location.id">
+							<dd class="font-normal text-gray-500"><span v-for="(preferred_career_location,i) in preferred_career_locations" :value="preferred_career_location.id" :key="preferred_career_location.id">
 							<span v-if="i != 0">, </span>{{preferred_career_location.state}}</span></dd>
 						</div>
 						<div class="grid grid-cols-2 text-xs pb-3 pt-3.5 desktop:text-base">
 							<dt class="font-light text-gray-400">College Location Preference</dt>
-							<dd class="font-normal text-gray-500"><span v-for="(preferred_college_location,i) in preferred_college_locations" v-bind:value="preferred_college_location.id" :key="preferred_college_location.id">
+							<dd class="font-normal text-gray-500"><span v-for="(preferred_college_location,i) in preferred_college_locations" :value="preferred_college_location.id" :key="preferred_college_location.id">
 							<span v-if="i != 0">, </span>
 							{{preferred_college_location.state}}</span></dd>
 						</div>
@@ -463,25 +477,19 @@
 
 						<div class="grid grid-cols-2 text-xs pb-3 pt-3.5 desktop:text-base">
 							<dt class="font-light text-gray-400">Course Preference</dt>
-							<dd class="font-normal text-gray-500"><span v-for="(preferred_course,i) in preferred_courses" v-bind:value="preferred_course.id" :key="preferred_course.id">
+							<dd class="font-normal text-gray-500"><span v-for="(preferred_course,i) in preferred_courses" :value="preferred_course.id" :key="preferred_course.id">
 							<span v-if="i != 0">, </span>
 							{{preferred_course.title}}</span></dd>
 						</div>
 
 
-						<div class="grid grid-cols-2 text-xs pb-3 pt-3.5 desktop:text-base">
-							<dt class="font-light text-gray-400">Current Career</dt>
-							<dd class="font-normal text-gray-500" v-if="current_career != null">{{current_career.name}}</dd>
-						</div>
+						
 
-						<div class="grid grid-cols-2 text-xs pb-3 pt-3.5 desktop:text-base">
-							<dt class="font-light text-gray-400">Score Type</dt>
-							<dd class="font-normal text-gray-500 upercase" v-if="score_type != null">{{score_type}}</dd>
-						</div>
+						
 
 						<div class="grid grid-cols-2 text-xs pb-3 pt-3.5 desktop:text-base">
 							<dt class="font-light text-gray-400">Current Certifications</dt>
-							<dd class="font-normal text-gray-500"><span v-for="(current_certification, i) in current_certifications" v-bind:value="current_certification.id" :key="current_certification.id">
+							<dd class="font-normal text-gray-500"><span v-for="(current_certification, i) in current_certifications" :value="current_certification.id" :key="current_certification.id">
 
 							<span v-if="i != 0">, </span>
 							{{current_certification.name}}</span></dd>
@@ -513,6 +521,13 @@
 					</button>
 
 					<dl class="divide-y">
+
+						<div class="grid grid-cols-2 text-xs pb-3 pt-3.5 desktop:text-base">
+							<dt class="font-light text-gray-400">Sector/Industry Interests</dt>
+							<dd class="font-normal text-gray-500"><span v-for="(listIndustrie,i) in listIndustries" >
+							<span v-if="i != 0">, </span>{{listIndustrie.name}}</span></dd>
+						</div>
+
 						<div class="grid grid-cols-2 text-xs pb-3 pt-3.5 desktop:text-base">
 							<dt class="font-light text-gray-400">Stream Interests</dt>
 							<dd class="font-normal text-gray-500"><span v-for="(education_stream,i) in education_streams" >
@@ -592,6 +607,7 @@ import App from './App.vue'
 import stepthree from './stepthree.vue'
 import auth from './auth'
 import moment from "moment";
+import { onUpdated } from 'vue'
 
 import { Form, Field } from 'vee-validate';
 import * as Yup from 'yup';
@@ -704,6 +720,7 @@ export default {
   		"careers":"",
   		"locations":"",
   		"industries":"",
+  		"listIndustries":"",
   		"courses":"",
   		"formDetail1":true,
   		"nationalities":"",
@@ -726,7 +743,13 @@ export default {
   			"is_current_12ex":'',
   		}
   	}
-  },methods:{
+  },
+
+created () {
+	console.log('tttttttt');
+  this.abc();
+},
+  methods:{
 
   	file(e){
   		const image = e.target.files[0];
@@ -742,7 +765,7 @@ export default {
   		 
   		auth.post('v1/updateImage',data, config).then((response) => {
   	 			//console.log(response);
-  	 			this.$toast.success("You have Successfully Updated!");
+  	 			this.$toast.success("Profile updated successfully");
   	 			auth.get('v1/user').then((response) => {
   	 				this.image = 'https://app.thecareertrail.com/images/'+response.data.data[0].image;
   	 				// this.form1 = false;
@@ -844,7 +867,7 @@ export default {
   		//this.formDetail1 = true;
   	},
   	click3(){
-  		
+
   		this.step3 = !this.step3;
   		//this.formDetail1 = true;
   	},
@@ -985,6 +1008,7 @@ export default {
         	this.hard_skills = res.hard_skills;
         	this.soft_skills = res.soft_skills;
         	this.entrance_exams = res.entrance_exams;
+        	this.listIndustries = res.industries;
         	// Step3*******************************************/
 
             

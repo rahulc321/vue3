@@ -9,7 +9,7 @@
                             <div class="flex flex-col w-1/2 gap-y-1">
                                 <label for="profile_type">Sector/ Industry Interests (Select Multiple)</label>
                                 <Field as="select" class="rounded-md border-gray-300 sectorIn"   name="preferred_college_locations_test" multiple="multiple" v-model="careersStep3_id">
-                                    <option v-for="industrie in industries" v-bind:value="industrie.id" :key="industrie.id"> {{industrie.name}}</option>
+                                    <option v-for="industrie in industries" :value="industrie.id" :key="industrie.id"> {{industrie.name}}</option>
                                      
                                       
                                 </Field>
@@ -22,7 +22,7 @@
                             <div class="flex flex-col w-1/2 gap-y-1">
                                 <label for="profile_type">Stream Interests (Select Multiple)</label>
                                 <Field as="select" class="rounded-md border-gray-300 streamIn"   name="preferred_college_locations_test" multiple="multiple">
-                                    <option v-for="stream in streams" v-bind:value="stream.id" :key="stream.id"> {{stream.name}}</option>
+                                    <option v-for="stream in streams" :value="stream.id" :key="stream.id"> {{stream.name}}</option>
                                       
                                 </Field>
 
@@ -41,7 +41,7 @@
                             <div class="flex flex-col w-1/2 gap-y-1">
                                 <label for="profile_type">Specialization Interests (Select Multiple)</label>
                                 <Field as="select" class="rounded-md border-gray-300 specIn specIn1"   name="preferred_college_locations_test" multiple="multiple">
-                                     <option v-for="special in specialization" v-bind:value="special.id" :key="special.id"> {{special.name}}</option>
+                                     <option v-for="special in specialization" :value="special.id" :key="special.id"> {{special.name}}</option>
                                       
                                 </Field>
 
@@ -53,7 +53,7 @@
                             <div class="flex flex-col w-1/2 gap-y-1">
                                 <label for="profile_type">Career Interests (Select Multiple)</label>
                                 <Field as="select" class="rounded-md border-gray-300 cI"   name="preferred_college_locations_test" multiple="multiple">
-                                    <option v-for="career in careers" v-bind:value="career.id" :key="career.id"> {{career.name}}</option>
+                                    <option v-for="career in careers" :value="career.id" :key="career.id"> {{career.name}}</option>
                                       
                                 </Field>
 
@@ -71,7 +71,7 @@
                             <div class="flex flex-col w-1/2 gap-y-1">
                                 <label for="profile_type">Select Your Interests</label>
                                 <Field as="select" class="rounded-md border-gray-300 specIn sp"   name="preferred_college_locations_test" multiple="multiple">
-                                     <option v-for="hskill in hard_skills" v-bind:value="hskill.id" :key="hskill.id"> {{hskill.name}}</option>
+                                     <option v-for="hskill in hard_skills" :value="hskill.id" :key="hskill.id"> {{hskill.name}}</option>
                                       
                                 </Field>
 
@@ -83,7 +83,7 @@
                             <div class="flex flex-col w-1/2 gap-y-1">
                                 <label for="profile_type">Select Your Top 3 Skills</label>
                                 <Field as="select" class="rounded-md border-gray-300 sftskill"   name="preferred_college_locations_test" multiple="multiple">
-                                    <option v-for="softskill in softskills" v-bind:value="softskill.id" :key="softskill.id"> {{softskill.name}}</option>
+                                    <option v-for="softskill in softskills" :value="softskill.id" :key="softskill.id"> {{softskill.name}}</option>
                                       
                                 </Field>
 
@@ -103,7 +103,7 @@
                                 <label for="profile_type">Exam {{k+1}}</label>
                                 <select as="select" class="rounded-md border-gray-300 exam ff"   name="preferred_college_locations_test" :id="'sel_'+k">
                                     <option value="" selected>Select</option>
-                                     <option v-for="exam in exams" v-bind:value="exam.id" :key="exam.id" :selected="exam.id == entrance_exam.entrance_exam_id"> {{exam.name}}</option>
+                                     <option v-for="exam in exams" :value="exam.id" :key="exam.id" :selected="exam.id == entrance_exam.entrance_exam_id"> {{exam.name}}</option>
                                       
                                 </select>
 
@@ -199,7 +199,7 @@
                                 <label for="profile_type">Exam {{entrance_exams.length+1+k}}</label>
                                 <select as="select" class="rounded-md border-gray-300 exam ff"   name="preferred_college_locations_test" :id="'sel_'+(entrance_exams.length+k)">
                                     <option value="" selected>Select</option>
-                                     <option v-for="exam in exams" v-bind:value="exam.id" :key="exam.id"> {{exam.name}}</option>
+                                     <option v-for="exam in exams" :value="exam.id" :key="exam.id"> {{exam.name}}</option>
                                       
                                 </select>
                                  <span>
@@ -445,7 +445,7 @@ export default {
     onSubmit(values){
 
         var examId =[];
-        $('.ff').each(function(index1, value,e) {
+        $('.ff').each(function(index1, value) {
             var current = $(this).attr('id');
             
             var strarray = current.split('_');
@@ -456,7 +456,7 @@ export default {
             var val1 = $("#sel_"+index).val();
             if(val1 ==''){
                 alert('Please Select Exam');
-                e.preventDefault();
+                return false;
             }
 
 
@@ -520,8 +520,11 @@ export default {
                    //this.step3 = false;
                    //component('Dashboard');
                    this.step3 = false;
+                  // this.$router.push('Dashboard');
+                  // alert();
                    //this.abc();
-                   window.location.href = "/dashboard"
+                  this.$router.go('/dashboard');
+                  // window.location.href = "/dashboard"
                    //this.$router.push('/dashboard');
                 //     this.formDetail1 = true;
                 //     this.user = response.data.data[0];
