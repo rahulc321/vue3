@@ -444,6 +444,10 @@ export default {
    
     onSubmit(values){
 
+      
+
+
+
         var examId =[];
         $('.ff').each(function(index1, value) {
             var current = $(this).attr('id');
@@ -520,10 +524,11 @@ export default {
                    //this.step3 = false;
                    //component('Dashboard');
                    this.step3 = false;
+                    $( "#foo" ).trigger("click");
                   // this.$router.push('Dashboard');
                   // alert();
                    //this.abc();
-                  this.$router.go('/dashboard');
+                 // this.$router.go('/dashboard');
                   // window.location.href = "/dashboard"
                    //this.$router.push('/dashboard');
                 //     this.formDetail1 = true;

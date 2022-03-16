@@ -29,12 +29,14 @@
 		<nav v-if="token==1" class="flex space-x-2 tablet:space-x-4 desktop:space-x-6 items-center">
 			 <router-link to="/dashboard"><a href="javascript:;" class="text-gray-600 leading-4 text-sm font-semibold">Dashboard</a></router-link>
 			<div class="relative"> 
-				<img class="rounded-full w-6 h-6 tablet:h-12 tablet:w-12" :src="image" alt="" onerror="this.src='https://i.ibb.co/wrKHWJ4/avatar-full.png'">
+				<img class="rounded-full w-6 h-6 tablet:h-12 tablet:w-12 imgh" :src="image" alt="" onerror="this.src='https://i.ibb.co/wrKHWJ4/avatar-full.png'">
 			</div>
 		</nav>
 
 	</header>
 	<!--===============Header================-->
+
+
 </template>
 
 

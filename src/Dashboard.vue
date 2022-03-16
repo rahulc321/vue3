@@ -71,6 +71,10 @@
 			<!-- Dashboard content -->
 			<div class="w-full tablet:pl-9 tablet:pr-12 tablet:py-12 desktop:pl-16  desktop:py-9">
 
+				<div class="txt">
+					<p class="txt2"><span class="imp" style="color: red"><i class="fa fa-bullhorn" aria-hidden="true"></i>  Important</span> : For better matching results, please complete all the profile sections below and provide as much information as you can.</p>
+					<br>
+				</div>
 
 				<!-- Avatar -->
 				<div class="flex gap-x-10 items-center">
@@ -160,7 +164,7 @@
 							<div class="invalid-feedback">{{errors.phone}}</div>
 						</div>
 						<div class="flex flex-col w-1/3 gap-y-1">
-							<label for="name"> profile type <span class="text-red-600">*</span></label>
+							<label for="name"> Profile Type <span class="text-red-600">*</span></label>
 							<Field as="select" class="rounded-md border-gray-300" name="profile_type"  v-model="post.profile_type">
 									<option value="" selectted>Select</option>
 									<option value="student" selected="">Student</option>
@@ -580,6 +584,9 @@
 
 	</section>
 	<Footer />
+
+	<button @click="buttonClickHandler" id="foo" style="display: none">Click Me!</button>
+
 </template>
 <style type="text/css">
 	.text1{
@@ -597,6 +604,19 @@ li.select2-results__option.select2-results__message {
 }
 .upercase:first-letter {
   text-transform: uppercase
+}
+p.txt2 {
+    border-radius: 7px;
+    background: #dcf6fe;
+    padding: 14px;
+    /*margin-top: -37px;*/
+}
+i.fa.fa-bullhorn {
+    font-size: 23px;
+}
+.desktop\:py-9 {
+    padding-top: 0rem !important;
+    padding-bottom: 2.25rem;
 }
 </style>
 
@@ -768,6 +788,7 @@ created () {
   	 			this.$toast.success("Profile updated successfully");
   	 			auth.get('v1/user').then((response) => {
   	 				this.image = 'https://app.thecareertrail.com/images/'+response.data.data[0].image;
+  	 			$('.imgh').attr("src",this.image);
   	 				// this.form1 = false;
   	 				// this.formDetail1 = true;
 		      //       this.user = response.data.data[0];
@@ -831,8 +852,10 @@ created () {
 
     	
     },
-
-  	logout(){
+    buttonClickHandler(){
+    	this.abc();
+    },
+    logout(){
   		var result = confirm("Are you sure you want to logout?");
 		if (result) {
 			auth.post('logout').then((response) => {
