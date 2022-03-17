@@ -12,6 +12,7 @@ import Forgot from './Forgot.vue'
 import Dashboard from './Dashboard.vue'
 import Reset from './Reset.vue'
 import ChangePass from './ChangePass.vue'
+import exam from './exam.vue'
 
 
 const routes = [
@@ -54,6 +55,11 @@ const routes = [
         path: '/change-password',
         name: 'Change Password',
         component: ChangePass
+    },
+    {
+        path: '/exam',
+        name: 'exam',
+        component: exam
     }
 ]
 

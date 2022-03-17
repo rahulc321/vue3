@@ -1,4 +1,7 @@
 <template>
+<!-- For Loader -->
+<loading v-model:active="isHiddenText" :can-cancel="false" />
+<!-- For Loader -->
    <body class="font-sans min-h-screen h-full w-full bg-login bg-cover bg-blend-soft-light bg-[#12c2e9] relative before:absolute before:top-0 before:left-0 before:min-h-screen before:w-full before:h-full before:mix-blend-multiply before:bg-gradient-to-t before:from-[#2d6de9] before:to-[#12c2e9]">
 	<div class="container isolate flex min-h-screen justify-center items-center">
 		<div class="max-w-lg min-h-3xl w-full mx-auto p-6 tablet:p-16 desktop:p-24 rounded-lg bg-white flex flex-col items-center justify-center">
@@ -36,7 +39,7 @@
 						<button  v-if="!isHidden" type="submit" class="py-3 px-5 font-medium bg-dark-blue text-gray-100 text-gray shadow-lg rounded-md">Change Password</button>
 						&nbsp;
 						<router-link to="/dashboard"><button style="background-color: red"   class="py-3 px-5 font-medium bg-dark-blue text-gray-100 text-gray shadow-lg rounded-md">Back</button></router-link>
-						<p v-if="isHiddenText" style="color: green">Please wait....</p>
+						 
 						<br>
 						 
 					</div>
@@ -57,12 +60,16 @@
 <script>
 import auth from './auth'
 import $ from 'jquery'
+import Loading from 'vue-loading-overlay';
 
 export default {
     name: 'Forgot',
 	 props: {
 
 	  },
+	  components: {
+        Loading
+    },
 	  data(){
 	  	return{
 	  		errors:[],

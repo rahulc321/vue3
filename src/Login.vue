@@ -1,4 +1,8 @@
 <template>
+<!-- For Loader -->
+<loading v-model:active="loading" :can-cancel="false" />
+<!-- For Loader -->
+
 <body class="font-sans min-h-screen h-full w-full bg-login bg-cover bg-blend-soft-light bg-[#12c2e9] relative before:absolute before:top-0 before:left-0 before:min-h-screen before:w-full before:h-full before:mix-blend-multiply before:bg-gradient-to-t before:from-[#2d6de9] before:to-[#12c2e9]">
     <div class="container isolate flex min-h-screen justify-center items-center">
 
@@ -27,7 +31,7 @@
 
                     <div class="mt-6 w-full flex space-x-3">
                         <button type="submit" class="py-3 px-16 bg-dark-blue font-medium text-gray-100 text-gray shadow-lg rounded-md">Log in</button>
-                        <p v-if="loading" class="plswait" style="color:green">Please Wait...<i class="fa fa-spinner fa-spin" style="font-size:24px"></i></p>
+                        
                     </div>
                 </div>
             </form>
@@ -46,11 +50,15 @@
 <script>
 import axios from 'axios'
 import auth from './auth'
+import Loading from 'vue-loading-overlay';
 
 export default {
 
     name: 'Login',
     props: {},
+    components: {
+        Loading
+    },
     data() {
         return {
             errors:[],

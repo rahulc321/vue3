@@ -1,4 +1,7 @@
 <template>
+<!-- For Loader -->
+<loading v-model:active="loaderOne" :can-cancel="false" />
+<!-- For Loader -->
 
 <Header />
 
@@ -43,11 +46,13 @@
 						</svg>
 						My College
 					</a>
-					<a class="flex gap-x-6 items-center text-gray-500 font-normal" href="#">
+					<router-link to="/exam">	
+					<a class="flex gap-x-6 items-center text-gray-500 font-normal" href="javascript:;">
 						<!-- icon -->
 						<svg class="w-5" width="23" height="28" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20.97 25.61"><path d="M11.37,21.54A3.91,3.91,0,0,1,9.56,20a4.34,4.34,0,0,0-.84-.9l-.09-.06L5.86,24.73l3.3-.23L11.11,27l2.82-5.78-.23.07a5.67,5.67,0,0,1-1.62.31A2.44,2.44,0,0,1,11.37,21.54Z" transform="translate(-4.51 -1.42)" style="fill:#003a9b"/><path d="M21.28,19.13a4.34,4.34,0,0,0-.84.9,3.91,3.91,0,0,1-1.81,1.51,4.05,4.05,0,0,1-2.33-.21l-.23-.07L18.89,27l1.95-2.54,3.3.23-2.77-5.66Z" transform="translate(-4.51 -1.42)" style="fill:#003a9b"/><path d="M25.49,10.93a2.84,2.84,0,0,0-.73-1.42A5,5,0,0,1,24,8.17a5,5,0,0,1-.2-1.58,2.8,2.8,0,0,0-.27-1.51,3.18,3.18,0,0,0-1.44-.72,6,6,0,0,1-1.52-.65,5.55,5.55,0,0,1-1.11-1.16,2.88,2.88,0,0,0-1.18-1.08,3.1,3.1,0,0,0-1.57.21A5.82,5.82,0,0,1,15,2a6,6,0,0,1-1.68-.32,4.92,4.92,0,0,0-1.24-.26,1.13,1.13,0,0,0-.32.05,2.88,2.88,0,0,0-1.18,1.08A5.55,5.55,0,0,1,9.47,3.71,6,6,0,0,1,8,4.36a3.18,3.18,0,0,0-1.44.72,2.8,2.8,0,0,0-.27,1.51A5,5,0,0,1,6,8.17a5,5,0,0,1-.8,1.34,2.84,2.84,0,0,0-.73,1.42,2.81,2.81,0,0,0,.73,1.42A5,5,0,0,1,6,13.69a5,5,0,0,1,.2,1.59,2.77,2.77,0,0,0,.27,1.5A3.09,3.09,0,0,0,8,17.5a6,6,0,0,1,1.52.66,5.76,5.76,0,0,1,1.11,1.15,3,3,0,0,0,1.18,1.09,3.07,3.07,0,0,0,1.56-.22A6,6,0,0,1,15,19.86a6,6,0,0,1,1.68.32,3.07,3.07,0,0,0,1.56.22,3,3,0,0,0,1.18-1.09,5.76,5.76,0,0,1,1.11-1.15,5.7,5.7,0,0,1,1.52-.66,3,3,0,0,0,1.43-.72,2.67,2.67,0,0,0,.28-1.5,5,5,0,0,1,.2-1.59,5,5,0,0,1,.8-1.34A2.81,2.81,0,0,0,25.49,10.93ZM15,18.28a7.56,7.56,0,0,1-7.75-7.35A7.57,7.57,0,0,1,15,3.58a7.57,7.57,0,0,1,7.75,7.35A7.56,7.56,0,0,1,15,18.28Z" transform="translate(-4.51 -1.42)" style="fill:#003a9b"/><path d="M15,4.78a6.32,6.32,0,0,0-6.48,6.15A6.32,6.32,0,0,0,15,17.08a6.33,6.33,0,0,0,6.48-6.15A6.33,6.33,0,0,0,15,4.78Z" transform="translate(-4.51 -1.42)" style="fill:#003a9b"/></svg>						
 						My Exam
 					</a>
+					</router-link>	
 
 					<!-- Seperator -->
 					<div class="border-t-2 border-blue-200 -ml-5 w-64"></div>
@@ -86,7 +91,7 @@
 
 				<!-- Basic Information -->
 				<div class="mt-10 w-full relative" x-data="{ showForm : true }">
-					<h2 class="text-base text-dark-blue font-medium mb-7 desktop:text-xl">Basic Information <i v-if="loaderOne" class="fa fa-spinner fa-spin" style="color:green;font-size:24px"></i></h2>
+					<h2 class="text-base text-dark-blue font-medium mb-7 desktop:text-xl">Basic Information  </h2>
 					<button class="absolute top-0 right-0" v-on:click="click">
 						<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 							<circle cx="12" cy="12" r="11.5" fill="#DCF6FF" stroke="#95DCF4" stroke-linecap="round"/>
@@ -432,7 +437,7 @@
 								<button style="height: 55px;" v-on:click="cancel2" class="py-3 px-16 font-medium text-gray-700 border border-gray-300 rounded-md" type="button">Cancel</button>
 								<button class="py-3 px-16 font-medium bg-dark-blue text-gray-100 text-gray shadow-lg rounded-md" type="submit">Save</button>
 
-								<p v-if="loading" class="plswait" style="color:green">Please Wait...<i class="fa fa-spinner fa-spin" style="font-size:24px"></i></p>
+								 
 							</div>
 						</div>
 					</form>
@@ -628,6 +633,8 @@ import stepthree from './stepthree.vue'
 import auth from './auth'
 import moment from "moment";
 import { onUpdated } from 'vue'
+import Loading from 'vue-loading-overlay';
+ 
 
 import { Form, Field } from 'vee-validate';
 import * as Yup from 'yup';
@@ -640,6 +647,7 @@ export default {
   name: 'Dashboard',
   components: {
    Header,
+   Loading,
    Footer,
    App,
    Form,
@@ -700,6 +708,7 @@ export default {
 
 
   	return {
+  		//isLoading: true,
   		schema,
   		schema2,
   		// Step2
@@ -782,13 +791,14 @@ created () {
         data.append('image', image);
 
   		
-  		 
+  		this.loaderOne = true; 
   		auth.post('v1/updateImage',data, config).then((response) => {
   	 			//console.log(response);
   	 			this.$toast.success("Profile updated successfully");
   	 			auth.get('v1/user').then((response) => {
   	 				this.image = 'https://app.thecareertrail.com/images/'+response.data.data[0].image;
   	 			$('.imgh').attr("src",this.image);
+  	 			this.loaderOne = false;
   	 				// this.form1 = false;
   	 				// this.formDetail1 = true;
 		      //       this.user = response.data.data[0];
@@ -798,7 +808,7 @@ created () {
 
   	},
   	onSubmit(values){
-
+  			this.loaderOne = true;
   			// const image = e.target.files[0];
   			// console.log(image); return false;
 
@@ -808,6 +818,7 @@ created () {
   	 			auth.get('v1/user').then((response) => {
   	 				this.form1 = false;
   	 				this.formDetail1 = true;
+  	 				this.loaderOne = false;
 		            this.user = response.data.data[0];
 
 					if(this.user.date_of_birth != null){
@@ -822,7 +833,9 @@ created () {
         },
 
     onSubmit2(val){
+    	//alert();
     	this.loading = true;
+    	this.loaderOne = true;
     	//console.log(val);
     	let obj = {
     		"sector_preference":val.sector_preference,
@@ -841,6 +854,7 @@ created () {
     	auth.post('v1/update_extended_step',obj).then((response) => {
     		this.abc();
   	 		this.loading = false;
+  	 		this.loaderOne = false;
   	 		this.form2 = false;
   	 		this.$toast.success("Profile updated successfully");
 			}).catch(error => {
@@ -856,10 +870,12 @@ created () {
     	this.abc();
     },
     logout(){
+    	this.loaderOne =true;
   		var result = confirm("Are you sure you want to logout?");
 		if (result) {
 			auth.post('logout').then((response) => {
 			localStorage.removeItem("token");
+			this.loaderOne =false;
 			//this.$toast.success('You have Successfully Logout');
 			window.location.href = "/"
 		}).catch(error => {

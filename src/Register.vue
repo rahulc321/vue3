@@ -1,4 +1,7 @@
 <template>
+<!-- For Loader -->
+<loading v-model:active="isHidden" :can-cancel="false" />
+<!-- For Loader -->
    <body class="font-sans min-h-screen h-full w-full bg-login bg-cover bg-blend-soft-light bg-[#12c2e9] relative before:absolute before:top-0 before:left-0 before:min-h-screen before:w-full before:h-full before:mix-blend-multiply before:bg-gradient-to-t before:from-[#2d6de9] before:to-[#12c2e9]">
 	<div class="container isolate flex min-h-screen justify-center items-center">
 		<div class="max-w-lg min-h-3xl w-full mx-auto p-6 tablet:p-16 desktop:p-24 rounded-lg bg-white flex flex-col items-center justify-center">
@@ -54,7 +57,7 @@
 					<div class="mt-6 w-full flex space-x-3">
 						<!-- <button class="py-3 px-8 tablet:px-16 font-medium text-gray-700 border border-gray-300 rounded-md" type="reset">Reset</button> -->
 						<button  type="submit" class="py-3 px-16 tablet:px-16 font-medium bg-dark-blue text-gray-100 text-gray shadow-lg rounded-md">Register</button>
-						<p  v-if="isHidden" style="color:green;    font-size: 15px;">Please Wait...<i class="fa fa-spinner fa-spin" style="font-size:24px"></i></p>
+						 
 					</div>
 				</div>
 			</form>
@@ -73,6 +76,7 @@
 
 import auth from './auth'
 import $ from 'jquery'
+import Loading from 'vue-loading-overlay';
 
 
 
@@ -82,6 +86,9 @@ export default {
  props: {
 
   },
+   components: {
+        Loading
+    },
    data(){
     return {
       errors:[],

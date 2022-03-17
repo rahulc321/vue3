@@ -1,6 +1,11 @@
 <template>
 <div v-if="step3">
-<p v-if="loading1" class="plswait" style="color:green">Please Wait...<i class="fa fa-spinner fa-spin" style="font-size:24px"></i></p>
+
+<!-- For Loader -->
+<loading v-model:active="loading1" :can-cancel="false" />
+<!-- For Loader -->
+
+
 <Form @submit="onSubmit" ref="ref"  v-slot="{ errors }" class="formstyle">
                     
                         <div class="flex justify-between items-center gap-2">
@@ -361,6 +366,7 @@ import auth from './auth'
 
 import { Form, Field } from 'vee-validate';
 import * as Yup from 'yup';
+import Loading from 'vue-loading-overlay';
 
 
 
@@ -372,6 +378,7 @@ export default {
   
    Form,
    Field,
+   Loading,
  
   
      
@@ -445,7 +452,7 @@ export default {
     onSubmit(values){
 
       
-
+        this.loading1 =true;
 
 
         var examId =[];
@@ -524,6 +531,7 @@ export default {
                    //this.step3 = false;
                    //component('Dashboard');
                    this.step3 = false;
+                   this.loading1 =false;
                     $( "#foo" ).trigger("click");
                   // this.$router.push('Dashboard');
                   // alert();
