@@ -80,7 +80,7 @@
     </div>
     <!-- Certificate Table -->
     <div class="overflow-x-auto bg-white rounded-lg shadow">
-      <table class="border-collapse table-auto w-full whitespace-no-wrap bg-white relative" id="myTable">
+      <table class="border-collapse table-auto w-full whitespace-no-wrap bg-white relative" id="example">
         <thead>
           <tr class="text-left">
             <th class="bg-gray-100 sticky top-0 border-b border-blue-200 px-4 py-2 text-dark-blue font-semibold tracking-wide text-sm"> No. </th>
@@ -92,33 +92,12 @@
             <th class="bg-gray-100 sticky top-0 border-b border-blue-200 px-4 py-2 text-dark-blue font-semibold tracking-wide text-sm"> Action </th>
           </tr>
         </thead>
-        <tbody  x-data="">
+        <tbody>
+
+        <div class="tableData">
+        </div>
          
-            <tr class="border-b border-blue-200" v-for="(exam,i) in exams" :value="exam.id" :key="exam.id">
-              <td>
-                <span class="text-gray-700 px-4 py-2 flex items-center text-sm">{{i+1}}</span>
-              </td>
-  
-              <td>
-                <span class="text-gray-700 px-4 py-2 flex items-center text-sm">{{exam.name}}</span>
-              </td>
-  
-              <td>
-                <span class="text-gray-700 px-4 py-2 flex items-center text-sm"> {{exam.type}} </span>
-              </td>
-  
-              <td>
-                <span class="text-gray-700 px-4 py-2 flex items-center text-sm"> {{exam.hot_rating}} </span>
-              </td>
-  
-              <td>
-                <span class="text-gray-700 px-4 py-2 flex items-center text-sm">{{exam.allowed_attempts}}% </span>
-              </td>
-  
-              <td>
-                <button class="text-white px-2 text-xs rounded-sm py-1.5 bg-red-600"> Remove </button>
-              </td>
-            </tr>
+
            
         </tbody>
       </table>
@@ -128,12 +107,20 @@
   </section>
     
 <Footer />
+
 </template>
- 
+ <style type="text/css">
+  tr.border-b.border-blue-200.odd {
+    background: #e6e9eb;
+}
+div#example_length {
+    margin-bottom: 19px;
+}
+</style>
 <script>
 
 import auth from './auth'
-import $ from 'jquery'
+//import $ from 'jquery'
 import Loading from 'vue-loading-overlay';
 import Header from './layout/header.vue'
 import Footer from './layout/footer.vue'
@@ -155,7 +142,7 @@ name: 'exam',
     },
    data(){
     return {
-          loader:false,
+          loader:true,
           isShowing:false,
            "exams":''
      
@@ -163,14 +150,61 @@ name: 'exam',
    },methods:{
     
 
-   },mounted() {
-
-    $('#myTable').DataTable();
+   },created() {
+    
+     
       auth.get('v1/exams').then((response) => {
             this.exams = response.data.data;
             console.log('>>>>>>>>exams',this.exams)
-             
+
+
+            // Append data
+          var examlen =this.exams;
+          for (let j = 0; j < examlen.length; j++) {
+          var $tblRow = $(`<tr class="border-b border-blue-200">
+
+            
+              <td>
+                <span class="text-gray-700 px-4 py-2 flex items-center text-sm">`+(j+1)+`</span>
+              </td>
+  
+              <td>
+                <span class="text-gray-700 px-4 py-2 flex items-center text-sm">`+examlen[j].name+`</span>
+              </td>
+  
+              <td>
+                <span class="text-gray-700 px-4 py-2 flex items-center text-sm"> `+examlen[j].type+` </span>
+              </td>
+  
+              <td>
+                <span class="text-gray-700 px-4 py-2 flex items-center text-sm"> `+examlen[j].hot_rating+` </span>
+              </td>
+  
+              <td>
+                <span class="text-gray-700 px-4 py-2 flex items-center text-sm">`+examlen[j].allowed_attempts+`% </span>
+              </td>
+  
+              <td>
+                <button class="text-white px-2 text-xs rounded-sm py-1.5 bg-red-600"> Remove </button>
+              </td>
+              
+            </tr>`);
+
+         // $('.tableData').append($tblRow);
+
+           $( $tblRow ).appendTo( $( "tbody" ) );
+
+           this.loader = false;
+
+          }
+
+
+
+
+           $('#example').DataTable();  
         })
+
+     // $('#example').DataTable();
    }
 }
 </script>
