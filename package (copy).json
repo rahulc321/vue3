@@ -1,0 +1,43 @@
+{
+  "name": "careertrail-vue",
+  "version": "0.0.0",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@meforma/vue-toaster": "^1.3.0",
+    "axios": "^0.25.0",
+    "core-js": "^3.6.5",
+    "jquery": "^3.6.0",
+    "v-toaster": "^1.0.3",
+    "validator": "^13.7.0",
+    "validators": "^0.3.1",
+    "vue": "^3.2.25",
+    "vue-axios": "^3.4.0",
+    "vue-env": "^0.2.1-moved",
+    "vue-router": "^4.0.12"
+  },
+  "devDependencies": {
+    "@tailwindcss/forms": "^0.4.0",
+    "@tailwindcss/typography": "^0.5.0",
+    "@vitejs/plugin-vue": "^2.0.0",
+    "autoprefixer": "^10.4.2",
+    "postcss": "^8.4.5",
+    "tailwindcss": "^3.0.15",
+    "vite": "^2.7.2"
+  },
+  "description": "This template should help get you started developing with Vue 3 in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.",
+  "main": "postcss.config.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/m0shiurX/careertrail-vue3.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/m0shiurX/careertrail-vue3/issues"
+  },
+  "homepage": "https://github.com/m0shiurX/careertrail-vue3#readme"
+}
