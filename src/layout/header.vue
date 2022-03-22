@@ -44,6 +44,12 @@
 import auth from '../auth'
 //localStorage.removeItem("token");
 const token = localStorage.getItem('token');
+const EXPIRE_TIME = 5000*60*60;
+setTimeout(function() {
+	//alert();
+	window.location.href = "/";
+    localStorage.removeItem('token');
+}, EXPIRE_TIME); // after an hour it will delete the data
 if(token==null){
 	var tkn = 0;
 }else{
