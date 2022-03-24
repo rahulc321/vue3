@@ -151,7 +151,9 @@ name: 'exam',
     
 
    },created() {
-    
+
+
+    ///ddd
      
       auth.get('v1/exams').then((response) => {
             this.exams = response.data.data;
