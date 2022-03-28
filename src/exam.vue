@@ -80,7 +80,7 @@
     </div>
     <!-- Certificate Table -->
     <div class="overflow-x-auto bg-white rounded-lg shadow">
-      <table class="border-collapse table-auto w-full whitespace-no-wrap bg-white relative" id="example">
+      <table class="border-collapse table-auto w-full whitespace-no-wrap bg-white relative example" id="example">
         <thead>
           <tr class="text-left">
             <th class="bg-gray-100 sticky top-0 border-b border-blue-200 px-4 py-2 text-dark-blue font-semibold tracking-wide text-sm"> No. </th>
@@ -105,13 +105,107 @@
   
     </div>
   </section>
+
+  <!-- Search form -->
+  <div class="container mt-8">
+    <h2 class="text-2xl">Filters:</h2>
+    <form action="" class="mt-3" @submit="search">
+      <div class="flex space-y-3 flex-col tablet:w-full tablet:flex-row tablet:flex-wrap tablet:gap-y-4 tablet:space-y-0">
+        <div class="flex items-center gap-x-6 tablet:w-1/2">
+          <label class="w-1/5" for="profile_type">College</label>
+          <select class="w-4/5 flex-1 rounded-md border-gray-300" name="profile_type" id="profile_type">
+            <option value="student">Indian Institute of Technology Bombay</option>
+            <option value="student">Engineer</option>
+          </select>
+        </div>
+        
+        <div class="flex items-center gap-x-6 tablet:w-1/2">
+          <label class="w-1/5 tablet:pl-2" for="profile_type">Location</label>
+          <select class="w-4/5 flex-1 rounded-md border-gray-300" name="profile_type" id="profile_type">
+            <option value="student">IT & Software</option>
+            <option value="student">Business</option>
+          </select>
+        </div>
+
+        <div class="flex justify-between items-center gap-3 tablet:w-full desktop:w-1/2">
+          <div class="flex w-1/2 items-center gap-x-2">
+            <label class="" for="profile_type">Hot College Rating</label>
+            <select class="flex-grow rounded-md border-gray-300" name="profile_type" id="profile_type">
+              <option value="student">Medium</option>
+              <option value="student">High</option>
+            </select>
+          </div>
+          <div class="flex w-1/2 items-center gap-x-2">
+            <label class="" for="profile_type">Match Score</label>
+            <select class="flex-grow rounded-md border-gray-300" name="profile_type" id="profile_type">
+              <option value="student">100%</option>
+              <option value="student">90%</option>
+            </select>
+          </div>
+        </div>
+        <button class="w-full bg-dark-blue px-8 py-2 rounded-lg text-white tablet:w-1/4 desktop:ml-5">Search</button>
+        <button class="hidden tablet:flex items-center ml-20 border-gray-500 border-b px-2">
+          Advanced Search
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 ml-1" width="24" height="24"
+            viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+            stroke-linecap="round" stroke-linejoin="round">
+            <rect x="0" y="0" width="24" height="24" stroke="none"></rect>
+            <polyline points="6 9 12 15 18 9" />
+          </svg>
+        </button>
+      </div>
+    </form>
+
+    <div class="mt-5" v-if="noresult">
+      <!-- Empty search results -->
+      <div class="relative p-12 w-3/5 tablet:text-center tablet:pl-24 desktop:w-full">
+        <p class="text-dark-blue text-sm desktop:text-lg">No results yet. Please search to find matching college!! </p>
+        <img class="absolute top-6 right-0 tablet:left-8 tablet:transform tablet:-scale-x-1 desktop:left-auto desktop:right-1/4 desktop:scale-x-100 " src="./assets/images/spiral_arrow.svg" alt="">
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Filter result -->
+  <section class="container mt-8" v-if="!noresult">
+    <!-- Heading & Filter-->
+     
+    <!-- Certificate Table -->
+    <div class="overflow-x-auto bg-white rounded-lg shadow">
+      <table class="border-collapse table-auto w-full whitespace-no-wrap bg-white relative example sec" id="example1">
+        <thead>
+          <tr class="text-left">
+            <th class="bg-gray-100 sticky top-0 border-b border-blue-200 px-4 py-2 text-dark-blue font-semibold tracking-wide text-sm"> No. </th>
+            <th class="bg-gray-100 sticky top-0 border-b border-blue-200 px-4 py-2 text-dark-blue font-semibold tracking-wide text-sm"> Exam </th>
+            <th class="bg-gray-100 sticky top-0 border-b border-blue-200 px-4 py-2 text-dark-blue font-semibold tracking-wide text-sm">  Type of Exam </th>
+            
+            <th class="bg-gray-100 sticky top-0 border-b border-blue-200 px-4 py-2 text-dark-blue font-semibold tracking-wide text-sm"> Hot Exam Rating </th>
+            <th class="bg-gray-100 sticky top-0 border-b border-blue-200 px-4 py-2 text-dark-blue font-semibold tracking-wide text-sm"> MatchScore </th>
+            <th class="bg-gray-100 sticky top-0 border-b border-blue-200 px-4 py-2 text-dark-blue font-semibold tracking-wide text-sm"> Action </th>
+          </tr>
+        </thead>
+        <tbody>
+
+        <div class="tableData1">
+        </div>
+         
+
+           
+        </tbody>
+      </table>
+       
+  
+    </div>
+  </section>
+
+
     
 <Footer />
 
 </template>
  <style type="text/css">
   tr.border-b.border-blue-200.odd {
-    background: #e6e9eb;
+    background: #e6e9eb !important;
 }
 div#example_length {
     margin-bottom: 19px;
@@ -144,18 +238,76 @@ name: 'exam',
     return {
           loader:true,
           isShowing:false,
+          noresult:true,
+          
            "exams":''
      
   	}
    },methods:{
-    
 
-   },created() {
+     saveExam: function (event) {
+      
+        alert();
+      },
+      
+
+      search(event){
+          event.preventDefault();
+          this.noresult= false;
+          this.loader = true;
+
+          auth.get('v1/exams/search').then((response) => {
+            this.exams = response.data.data;
+            console.log('>>>>>>>>examssearch',this.exams)
 
 
-    ///ddd
-     
-      auth.get('v1/exams').then((response) => {
+            // Append data
+          $( ".sec tbody" ).html(' ');
+          var examlen =this.exams;
+          for (let j = 0; j < examlen.length; j++) {
+          var $tblRow = $(`<tr class="border-b border-blue-200">
+
+            
+              <td>
+                <span class="text-gray-700 px-4 py-2 flex items-center text-sm">`+(j+1)+`</span>
+              </td>
+  
+              <td>
+                <span class="text-gray-700 px-4 py-2 flex items-center text-sm">`+examlen[j].name+`</span>
+              </td>
+  
+              <td>
+                <span class="text-gray-700 px-4 py-2 flex items-center text-sm"> `+examlen[j].full_name+` </span>
+              </td>
+  
+              <td>
+                <span class="text-gray-700 px-4 py-2 flex items-center text-sm"> `+examlen[j].hot_rating+` </span>
+              </td>
+  
+              <td>
+                <span class="text-gray-700 px-4 py-2 flex items-center text-sm">`+examlen[j].match_score+`</span>
+              </td>
+  
+              <td>
+                <button @click="saveExam" data="`+examlen[j].match_score+`" exam-id="`+examlen[j].id+`" class="text-white px-2 text-xs rounded-sm py-1.5 bg-green-600 saveExam"> Save </button>
+              </td>
+              
+            </tr>`);
+
+         $(".sec tbody").append($tblRow);
+
+         // $( $tblRow ).appendTo( $( ".sec tbody" ) );
+
+           this.loader = false;
+
+          }
+           $('.example').DataTable();  
+        })
+      },
+
+
+      listExam(){
+        auth.get('v1/get_saved_exams').then((response) => {
             this.exams = response.data.data;
             console.log('>>>>>>>>exams',this.exams)
 
@@ -183,11 +335,11 @@ name: 'exam',
               </td>
   
               <td>
-                <span class="text-gray-700 px-4 py-2 flex items-center text-sm">`+examlen[j].allowed_attempts+`% </span>
+                <span class="text-gray-700 px-4 py-2 flex items-center text-sm">`+examlen[j].match_score+` </span>
               </td>
   
               <td>
-                <button class="text-white px-2 text-xs rounded-sm py-1.5 bg-red-600"> Remove </button>
+                <button v-on:click="remove" exam-id="`+examlen[j].id+`"  class="text-white px-2 text-xs rounded-sm py-1.5 bg-red-600 remove"> Remove </button>
               </td>
               
             </tr>`);
@@ -196,15 +348,58 @@ name: 'exam',
 
            $( $tblRow ).appendTo( $( "tbody" ) );
 
-           this.loader = false;
+           
 
           }
-
-
-
-
-           $('#example').DataTable();  
+          this.loader = false;
+           $('.example').DataTable();  
         })
+      },
+      remove(message) {
+     // remove(){
+        alert();
+      },
+    
+
+   },created() {
+
+
+    ///ddd
+   var loadApi=  this.listExam();
+    $(document).on('click','.saveExam',function(loadApi){
+       var obj = {
+            "exam_id":$(this).attr('exam-id'),
+            "match_score":$(this).attr('data'),
+       }
+        
+       auth.post('v1/save_exam',obj).then((response) => {
+         
+        alert('Exam Successfully Added.');
+        window.location.href = "/exam"
+
+       });
+
+       
+    });
+
+    $(document).on('click','.remove',function(loadApi){
+       var obj = {
+            "exam_id":$(this).attr('exam-id')
+            
+       }
+        
+       auth.post('v1/remove_exam',obj).then((response) => {
+         
+        alert('Exam Successfully Removed.');
+        window.location.href = "/exam"
+
+       });
+
+       
+    });
+
+      
+      
 
      // $('#example').DataTable();
    }
