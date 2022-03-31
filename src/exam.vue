@@ -20,91 +20,7 @@
       </ol>
       </nav>
   </section>
-<section class="container mt-8">
-    <!-- Heading & Filter-->
-    <div class="flex justify-between items-center mb-3">
-      <h2 class="text-2xl">Saved Results</h2>
-      <div  x-data="{ isShowing:false }" class="relative">
-        <button x-on:click="isShowing = !isShowing" class="rounded-lg inline-flex items-center bg-white hover:text-blue-500 focus:outline-none focus:shadow-outline text-gray-500 font-semibold py-2 px-2 desktop:px-4">
-          <svg class="w-6 h-6 tablet:hidden" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-            <rect x="0" y="0" width="24" height="24" stroke="none"></rect>
-            <path d="M5.5 5h13a1 1 0 0 1 0.5 1.5L14 12L14 19L10 16L10 12L5 6.5a1 1 0 0 1 0.5 -1.5" />
-          </svg>
-          <span class="hidden tablet:block">Show / Hide Columns</span>
-          <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 ml-1" width="24" height="24"
-            viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
-            stroke-linecap="round" stroke-linejoin="round">
-            <rect x="0" y="0" width="24" height="24" stroke="none"></rect>
-            <polyline points="6 9 12 15 18 9" />
-          </svg>
-        </button>
 
-        <!-- Filter properties -->
-        <div class="absolute top-0 right-0 shadow-lg bg-white p-5 w-80 min-h-40 rounded-lg z-10"  v-if="isShowing">
-          <form action="" class="flex flex-wrap gap-y-2 gap-x-3">
-            <div>
-              <input type="checkbox" name="education_streams" id="education_streams">
-              <label class="text-sm font-light" for="education_streams">Education Streams</label>
-            </div>
-            <div>
-              <input type="checkbox" name="specialization" id="specialization">
-              <label class="text-sm font-light" for="specialization">Specialization</label>
-            </div>
-            <div>
-              <input type="checkbox" name="mode_of_study" id="mode_of_study">
-              <label class="text-sm font-light" for="mode_of_study">Mode of Study</label>
-            </div>
-            <div>
-              <input type="checkbox" name="career_location" id="career_location">
-              <label class="text-sm font-light" for="career_location">Career Location</label>
-            </div>
-            <div>
-              <input type="checkbox" name="certificate" id="certificate">
-              <label class="text-sm font-light" for="certificate">Credentials - Degree/ Diploma/ Certificate</label>
-            </div>
-            <div>
-              <input type="checkbox" name="course_level" id="course_level">
-              <label class="text-sm font-light" for="course_level">Course (Program) Levels</label>
-            </div>
-            <button type="reset" class="border-b text-blue-600 text-sm border-blue-600">Reset</button>
-          </form>
-          <span class="absolute top-0 right-0" x-on:click="isShowing = false">
-            <svg class="w-12 h-12 cursor-pointer" width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <circle cx="15.5" cy="15.5002" r="7.57773" transform="rotate(45 15.5 15.5002)" fill="#DCF6FF" stroke="#95DCF4" stroke-width="0.415051" stroke-linecap="round"/>
-              <rect x="17.8613" y="12.5322" width="1.24515" height="7.47091" transform="rotate(45 17.8613 12.5322)" fill="#003A9B"/>
-              <rect x="18.7419" y="17.5215" width="1.24515" height="7.47091" transform="rotate(135 18.7419 17.5215)" fill="#003A9B"/>
-            </svg>              
-          </span>
-        </div>
-      </div>
-    </div>
-    <!-- Certificate Table -->
-    <div class="overflow-x-auto bg-white rounded-lg shadow">
-      <table class="border-collapse table-auto w-full whitespace-no-wrap bg-white relative example" id="example">
-        <thead>
-          <tr class="text-left">
-            <th class="bg-gray-100 sticky top-0 border-b border-blue-200 px-4 py-2 text-dark-blue font-semibold tracking-wide text-sm"> No. </th>
-            <th class="bg-gray-100 sticky top-0 border-b border-blue-200 px-4 py-2 text-dark-blue font-semibold tracking-wide text-sm"> Exam </th>
-            <th class="bg-gray-100 sticky top-0 border-b border-blue-200 px-4 py-2 text-dark-blue font-semibold tracking-wide text-sm">  Type of Exam </th>
-            
-            <th class="bg-gray-100 sticky top-0 border-b border-blue-200 px-4 py-2 text-dark-blue font-semibold tracking-wide text-sm"> Hot Exam Rating </th>
-            <th class="bg-gray-100 sticky top-0 border-b border-blue-200 px-4 py-2 text-dark-blue font-semibold tracking-wide text-sm"> MatchScore </th>
-            <th class="bg-gray-100 sticky top-0 border-b border-blue-200 px-4 py-2 text-dark-blue font-semibold tracking-wide text-sm"> Action </th>
-          </tr>
-        </thead>
-        <tbody>
-
-        <div class="tableData">
-        </div>
-         
-
-           
-        </tbody>
-      </table>
-       
-  
-    </div>
-  </section>
 
   <!-- Search form -->
   <div class="container mt-8">
@@ -199,6 +115,94 @@
   </section>
 
 
+  <section class="container mt-8">
+    <!-- Heading & Filter-->
+    <div class="flex justify-between items-center mb-3">
+      <h2 class="text-2xl">My Saved Results</h2>
+      <div  x-data="{ isShowing:false }" class="relative">
+        <button x-on:click="isShowing = !isShowing" class="rounded-lg inline-flex items-center bg-white hover:text-blue-500 focus:outline-none focus:shadow-outline text-gray-500 font-semibold py-2 px-2 desktop:px-4">
+          <svg class="w-6 h-6 tablet:hidden" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="0" y="0" width="24" height="24" stroke="none"></rect>
+            <path d="M5.5 5h13a1 1 0 0 1 0.5 1.5L14 12L14 19L10 16L10 12L5 6.5a1 1 0 0 1 0.5 -1.5" />
+          </svg>
+          <!-- <span class="hidden tablet:block">Show / Hide Columns</span> -->
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 ml-1" width="24" height="24"
+            viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+            stroke-linecap="round" stroke-linejoin="round">
+            <rect x="0" y="0" width="24" height="24" stroke="none"></rect>
+            <polyline points="6 9 12 15 18 9" />
+          </svg>
+        </button>
+
+        <!-- Filter properties -->
+        <div class="absolute top-0 right-0 shadow-lg bg-white p-5 w-80 min-h-40 rounded-lg z-10"  v-if="isShowing">
+          <form action="" class="flex flex-wrap gap-y-2 gap-x-3">
+            <div>
+              <input type="checkbox" name="education_streams" id="education_streams">
+              <label class="text-sm font-light" for="education_streams">Education Streams</label>
+            </div>
+            <div>
+              <input type="checkbox" name="specialization" id="specialization">
+              <label class="text-sm font-light" for="specialization">Specialization</label>
+            </div>
+            <div>
+              <input type="checkbox" name="mode_of_study" id="mode_of_study">
+              <label class="text-sm font-light" for="mode_of_study">Mode of Study</label>
+            </div>
+            <div>
+              <input type="checkbox" name="career_location" id="career_location">
+              <label class="text-sm font-light" for="career_location">Career Location</label>
+            </div>
+            <div>
+              <input type="checkbox" name="certificate" id="certificate">
+              <label class="text-sm font-light" for="certificate">Credentials - Degree/ Diploma/ Certificate</label>
+            </div>
+            <div>
+              <input type="checkbox" name="course_level" id="course_level">
+              <label class="text-sm font-light" for="course_level">Course (Program) Levels</label>
+            </div>
+            <button type="reset" class="border-b text-blue-600 text-sm border-blue-600">Reset</button>
+          </form>
+          <span class="absolute top-0 right-0" x-on:click="isShowing = false">
+            <svg class="w-12 h-12 cursor-pointer" width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="15.5" cy="15.5002" r="7.57773" transform="rotate(45 15.5 15.5002)" fill="#DCF6FF" stroke="#95DCF4" stroke-width="0.415051" stroke-linecap="round"/>
+              <rect x="17.8613" y="12.5322" width="1.24515" height="7.47091" transform="rotate(45 17.8613 12.5322)" fill="#003A9B"/>
+              <rect x="18.7419" y="17.5215" width="1.24515" height="7.47091" transform="rotate(135 18.7419 17.5215)" fill="#003A9B"/>
+            </svg>              
+          </span>
+        </div>
+      </div>
+    </div>
+    <!-- Certificate Table -->
+    <div class="overflow-x-auto bg-white rounded-lg shadow">
+      <table class="border-collapse table-auto w-full whitespace-no-wrap bg-white relative example ssss" id="example">
+        <thead>
+          <tr class="text-left">
+            <th class="bg-gray-100 sticky top-0 border-b border-blue-200 px-4 py-2 text-dark-blue font-semibold tracking-wide text-sm"> No. </th>
+            <th class="bg-gray-100 sticky top-0 border-b border-blue-200 px-4 py-2 text-dark-blue font-semibold tracking-wide text-sm"> Exam </th>
+            <th class="bg-gray-100 sticky top-0 border-b border-blue-200 px-4 py-2 text-dark-blue font-semibold tracking-wide text-sm">  Type of Exam </th>
+            
+            <th class="bg-gray-100 sticky top-0 border-b border-blue-200 px-4 py-2 text-dark-blue font-semibold tracking-wide text-sm"> Hot Exam Rating </th>
+            <th class="bg-gray-100 sticky top-0 border-b border-blue-200 px-4 py-2 text-dark-blue font-semibold tracking-wide text-sm"> MatchScore </th>
+            <th class="bg-gray-100 sticky top-0 border-b border-blue-200 px-4 py-2 text-dark-blue font-semibold tracking-wide text-sm"> Action </th>
+          </tr>
+        </thead>
+        <tbody>
+
+        <div class="tableData2">
+        </div>
+         
+
+           
+        </tbody>
+      </table>
+       
+  
+    </div>
+  </section>
+
+<button @click="saveExam" id="saveExam" style="display: none">Click Me!</button>
+<button @click="remove" id="remove" style="display: none">Click Me!</button>
     
 <Footer />
 
@@ -246,8 +250,19 @@ name: 'exam',
    },methods:{
 
      saveExam: function (event) {
-      
-        alert();
+        
+        this.listExam();
+        this.$toast.success("Exam successfully Added!");
+        window.location.href = "/exam"
+      },
+
+       remove() {
+       // alert();
+     // remove(){
+      $('.tableData2').find('tbody').remove();
+        this.listExam();
+        this.$toast.error("Exam successfully Removed!");
+        window.location.href = "/exam"
       },
       
 
@@ -307,11 +322,17 @@ name: 'exam',
 
 
       listExam(){
+
+        
+        
+
+        this.loader = true;
         auth.get('v1/get_saved_exams').then((response) => {
             this.exams = response.data.data;
             console.log('>>>>>>>>exams',this.exams)
 
-
+           
+          
             // Append data
           var examlen =this.exams;
           for (let j = 0; j < examlen.length; j++) {
@@ -346,7 +367,7 @@ name: 'exam',
 
          // $('.tableData').append($tblRow);
 
-           $( $tblRow ).appendTo( $( "tbody" ) );
+           $( $tblRow ).appendTo( $(".ssss tbody") );
 
            
 
@@ -355,10 +376,7 @@ name: 'exam',
            $('.example').DataTable();  
         })
       },
-      remove(message) {
-     // remove(){
-        alert();
-      },
+     
     
 
    },created() {
@@ -373,9 +391,10 @@ name: 'exam',
        }
         
        auth.post('v1/save_exam',obj).then((response) => {
-         
-        alert('Exam Successfully Added.');
-        window.location.href = "/exam"
+        $( "#saveExam" ).trigger("click");
+        
+        //alert('Exam Successfully Added.');
+        //window.location.href = "/exam"
 
        });
 
@@ -389,19 +408,15 @@ name: 'exam',
        }
         
        auth.post('v1/remove_exam',obj).then((response) => {
-         
-        alert('Exam Successfully Removed.');
-        window.location.href = "/exam"
+         $( "#remove" ).trigger("click");
+        // alert('Exam Successfully Removed.');
+        // window.location.href = "/exam"
 
        });
 
        
     });
 
-      
-      
-
-     // $('#example').DataTable();
    }
 }
 </script>
