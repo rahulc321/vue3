@@ -101,9 +101,32 @@
           </tr>
         </thead>
         <tbody>
-
-        <div class="tableData1">
-        </div>
+        <tr v-for="(exam,key) in searchResult">
+         <td>
+                <span class="text-gray-700 px-4 py-2 flex items-center text-sm">{{key+1}}</span>
+              </td>
+  
+              <td>
+                <span class="text-gray-700 px-4 py-2 flex items-center text-sm">{{exam.name}}</span>
+              </td>
+  
+              <td>
+                <span class="text-gray-700 px-4 py-2 flex items-center text-sm"> {{exam.full_name}} </span>
+              </td>
+  
+              <td>
+                <span class="text-gray-700 px-4 py-2 flex items-center text-sm"> {{exam.hot_rating}} </span>
+              </td>
+  
+              <td>
+                <span class="text-gray-700 px-4 py-2 flex items-center text-sm">{{exam.match_score}}</span>
+              </td>
+  
+              <td>
+                <button v-on:click="saveExam" :data="exam.match_score" :exam_id="exam.id" class="text-white px-2 text-xs rounded-sm py-1.5 bg-green-600 saveExam"> Save </button>
+              </td>
+              
+            </tr>
          
 
            
@@ -189,8 +212,32 @@
         </thead>
         <tbody>
 
-        <div class="tableData2">
-        </div>
+        <tr v-for="(exam,key) in exams">
+         <td>
+                <span class="text-gray-700 px-4 py-2 flex items-center text-sm">{{key+1}}</span>
+              </td>
+  
+              <td>
+                <span class="text-gray-700 px-4 py-2 flex items-center text-sm">{{exam.name}}</span>
+              </td>
+  
+              <td>
+                <span class="text-gray-700 px-4 py-2 flex items-center text-sm"> {{exam.full_name}} </span>
+              </td>
+  
+              <td>
+                <span class="text-gray-700 px-4 py-2 flex items-center text-sm"> {{exam.hot_rating}} </span>
+              </td>
+  
+              <td>
+                <span class="text-gray-700 px-4 py-2 flex items-center text-sm">{{exam.match_score}}</span>
+              </td>
+  
+              <td>
+                <button v-on:click="remove" data="`+examlen[j].match_score+`" :exam_id="exam.id" class="text-white px-2 text-xs rounded-sm py-1.5 bg-red-600 saveExam"> Remove </button>
+              </td>
+              
+            </tr>
          
 
            
@@ -211,8 +258,15 @@
   tr.border-b.border-blue-200.odd {
     background: #e6e9eb !important;
 }
+tr.even {
+    /* background: red; */
+    background-color: #e1d7d7 !important;
+}
 div#example_length {
     margin-bottom: 19px;
+}
+.dataTables_wrapper .dataTables_length select {
+    width: 53px !important;
 }
 </style>
 <script>
@@ -243,26 +297,39 @@ name: 'exam',
           loader:true,
           isShowing:false,
           noresult:true,
-          
-           "exams":''
+          searchResult:[],
+          exams:[]
      
-  	}
+    }
    },methods:{
 
      saveExam: function (event) {
-        
-        this.listExam();
-        this.$toast.success("Exam successfully Added!");
-        window.location.href = "/exam"
+        var obj = {
+            "exam_id":event.target.getAttribute('exam_id'),
+            "match_score":event.target.getAttribute('data'),
+       }
+      $('.ssss').DataTable().destroy();
+       auth.post('v1/save_exam',obj).then((response) => {
+          this.$toast.success("Exam successfully Added!");
+         this.listExam();
+
+       });
       },
 
-       remove() {
-       // alert();
-     // remove(){
-      $('.tableData2').find('tbody').remove();
-        this.listExam();
-        this.$toast.error("Exam successfully Removed!");
-        window.location.href = "/exam"
+       remove(event) {
+
+        var obj = {
+            "exam_id":event.target.getAttribute('exam_id')
+            
+       }
+      this.exams = []
+      $('.ssss').DataTable().destroy();
+       auth.post('v1/remove_exam',obj).then((response) => {
+         this.$toast.success("Exam successfully Removed!");
+         this.listExam();
+       });
+
+       
       },
       
 
@@ -270,153 +337,40 @@ name: 'exam',
           event.preventDefault();
           this.noresult= false;
           this.loader = true;
-
+          //$('.example').DataTable();
           auth.get('v1/exams/search').then((response) => {
-            this.exams = response.data.data;
-            console.log('>>>>>>>>examssearch',this.exams)
-
-
-            // Append data
-          $( ".sec tbody" ).html(' ');
-          var examlen =this.exams;
-          for (let j = 0; j < examlen.length; j++) {
-          var $tblRow = $(`<tr class="border-b border-blue-200">
-
-            
-              <td>
-                <span class="text-gray-700 px-4 py-2 flex items-center text-sm">`+(j+1)+`</span>
-              </td>
-  
-              <td>
-                <span class="text-gray-700 px-4 py-2 flex items-center text-sm">`+examlen[j].name+`</span>
-              </td>
-  
-              <td>
-                <span class="text-gray-700 px-4 py-2 flex items-center text-sm"> `+examlen[j].full_name+` </span>
-              </td>
-  
-              <td>
-                <span class="text-gray-700 px-4 py-2 flex items-center text-sm"> `+examlen[j].hot_rating+` </span>
-              </td>
-  
-              <td>
-                <span class="text-gray-700 px-4 py-2 flex items-center text-sm">`+examlen[j].match_score+`</span>
-              </td>
-  
-              <td>
-                <button @click="saveExam" data="`+examlen[j].match_score+`" exam-id="`+examlen[j].id+`" class="text-white px-2 text-xs rounded-sm py-1.5 bg-green-600 saveExam"> Save </button>
-              </td>
-              
-            </tr>`);
-
-         $(".sec tbody").append($tblRow);
-
-         // $( $tblRow ).appendTo( $( ".sec tbody" ) );
-
-           this.loader = false;
-
-          }
-           $('.example').DataTable();  
+            this.searchResult = response.data.data;
+            this.loader = false;
+            setTimeout(() => {
+            $('.example').DataTable();
+            }, 150);
+          
+           
         })
       },
 
 
       listExam(){
 
-        
-        
-
         this.loader = true;
         auth.get('v1/get_saved_exams').then((response) => {
-            this.exams = response.data.data;
-            console.log('>>>>>>>>exams',this.exams)
-
-           
-          
-            // Append data
-          var examlen =this.exams;
-          for (let j = 0; j < examlen.length; j++) {
-          var $tblRow = $(`<tr class="border-b border-blue-200">
-
-            
-              <td>
-                <span class="text-gray-700 px-4 py-2 flex items-center text-sm">`+(j+1)+`</span>
-              </td>
-  
-              <td>
-                <span class="text-gray-700 px-4 py-2 flex items-center text-sm">`+examlen[j].name+`</span>
-              </td>
-  
-              <td>
-                <span class="text-gray-700 px-4 py-2 flex items-center text-sm"> `+examlen[j].type+` </span>
-              </td>
-  
-              <td>
-                <span class="text-gray-700 px-4 py-2 flex items-center text-sm"> `+examlen[j].hot_rating+` </span>
-              </td>
-  
-              <td>
-                <span class="text-gray-700 px-4 py-2 flex items-center text-sm">`+examlen[j].match_score+` </span>
-              </td>
-  
-              <td>
-                <button v-on:click="remove" exam-id="`+examlen[j].id+`"  class="text-white px-2 text-xs rounded-sm py-1.5 bg-red-600 remove"> Remove </button>
-              </td>
-              
-            </tr>`);
-
-         // $('.tableData').append($tblRow);
-
-           $( $tblRow ).appendTo( $(".ssss tbody") );
-
-           
-
-          }
+          this.exams = response.data.data;
           this.loader = false;
-           $('.example').DataTable();  
+          setTimeout(() => {
+            $('.ssss').DataTable();
+          // var table  = $('.ssss').DataTable();
+          //alert();
+          //table.ajax.params({name: 'test'});
+         // table.draw();
+
+            }, 150);
         })
       },
      
     
 
    },created() {
-
-
-    ///ddd
-   var loadApi=  this.listExam();
-    $(document).on('click','.saveExam',function(loadApi){
-       var obj = {
-            "exam_id":$(this).attr('exam-id'),
-            "match_score":$(this).attr('data'),
-       }
-        
-       auth.post('v1/save_exam',obj).then((response) => {
-        $( "#saveExam" ).trigger("click");
-        
-        //alert('Exam Successfully Added.');
-        //window.location.href = "/exam"
-
-       });
-
-       
-    });
-
-    $(document).on('click','.remove',function(loadApi){
-       var obj = {
-            "exam_id":$(this).attr('exam-id')
-            
-       }
-        
-       auth.post('v1/remove_exam',obj).then((response) => {
-         $( "#remove" ).trigger("click");
-        // alert('Exam Successfully Removed.');
-        // window.location.href = "/exam"
-
-       });
-
-       
-    });
-
+    this.listExam();
    }
 }
 </script>
