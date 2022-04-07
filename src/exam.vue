@@ -22,8 +22,17 @@
   </section>
 
 
+<div class="container mt-8" v-if="f">
+<center>
+  <p class="text-dark-blue text-sm desktop:text-lg">To find exam that match your profile, Please use "Find my Exams" button below</p>
+  <button v-on:click="search" class="w-full bg-dark-blue px-8 py-2 rounded-lg text-white tablet:w-1/4 desktop:ml-5">Find my Exams</button></center>
+</div>
+
   <!-- Search form -->
-  <div class="container mt-8">
+  <div class="container mt-8" v-if="a">
+  
+
+
     <h2 class="text-2xl">Filters:</h2>
     <form action="" class="mt-3" @submit="search">
       <div class="flex space-y-3 flex-col tablet:w-full tablet:flex-row tablet:flex-wrap tablet:gap-y-4 tablet:space-y-0">
@@ -93,6 +102,17 @@
           <tr class="text-left">
             <th class="bg-gray-100 sticky top-0 border-b border-blue-200 px-4 py-2 text-dark-blue font-semibold tracking-wide text-sm"> No. </th>
             <th class="bg-gray-100 sticky top-0 border-b border-blue-200 px-4 py-2 text-dark-blue font-semibold tracking-wide text-sm"> Exam </th>
+            <!--  -->
+            <th class="bg-gray-100 sticky top-0 border-b border-blue-200 px-4 py-2 text-dark-blue font-semibold tracking-wide text-sm"> Full Name </th>
+
+            <th class="bg-gray-100 sticky top-0 border-b border-blue-200 px-4 py-2 text-dark-blue font-semibold tracking-wide text-sm"> Conducted By </th>
+
+            <th class="bg-gray-100 sticky top-0 border-b border-blue-200 px-4 py-2 text-dark-blue font-semibold tracking-wide text-sm"> Education Stream </th>
+
+            <th class="bg-gray-100 sticky top-0 border-b border-blue-200 px-4 py-2 text-dark-blue font-semibold tracking-wide text-sm"> Public Sector </th>
+
+            <th class="bg-gray-100 sticky top-0 border-b border-blue-200 px-4 py-2 text-dark-blue font-semibold tracking-wide text-sm"> Nationality </th>
+            <!--  -->
             <th class="bg-gray-100 sticky top-0 border-b border-blue-200 px-4 py-2 text-dark-blue font-semibold tracking-wide text-sm">  Type of Exam </th>
             
             <th class="bg-gray-100 sticky top-0 border-b border-blue-200 px-4 py-2 text-dark-blue font-semibold tracking-wide text-sm"> Hot Exam Rating </th>
@@ -111,7 +131,41 @@
               </td>
   
               <td>
-                <span class="text-gray-700 px-4 py-2 flex items-center text-sm"> {{exam.full_name}} </span>
+                <span class="text-gray-700 px-4 py-2 flex items-center text-sm">{{exam.full_name}}</span>
+              </td>
+
+              <td>
+                <span class="text-gray-700 px-4 py-2 flex items-center text-sm">{{exam.authority}}</span>
+              </td>
+              <td>
+                <span class="text-gray-700 px-4 py-2 flex items-center text-sm">
+                  <span v-for="(stream,i) in exam.education_streams">
+                  <span v-if="i != 0">, </span>{{stream.name}}</span>
+
+                </span>
+              </td>
+              <td>
+                <span class="text-gray-700 px-4 py-2 flex items-center text-sm">
+                <span v-if="exam.is_govt==1">Public</span>
+                <span v-else>Public</span>
+
+                </span>
+              </td>
+
+              <td>
+                <span class="text-gray-700 px-4 py-2 flex items-center text-sm"> 
+
+                <span v-for="(nationality,i) in exam.allowed_nationalities">
+                  <span v-if="i != 0">, </span>{{nationality.name}}</span>
+
+
+
+
+                </span>
+              </td>
+
+              <td>
+                <span class="text-gray-700 px-4 py-2 flex items-center text-sm"> {{exam.type}} </span>
               </td>
   
               <td>
@@ -203,6 +257,18 @@
           <tr class="text-left">
             <th class="bg-gray-100 sticky top-0 border-b border-blue-200 px-4 py-2 text-dark-blue font-semibold tracking-wide text-sm"> No. </th>
             <th class="bg-gray-100 sticky top-0 border-b border-blue-200 px-4 py-2 text-dark-blue font-semibold tracking-wide text-sm"> Exam </th>
+
+            <th class="bg-gray-100 sticky top-0 border-b border-blue-200 px-4 py-2 text-dark-blue font-semibold tracking-wide text-sm"> Full Name </th>
+
+            <th class="bg-gray-100 sticky top-0 border-b border-blue-200 px-4 py-2 text-dark-blue font-semibold tracking-wide text-sm"> Conducted By </th>
+
+            <th class="bg-gray-100 sticky top-0 border-b border-blue-200 px-4 py-2 text-dark-blue font-semibold tracking-wide text-sm"> Education Stream </th>
+
+            <th class="bg-gray-100 sticky top-0 border-b border-blue-200 px-4 py-2 text-dark-blue font-semibold tracking-wide text-sm"> Public Sector </th>
+
+            <th class="bg-gray-100 sticky top-0 border-b border-blue-200 px-4 py-2 text-dark-blue font-semibold tracking-wide text-sm"> Nationality </th>
+            <!--  -->
+
             <th class="bg-gray-100 sticky top-0 border-b border-blue-200 px-4 py-2 text-dark-blue font-semibold tracking-wide text-sm">  Type of Exam </th>
             
             <th class="bg-gray-100 sticky top-0 border-b border-blue-200 px-4 py-2 text-dark-blue font-semibold tracking-wide text-sm"> Hot Exam Rating </th>
@@ -222,7 +288,41 @@
               </td>
   
               <td>
-                <span class="text-gray-700 px-4 py-2 flex items-center text-sm"> {{exam.full_name}} </span>
+                <span class="text-gray-700 px-4 py-2 flex items-center text-sm">{{exam.full_name}}</span>
+              </td>
+
+              <td>
+                <span class="text-gray-700 px-4 py-2 flex items-center text-sm">{{exam.authority}}</span>
+              </td>
+              <td>
+                <span class="text-gray-700 px-4 py-2 flex items-center text-sm">
+                  <span v-for="(stream,i) in exam.education_streams">
+                  <span v-if="i != 0">, </span>{{stream.name}}</span>
+
+                </span>
+              </td>
+              <td>
+                <span class="text-gray-700 px-4 py-2 flex items-center text-sm">
+                <span v-if="exam.is_govt==1">Public</span>
+                <span v-else>Public</span>
+
+                </span>
+              </td>
+
+              <td>
+                <span class="text-gray-700 px-4 py-2 flex items-center text-sm"> 
+
+                <span v-for="(nationality,i) in exam.allowed_nationalities">
+                  <span v-if="i != 0">, </span>{{nationality.name}}</span>
+
+
+
+
+                </span>
+              </td>
+
+              <td>
+                <span class="text-gray-700 px-4 py-2 flex items-center text-sm"> {{exam.type}} </span>
               </td>
   
               <td>
@@ -268,6 +368,9 @@ div#example_length {
 .dataTables_wrapper .dataTables_length select {
     width: 53px !important;
 }
+td {
+    white-space: nowrap;
+}
 </style>
 <script>
 
@@ -295,6 +398,8 @@ name: 'exam',
    data(){
     return {
           loader:true,
+          f:true,
+          a:false,
           isShowing:false,
           noresult:true,
           searchResult:[],
@@ -340,6 +445,8 @@ name: 'exam',
           //$('.example').DataTable();
           auth.get('v1/exams/search').then((response) => {
             this.searchResult = response.data.data;
+             this.f = false;
+             this.a = true;
             this.loader = false;
             setTimeout(() => {
             $('.example').DataTable();
