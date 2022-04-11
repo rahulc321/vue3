@@ -109,6 +109,9 @@
         <thead>
           <tr class="text-left">
             <th class="bg-gray-100 sticky top-0 border-b border-blue-200 px-4 py-2 text-dark-blue font-semibold tracking-wide text-sm"> No. </th>
+
+            <th class="bg-gray-100 sticky top-0 border-b border-blue-200 px-4 py-2 text-dark-blue font-semibold tracking-wide text-sm sticky1"> Action </th>
+
             <th class="bg-gray-100 sticky top-0 border-b border-blue-200 px-4 py-2 text-dark-blue font-semibold tracking-wide text-sm"> Exam </th>
             <!--  -->
             <th class="bg-gray-100 sticky top-0 border-b border-blue-200 px-4 py-2 text-dark-blue font-semibold tracking-wide text-sm"> Full Name </th>
@@ -125,13 +128,18 @@
             
             <th class="bg-gray-100 sticky top-0 border-b border-blue-200 px-4 py-2 text-dark-blue font-semibold tracking-wide text-sm"> Hot Exam Rating </th>
             <th class="bg-gray-100 sticky top-0 border-b border-blue-200 px-4 py-2 text-dark-blue font-semibold tracking-wide text-sm"> MatchScore </th>
-            <th class="bg-gray-100 sticky top-0 border-b border-blue-200 px-4 py-2 text-dark-blue font-semibold tracking-wide text-sm"> Action </th>
+             
           </tr>
         </thead>
         <tbody>
         <tr v-for="(exam,key) in searchResult">
          <td>
                 <span class="text-gray-700 px-4 py-2 flex items-center text-sm">{{key+1}}</span>
+              </td>
+
+
+              <td class="sticky1">
+                <button v-on:click="saveExam" :data="exam.match_score" :exam_id="exam.id" class="text-white px-2 text-xs rounded-sm py-1.5 bg-green-600 saveExam"> Save </button>
               </td>
   
               <td>
@@ -184,9 +192,7 @@
                 <span class="text-gray-700 px-4 py-2 flex items-center text-sm">{{exam.match_score}}</span>
               </td>
   
-              <td>
-                <button v-on:click="saveExam" :data="exam.match_score" :exam_id="exam.id" class="text-white px-2 text-xs rounded-sm py-1.5 bg-green-600 saveExam"> Save </button>
-              </td>
+              
               
             </tr>
          
@@ -263,7 +269,13 @@
       <table class="border-collapse table-auto w-full whitespace-no-wrap bg-white relative example ssss" id="example">
         <thead>
           <tr class="text-left">
-            <th class="bg-gray-100 sticky top-0 border-b border-blue-200 px-4 py-2 text-dark-blue font-semibold tracking-wide text-sm"> No. </th>
+
+          <th class="bg-gray-100 sticky top-0 border-b border-blue-200 px-4 py-2 text-dark-blue font-semibold tracking-wide text-sm"> No. </th>
+
+
+          <th class="bg-gray-100 sticky top-0 border-b border-blue-200 px-4 py-2 text-dark-blue font-semibold tracking-wide text-sm sticky1"> Action </th>
+
+            
             <th class="bg-gray-100 sticky top-0 border-b border-blue-200 px-4 py-2 text-dark-blue font-semibold tracking-wide text-sm"> Exam </th>
 
             <th class="bg-gray-100 sticky top-0 border-b border-blue-200 px-4 py-2 text-dark-blue font-semibold tracking-wide text-sm"> Full Name </th>
@@ -281,15 +293,24 @@
             
             <th class="bg-gray-100 sticky top-0 border-b border-blue-200 px-4 py-2 text-dark-blue font-semibold tracking-wide text-sm"> Hot Exam Rating </th>
             <th class="bg-gray-100 sticky top-0 border-b border-blue-200 px-4 py-2 text-dark-blue font-semibold tracking-wide text-sm"> MatchScore </th>
-            <th class="bg-gray-100 sticky top-0 border-b border-blue-200 px-4 py-2 text-dark-blue font-semibold tracking-wide text-sm"> Action </th>
+            
           </tr>
         </thead>
         <tbody>
 
         <tr v-for="(exam,key) in exams">
-         <td>
-                <span class="text-gray-700 px-4 py-2 flex items-center text-sm">{{key+1}}</span>
-              </td>
+
+          <td>
+          <span class="text-gray-700 px-4 py-2 flex items-center text-sm">{{key+1}}</span>
+          </td>
+
+
+          <td class="sticky1">
+          <button v-on:click="remove" data="`+examlen[j].match_score+`" :exam_id="exam.id" class="text-white px-2 text-xs rounded-sm py-1.5 bg-red-600 saveExam"> Remove </button>
+          </td>
+
+
+         
   
               <td>
                 <span class="text-gray-700 px-4 py-2 flex items-center text-sm">{{exam.name}}</span>
@@ -341,9 +362,7 @@
                 <span class="text-gray-700 px-4 py-2 flex items-center text-sm">{{exam.match_score}}</span>
               </td>
   
-              <td>
-                <button v-on:click="remove" data="`+examlen[j].match_score+`" :exam_id="exam.id" class="text-white px-2 text-xs rounded-sm py-1.5 bg-red-600 saveExam"> Remove </button>
-              </td>
+              
               
             </tr>
          
@@ -378,6 +397,14 @@ div#example_length {
 }
 td {
     white-space: nowrap;
+}
+.sticky1{
+   
+  left: 0;
+  position: sticky;
+
+  /* Displayed on top of other rows when scrolling */
+  z-index: 9999;
 }
 </style>
 <script>
@@ -462,7 +489,7 @@ name: 'exam',
           // alert(examLabel);
           // this.a = true;
 
-          // this.noresult= false;
+          this.noresult= false;
           this.loader = true;
           
 
