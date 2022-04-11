@@ -36,35 +36,43 @@
     <h2 class="text-2xl">Filters:</h2>
     <form action="" class="mt-3" @submit="search">
       <div class="flex space-y-3 flex-col tablet:w-full tablet:flex-row tablet:flex-wrap tablet:gap-y-4 tablet:space-y-0">
-        <div class="flex items-center gap-x-6 tablet:w-1/2">
-          <label class="w-1/5" for="profile_type">College</label>
-          <select class="w-4/5 flex-1 rounded-md border-gray-300" name="profile_type" id="profile_type">
-            <option value="student">Indian Institute of Technology Bombay</option>
-            <option value="student">Engineer</option>
+        <div class="flex items-center gap-x-2 tablet:w-1/3">
+          <label class="w-1/3" for="profile_type">Exam Label</label>
+          <select class="w-4/5 flex-1 rounded-md border-gray-300" v-model="examLabel" id="profile_type">
+            <option value="NATIONAL" selected="">National</option>
+             
           </select>
         </div>
         
-        <div class="flex items-center gap-x-6 tablet:w-1/2">
-          <label class="w-1/5 tablet:pl-2" for="profile_type">Location</label>
-          <select class="w-4/5 flex-1 rounded-md border-gray-300" name="profile_type" id="profile_type">
-            <option value="student">IT & Software</option>
-            <option value="student">Business</option>
+        <div class="flex items-center gap-x-6 tablet:w-1/3">
+          <label class="w-1/5 tablet:pl-2" for="profile_type">Govt./Private</label>
+          <select class="w-4/5 flex-1 rounded-md border-gray-300" v-model="is_govt"  id="profile_type">
+            <option value="1">Govt</option>
+            <option value="0">Private</option>
+          </select>
+        </div>
+
+        <div class="flex items-center gap-x-2 tablet:w-1/3">
+          <label class="w-1/1 tablet:pl-1" for="profile_type">Type Of exam</label>
+          <select class="w-2/2 flex-1 rounded-md border-gray-300" v-model="type"  id="profile_type">
+            <option value="CERTIFICATION">CERTIFICATION</option>
+            <option value="Entrance Exam">Entrance Exam</option>
           </select>
         </div>
 
         <div class="flex justify-between items-center gap-3 tablet:w-full desktop:w-1/2">
           <div class="flex w-1/2 items-center gap-x-2">
-            <label class="" for="profile_type">Hot College Rating</label>
-            <select class="flex-grow rounded-md border-gray-300" name="profile_type" id="profile_type">
-              <option value="student">Medium</option>
-              <option value="student">High</option>
+            <label class="" for="profile_type">Exam Rating</label>
+            <select class="flex-grow rounded-md border-gray-300" v-model="hot_rating" name="profile_type" id="profile_type">
+              <option value="Medium">Medium</option>
+              <option value="High">High</option>
             </select>
           </div>
           <div class="flex w-1/2 items-center gap-x-2">
             <label class="" for="profile_type">Match Score</label>
-            <select class="flex-grow rounded-md border-gray-300" name="profile_type" id="profile_type">
-              <option value="student">100%</option>
-              <option value="student">90%</option>
+            <select class="flex-grow rounded-md border-gray-300" v-model="match_score" name="profile_type" id="profile_type">
+              <option value="40+">40+</option>
+              <option value="40-">40-</option>
             </select>
           </div>
         </div>
@@ -403,6 +411,11 @@ name: 'exam',
           isShowing:false,
           noresult:true,
           searchResult:[],
+          examLabel:'',
+          is_govt:'',
+          type:'',
+          hot_rating:'',
+          match_score:'',
           exams:[]
      
     }
@@ -440,10 +453,20 @@ name: 'exam',
 
       search(event){
           event.preventDefault();
-          this.noresult= false;
+
+          var examLabel = this.examLabel;
+          var is_govt = this.is_govt;
+          var type = this.type;
+          var hot_rating = this.hot_rating;
+          var match_score = this.match_score;
+          // alert(examLabel);
+          // this.a = true;
+
+          // this.noresult= false;
           this.loader = true;
-          //$('.example').DataTable();
-          auth.get('v1/exams/search').then((response) => {
+          
+
+          auth.get('v1/exams/search?exam_level='+examLabel+'&is_govt='+is_govt+'&type='+type+'&hot_rating='+hot_rating+'&match_score='+match_score+'').then((response) => {
             this.searchResult = response.data.data;
              this.f = false;
              this.a = true;
