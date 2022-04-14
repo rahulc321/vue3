@@ -25,7 +25,7 @@
 <div class="container mt-8" v-if="f">
 <center>
   <p class="text-dark-blue text-sm desktop:text-lg">To find exam that match your profile, Please use "Find my Exams" button below</p>
-  <button v-on:click="search" class="w-full bg-dark-blue px-8 py-2 rounded-lg text-white tablet:w-1/4 desktop:ml-5">Find my Exams</button></center>
+  <button v-on:click="search" class="w-full bg-dark-blue px-8 py-2 rounded-lg text-white tablet:w-1/6 desktop:ml-1">Find my Exams</button></center>
 </div>
 
   <!-- Search form -->
@@ -37,7 +37,7 @@
     <form action="" class="mt-3" @submit="search">
       <div class="flex space-y-3 flex-col tablet:w-full tablet:flex-row tablet:flex-wrap tablet:gap-y-4 tablet:space-y-0">
         <div class="flex items-center gap-x-2 tablet:w-1/3">
-          <label class="w-1/3" for="profile_type">Exam Label</label>
+          <label class="" for="profile_type">Exam Label</label>
           <select class="w-4/5 flex-1 rounded-md border-gray-300" v-model="examLabel" id="profile_type">
             <option value="NATIONAL" selected="">National</option>
              
@@ -69,16 +69,16 @@
             </select>
           </div>
           <div class="flex w-1/2 items-center gap-x-2">
-            <label class="" for="profile_type">Match Score</label>
+            <label class="" for="profile_type">MatchScore</label>
             <select class="flex-grow rounded-md border-gray-300" v-model="match_score" name="profile_type" id="profile_type">
               <option value="40+">40+</option>
               <option value="40-">40-</option>
             </select>
           </div>
         </div>
-        <button class="w-full bg-dark-blue px-8 py-2 rounded-lg text-white tablet:w-1/4 desktop:ml-5">Search</button>
+        <button class="w-full bg-dark-blue px-8 py-2 rounded-lg text-white tablet:w-1/6 desktop:ml-5">Search</button>
         <button class="hidden tablet:flex items-center ml-20 border-gray-500 border-b px-2">
-          Advanced Search
+          More Filter
           <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 ml-1" width="24" height="24"
             viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
             stroke-linecap="round" stroke-linejoin="round">
@@ -120,7 +120,7 @@
 
             <th class="bg-gray-100 sticky top-0 border-b border-blue-200 px-4 py-2 text-dark-blue font-semibold tracking-wide text-sm"> Education Stream </th>
 
-            <th class="bg-gray-100 sticky top-0 border-b border-blue-200 px-4 py-2 text-dark-blue font-semibold tracking-wide text-sm"> Public Sector </th>
+            <th class="bg-gray-100 sticky top-0 border-b border-blue-200 px-4 py-2 text-dark-blue font-semibold tracking-wide text-sm">Govt./Private</th>
 
             <th class="bg-gray-100 sticky top-0 border-b border-blue-200 px-4 py-2 text-dark-blue font-semibold tracking-wide text-sm"> Nationality </th>
             <!--  -->
@@ -162,7 +162,7 @@
               </td>
               <td>
                 <span class="text-gray-700 px-4 py-2 flex items-center text-sm">
-                <span v-if="exam.is_govt==1">Public</span>
+                <span v-if="exam.is_govt==1">Govt</span>
                 <span v-else>Public</span>
 
                 </span>
@@ -284,7 +284,7 @@
 
             <th class="bg-gray-100 sticky top-0 border-b border-blue-200 px-4 py-2 text-dark-blue font-semibold tracking-wide text-sm"> Education Stream </th>
 
-            <th class="bg-gray-100 sticky top-0 border-b border-blue-200 px-4 py-2 text-dark-blue font-semibold tracking-wide text-sm"> Public Sector </th>
+            <th class="bg-gray-100 sticky top-0 border-b border-blue-200 px-4 py-2 text-dark-blue font-semibold tracking-wide text-sm">Govt./Private</th>
 
             <th class="bg-gray-100 sticky top-0 border-b border-blue-200 px-4 py-2 text-dark-blue font-semibold tracking-wide text-sm"> Nationality </th>
             <!--  -->
@@ -332,8 +332,8 @@
               </td>
               <td>
                 <span class="text-gray-700 px-4 py-2 flex items-center text-sm">
-                <span v-if="exam.is_govt==1">Public</span>
-                <span v-else>Public</span>
+                <span v-if="exam.is_govt==1">Govt</span>
+                <span v-else>Private</span>
 
                 </span>
               </td>
