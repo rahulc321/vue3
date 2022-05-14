@@ -95,8 +95,9 @@ export default {
                     "email": this.post.email,
                     "password": this.post.password
                 }
+
                 
-                auth.post('login', data)
+                auth.post('auth/login', data)
                     .then(response => {
                         this.loading = false;
                         if (response.data.status == true) {
@@ -118,9 +119,9 @@ export default {
         }
     },
     mounted() {
-        // axios.get('https://api.thecareertrail.com/api/v1/exams').then((response) => {
-        //     console.log(response.data)
-        // })
+        axios.get('https://admin.ecotime.my/api/adminLogin').then((response) => {
+            console.log(response.data)
+        })
     }
 }
 </script>
