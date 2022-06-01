@@ -97,7 +97,7 @@ export default {
                 }
 
                 
-                auth.post('auth/login', data)
+                auth.post('login', data)
                     .then(response => {
                         this.loading = false;
                         if (response.data.status == true) {

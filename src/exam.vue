@@ -37,42 +37,56 @@
     <form action="" class="mt-3" @submit="search">
       <div class="flex space-y-3 flex-col tablet:w-full tablet:flex-row tablet:flex-wrap tablet:gap-y-4 tablet:space-y-0">
         <div class="flex items-center gap-x-2 tablet:w-1/3">
-          <label class="" for="profile_type">Exam Label</label>
-          <select class="w-4/5 flex-1 rounded-md border-gray-300" v-model="examLabel" id="profile_type">
-            <option value="NATIONAL" selected="">National</option>
+          <label class="w-1/3" for="profile_type">Exam Level</label>
+          <select class="w-1/3 flex-1 rounded-md border-gray-300" v-model="examLabel" id="profile_type">
+            <option value="all" selected="">All</option>
+            <option value="state_exam" selected="">State Level Exam</option>
+            <option value="national_exam" selected="">National Level Exam</option>
              
           </select>
         </div>
         
         <div class="flex items-center gap-x-6 tablet:w-1/3">
-          <label class="w-1/5 tablet:pl-2" for="profile_type">Govt./Private</label>
-          <select class="w-4/5 flex-1 rounded-md border-gray-300" v-model="is_govt"  id="profile_type">
+          <label class="w-1/3 tablet:pl-2" for="profile_type">Govt./Non Govt</label>
+          <select class="w-1/3 flex-1 rounded-md border-gray-300" v-model="is_govt"  id="profile_type">
+          <option value="all" selected="">All</option>
             <option value="1">Govt</option>
-            <option value="0">Private</option>
+            <option value="0">Non Govt</option>
           </select>
         </div>
 
         <div class="flex items-center gap-x-2 tablet:w-1/3">
-          <label class="w-1/1 tablet:pl-1" for="profile_type">Type Of exam</label>
-          <select class="w-2/2 flex-1 rounded-md border-gray-300" v-model="type"  id="profile_type">
-            <option value="CERTIFICATION">CERTIFICATION</option>
-            <option value="Entrance Exam">Entrance Exam</option>
+          <label class="w-1/3 tablet:pl-1" for="profile_type">Type of exam</label>
+          <select class="w-1/3 flex-1 rounded-md border-gray-300" v-model="type"  id="profile_type">
+            <option value="all" selected>All</option>
+            <option value="e_xam" >Entrance Exam</option>
+            <option value="c_exam" >Certification Exam</option>
+            <option value="diploma" >Diploma</option>
           </select>
         </div>
 
         <div class="flex justify-between items-center gap-3 tablet:w-full desktop:w-1/2">
           <div class="flex w-1/2 items-center gap-x-2">
-            <label class="" for="profile_type">Exam Rating</label>
-            <select class="flex-grow rounded-md border-gray-300" v-model="hot_rating" name="profile_type" id="profile_type">
-              <option value="Medium">Medium</option>
-              <option value="High">High</option>
+            <label class="w-3/1" for="profile_type">Hot Exam Rating</label>
+            <select class="w-1/2 flex-grow rounded-md border-gray-300" v-model="hot_rating" name="profile_type" id="profile_type">
+              <option value="all" selected>All</option>
+              <option value="e_xam" >Highest</option>
+              <option value="c_exam" >Very High</option>
+              <option value="diploma" >High</option>
+              <option value="diploma" >Medium</option>
+              <option value="diploma" >Low</option>
+              <option value="diploma" >Very Low</option>
             </select>
           </div>
           <div class="flex w-1/2 items-center gap-x-2">
             <label class="" for="profile_type">matchScore</label>
             <select class="flex-grow rounded-md border-gray-300" v-model="match_score" name="profile_type" id="profile_type">
-              <option value="40+">40+</option>
-              <option value="40-">40-</option>
+              <option value="all" selected>All</option>
+              <option value="e_xam" >Greater than 90%</option>
+              <option value="c_exam" >Between 75% to 90%</option>
+              <option value="c_exam" >Between 40% to 75%</option>
+              <option value="c_exam" >Below 40%</option>
+               
             </select>
           </div>
         </div>
@@ -163,15 +177,7 @@
 
 
         <button class="w-full bg-dark-blue px-8 py-2 rounded-lg text-white tablet:w-1/6 desktop:ml-5">Search</button>
-        <a href="javascript:;" v-on:click="hideshow" class="hidden tablet:flex items-center ml-20 border-gray-500 border-b px-2">
-          More Filter
-          <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 ml-1" width="24" height="24"
-            viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
-            stroke-linecap="round" stroke-linejoin="round">
-            <rect x="0" y="0" width="24" height="24" stroke="none"></rect>
-            <polyline points="6 9 12 15 18 9" />
-          </svg>
-        </a>
+        
       </div>
     </form>
 

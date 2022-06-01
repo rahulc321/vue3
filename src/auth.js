@@ -4,7 +4,8 @@ const token = localStorage.getItem('token');
 //const token = 'abc';
 //alert(token);
 const instance = axios.create({
-    baseURL: 'https://admin.ecotime.my/api',
+    baseURL: 'https://app.thecareertrail.com/api',
+    //baseURL: 'http://127.0.0.1:8001/api',
     //baseURL: 'https://upskill-edukators.com/public/ecotime/api/auth',
     //baseURL: 'http://127.0.0.1:8000/api',
     headers: {
