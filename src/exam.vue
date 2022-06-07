@@ -36,12 +36,11 @@
     <h2 class="text-2xl">Filters:</h2>
     <form action="" class="mt-3" @submit="search">
       <div class="flex space-y-3 flex-col tablet:w-full tablet:flex-row tablet:flex-wrap tablet:gap-y-4 tablet:space-y-0">
-        <div class="flex items-center gap-x-2 tablet:w-1/3">
+        <div class="flex items-center gap-x-2 tablet:w-1/3" style="width: 21.333333%">
           <label class="w-1/3" for="profile_type">Exam Level</label>
           <select class="w-1/3 flex-1 rounded-md border-gray-300" v-model="examLabel" id="profile_type">
-            <option value="all" selected="">All</option>
-            <option value="state_exam" selected="">State Level Exam</option>
-            <option value="national_exam" selected="">National Level Exam</option>
+          <option value="all" selected="">All</option>
+            <option  v-for="(level,i) in exam_label" :value="i" :key="level.id">{{level}}</option>
              
           </select>
         </div>
@@ -56,39 +55,40 @@
         </div>
 
         <div class="flex items-center gap-x-2 tablet:w-1/3">
-          <label class="w-1/3 tablet:pl-1" for="profile_type">Type of exam</label>
+          <label class="w-1/3 tablet:pl-1" for="profile_type">Type of Exam</label>
           <select class="w-1/3 flex-1 rounded-md border-gray-300" v-model="type"  id="profile_type">
-            <option value="all" selected>All</option>
-            <option value="e_xam" >Entrance Exam</option>
-            <option value="c_exam" >Certification Exam</option>
-            <option value="diploma" >Diploma</option>
+            <option value="all" selected="">All</option>
+            <option  v-for="(type,i) in exam_type" :value="i" :key="type.id">{{type}}</option>
           </select>
         </div>
 
         <div class="flex justify-between items-center gap-3 tablet:w-full desktop:w-1/2">
-          <div class="flex w-1/2 items-center gap-x-2">
-            <label class="w-3/1" for="profile_type">Hot Exam Rating</label>
-            <select class="w-1/2 flex-grow rounded-md border-gray-300" v-model="hot_rating" name="profile_type" id="profile_type">
+          <div class="flex w-1/3 items-center gap-x-2" style="width: 46.333333%;">
+            <label class="w-2/3" for="profile_type">Hot Exam Rating</label>
+            <select class="w-2/3 flex-grow rounded-md border-gray-300" v-model="hot_rating" name="profile_type" id="profile_type">
               <option value="all" selected>All</option>
-              <option value="e_xam" >Highest</option>
-              <option value="c_exam" >Very High</option>
-              <option value="diploma" >High</option>
-              <option value="diploma" >Medium</option>
-              <option value="diploma" >Low</option>
-              <option value="diploma" >Very Low</option>
+              <option value="Highest" >Highest</option>
+              <option value="Very_High" >Very High</option>
+              <option value="High" >High</option>
+              <option value="Medium" >Medium</option>
+              <option value="Low" >Low</option>
+              <option value="Very_Low" >Very Low</option>
             </select>
           </div>
-          <div class="flex w-1/2 items-center gap-x-2">
-            <label class="" for="profile_type">matchScore</label>
-            <select class="flex-grow rounded-md border-gray-300" v-model="match_score" name="profile_type" id="profile_type">
+          
+        <div class="flex w-1/2 items-center gap-x-2">
+            <label class="" for="profile_type">Difficulty Level</label>
+            <select class="flex-grow rounded-md border-gray-300" v-model="difficulty_level" name="profile_type" id="profile_type">
               <option value="all" selected>All</option>
-              <option value="e_xam" >Greater than 90%</option>
-              <option value="c_exam" >Between 75% to 90%</option>
-              <option value="c_exam" >Between 40% to 75%</option>
-              <option value="c_exam" >Below 40%</option>
+              <option value="High" >High</option>
+              <option value="Medium" >Medium</option>
+              <option value="Low" >Low</option>
+               
                
             </select>
           </div>
+
+         
         </div>
 
 
@@ -176,7 +176,7 @@
 
 
 
-        <button class="w-full bg-dark-blue px-8 py-2 rounded-lg text-white tablet:w-1/6 desktop:ml-5">Search</button>
+        <button class="w-full bg-dark-blue px-8 py-1 rounded-lg text-white tablet:w-1/6 desktop:ml-5">Search</button>
         
       </div>
     </form>
@@ -212,7 +212,7 @@
 
             <th class="bg-gray-100 sticky top-0 border-b border-blue-200 px-4 py-2 text-dark-blue font-semibold tracking-wide text-sm"> Education Stream </th>
 
-            <th class="bg-gray-100 sticky top-0 border-b border-blue-200 px-4 py-2 text-dark-blue font-semibold tracking-wide text-sm">Govt./Private</th>
+            <th class="bg-gray-100 sticky top-0 border-b border-blue-200 px-4 py-2 text-dark-blue font-semibold tracking-wide text-sm">Govt./Non Govt</th>
 
             <th class="bg-gray-100 sticky top-0 border-b border-blue-200 px-4 py-2 text-dark-blue font-semibold tracking-wide text-sm"> Nationality </th>
             <!--  -->
@@ -328,7 +328,7 @@
 
             <th class="bg-gray-100 sticky top-0 border-b border-blue-200 px-4 py-2 text-dark-blue font-semibold tracking-wide text-sm"> Education Stream </th>
 
-            <th class="bg-gray-100 sticky top-0 border-b border-blue-200 px-4 py-2 text-dark-blue font-semibold tracking-wide text-sm">Govt./Private</th>
+            <th class="bg-gray-100 sticky top-0 border-b border-blue-200 px-4 py-2 text-dark-blue font-semibold tracking-wide text-sm">Govt./Non Govt</th>
 
             <th class="bg-gray-100 sticky top-0 border-b border-blue-200 px-4 py-2 text-dark-blue font-semibold tracking-wide text-sm"> Nationality </th>
             <!--  -->
@@ -455,6 +455,9 @@ td {
     padding: 1.25rem;
     width: 32%;
 }
+tr.text-left {
+    white-space: nowrap;
+}
 </style>
 <script>
 
@@ -499,7 +502,8 @@ name: 'exam',
           difficulty_level:'all',
           education_streams:'1',
           "streams":"",
-          exams:[]
+          exams:[],
+          exam_label:[]
      
     }
    },methods:{
@@ -561,6 +565,7 @@ name: 'exam',
              this.f = false;
              this.a = true;
             this.loader = false;
+             $('.example').DataTable().destroy();
             setTimeout(() => {
             $('.example').DataTable();
             }, 150);
@@ -597,6 +602,14 @@ name: 'exam',
             this.streams = response.data.data;
             //console.log(response);   
         })
+
+
+    auth.get('v1/dropdownData').then((response) => {
+             this.exam_label = response.data.data.exam_label;
+             this.exam_type = response.data.data.exam_type;
+             //console.log(response.data.data.exam_label);   
+        })
+
    }
 }
 </script>
