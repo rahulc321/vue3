@@ -30,7 +30,6 @@
 
   <!-- Search form -->
   <div class="container mt-8" v-if="a">
-  
 
 
     <h2 class="text-2xl">Filters:</h2>
@@ -176,7 +175,9 @@
 
 
 
-        <button class="w-full bg-dark-blue px-8 py-1 rounded-lg text-white tablet:w-1/6 desktop:ml-5">Search</button>
+        <button class="w-full bg-dark-blue px-8 py-1 rounded-lg text-white tablet:w-1/6 desktop:ml-5">Search</button> &nbsp;&nbsp;&nbsp;&nbsp;
+        <!--  <button class="rbtn" @click="reset" >Reset</button> -->
+         <button type="submit" @click="reset" class="border-b text-blue-600 text-sm border-blue-600">Reset</button>
         
       </div>
     </form>
@@ -220,6 +221,17 @@
             
             <th class="bg-gray-100 sticky top-0 border-b border-blue-200 px-4 py-2 text-dark-blue font-semibold tracking-wide text-sm"> Hot Exam Rating </th>
             <th class="bg-gray-100 sticky top-0 border-b border-blue-200 px-4 py-2 text-dark-blue font-semibold tracking-wide text-sm"> matchScore </th>
+
+
+            <!-- New column -->
+            <th class="bg-gray-100 sticky top-0 border-b border-blue-200 px-4 py-2 text-dark-blue font-semibold tracking-wide text-sm"> Exam Level </th>
+
+            <th class="bg-gray-100 sticky top-0 border-b border-blue-200 px-4 py-2 text-dark-blue font-semibold tracking-wide text-sm"> Mode of Exam </th>
+
+            <th class="bg-gray-100 sticky top-0 border-b border-blue-200 px-4 py-2 text-dark-blue font-semibold tracking-wide text-sm"> Applicable for </th>
+
+            <th class="bg-gray-100 sticky top-0 border-b border-blue-200 px-4 py-2 text-dark-blue font-semibold tracking-wide text-sm"> Difficulty Level </th>
+            <!-- New column -->
              
           </tr>
         </thead>
@@ -229,9 +241,16 @@
                 <span class="text-gray-700 px-4 py-2 flex items-center text-sm">{{key+1}}</span>
               </td>
 
-
+              
               <td class="sticky1">
-                <button v-on:click="saveExam" :data="exam.match_score" :exam_id="exam.id" class="text-white px-2 text-xs rounded-sm py-1.5 bg-green-600 saveExam"> Save </button>
+
+
+
+                <button v-on:click="saveExam" :data="exam.match_score" :exam_id="exam.id" class="text-white px-2 text-xs rounded-sm py-1.5 bg-green-600 saveExam" v-if="exam.exists ==0"> Save </button>
+
+
+                <button  class="text-white px-2 text-xs rounded-sm py-1.5 bg-red-600 saveExam" v-if="exam.exists ==1"> Added </button>
+
               </td>
   
               <td>
@@ -283,6 +302,27 @@
               <td>
                 <span class="text-gray-700 px-4 py-2 flex items-center text-sm">{{exam.match_score}}</span>
               </td>
+
+
+              <!-- New column tr -->
+              <td>
+                <span class="text-gray-700 px-4 py-2 flex items-center text-sm">{{exam.level}}</span>
+              </td>
+              <td>
+                <span class="text-gray-700 px-4 py-2 flex items-center text-sm">{{exam.mode_of_exam}}</span>
+              </td>
+
+              <td>
+                <span v-for="(applicable_courses,i) in exam.applicable_courses" :value="applicable_courses.id" :key="applicable_courses.id">
+                  <span v-if="i != 0">, </span>
+                  {{applicable_courses.title}}
+                </span>
+              </td>
+
+              <td>
+                <span class="text-gray-700 px-4 py-2 flex items-center text-sm">{{exam.difficulty_level}}</span>
+              </td>
+              <!-- New column tr -->
   
               
               
@@ -337,6 +377,17 @@
             
             <th class="bg-gray-100 sticky top-0 border-b border-blue-200 px-4 py-2 text-dark-blue font-semibold tracking-wide text-sm"> Hot Exam Rating </th>
             <th class="bg-gray-100 sticky top-0 border-b border-blue-200 px-4 py-2 text-dark-blue font-semibold tracking-wide text-sm"> matchScore </th>
+
+
+            <!-- New column -->
+            <th class="bg-gray-100 sticky top-0 border-b border-blue-200 px-4 py-2 text-dark-blue font-semibold tracking-wide text-sm"> Exam Level </th>
+
+            <th class="bg-gray-100 sticky top-0 border-b border-blue-200 px-4 py-2 text-dark-blue font-semibold tracking-wide text-sm"> Mode of Exam </th>
+
+            <th class="bg-gray-100 sticky top-0 border-b border-blue-200 px-4 py-2 text-dark-blue font-semibold tracking-wide text-sm"> Applicable for </th>
+
+            <th class="bg-gray-100 sticky top-0 border-b border-blue-200 px-4 py-2 text-dark-blue font-semibold tracking-wide text-sm"> Difficulty Level </th>
+            <!-- New column -->
             
           </tr>
         </thead>
@@ -405,6 +456,27 @@
               <td>
                 <span class="text-gray-700 px-4 py-2 flex items-center text-sm">{{exam.match_score}}</span>
               </td>
+
+
+              <!-- New column tr -->
+              <td>
+                <span class="text-gray-700 px-4 py-2 flex items-center text-sm">{{exam.level}}</span>
+              </td>
+              <td>
+                <span class="text-gray-700 px-4 py-2 flex items-center text-sm">{{exam.mode_of_exam}}</span>
+              </td>
+
+              <td>
+                <span v-for="(applicable_courses,i) in exam.applicable_courses" :value="applicable_courses.id" :key="applicable_courses.id">
+                  <span v-if="i != 0">, </span>
+                  {{applicable_courses.title}}
+                </span>
+              </td>
+
+              <td>
+                <span class="text-gray-700 px-4 py-2 flex items-center text-sm">{{exam.difficulty_level}}</span>
+              </td>
+              <!-- New column tr -->
   
               
               
@@ -458,6 +530,15 @@ td {
 tr.text-left {
     white-space: nowrap;
 }
+
+.rbtn {
+    font-weight: 600;
+    background: red;
+    border-radius: 7px;
+    padding: 5px;
+    margin-left: 13px;
+    color: white;
+}
 </style>
 <script>
 
@@ -507,6 +588,18 @@ name: 'exam',
      
     }
    },methods:{
+
+
+    reset(){
+      this.examLabel = 'all';
+      this.examLabel = 'all';
+      this.is_govt  = 'all';
+      this.type  = 'all';
+      this.hot_rating  = 'all';
+      this.difficulty_level  = 'all';
+
+      this.search();
+    },
 
     apply(){
       this.isApply = false;
