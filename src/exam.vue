@@ -33,7 +33,7 @@
 
 
     <h2 class="text-2xl">Filters:</h2>
-    <form action="" class="mt-3" @submit="search">
+    <form action="" class="mt-3 searchForm" @submit="search" >
       <div class="flex space-y-3 flex-col tablet:w-full tablet:flex-row tablet:flex-wrap tablet:gap-y-4 tablet:space-y-0">
         <div class="flex items-center gap-x-2 tablet:w-1/3" style="width: 21.333333%">
           <label class="w-1/3" for="profile_type">Exam Level</label>
@@ -175,7 +175,7 @@
 
 
 
-        <button class="w-full bg-dark-blue px-8 py-1 rounded-lg text-white tablet:w-1/6 desktop:ml-5">Search</button> &nbsp;&nbsp;&nbsp;&nbsp;
+        <button class="w-full bg-dark-blue px-8 py-1 rounded-lg text-white tablet:w-1/6 desktop:ml-5 sss">Search</button> &nbsp;&nbsp;&nbsp;&nbsp;
         <!--  <button class="rbtn" @click="reset" >Reset</button> -->
          <button type="submit" @click="reset" class="border-b text-blue-600 text-sm border-blue-600">Reset</button>
         
@@ -249,7 +249,7 @@
                 <button v-on:click="saveExam" :data="exam.match_score" :exam_id="exam.id" class="text-white px-2 text-xs rounded-sm py-1.5 bg-green-600 saveExam" v-if="exam.exists ==0"> Save </button>
 
 
-                <button  class="text-white px-2 text-xs rounded-sm py-1.5 bg-red-600 saveExam" v-if="exam.exists ==1"> Added </button>
+                <button  class="text-white px-2 text-xs rounded-sm py-1.5 bg-red-600 saveExam" v-if="exam.exists ==1"> Saved </button>
 
               </td>
   
@@ -574,14 +574,14 @@ name: 'exam',
           searchResult:[],
           examLabel:'all',
           is_govt:'all',
-          type:'',
+          type:'all',
           hot_rating:'all',
           match_score:'all',
           authority:'all',
-          mode_of_exam:'MCQ',
+          mode_of_exam:'all',
           applicable_courses:'',
           difficulty_level:'all',
-          education_streams:'1',
+          education_streams:'all',
           "streams":"",
           exams:[],
           exam_label:[]
@@ -617,6 +617,7 @@ name: 'exam',
        auth.post('v1/save_exam',obj).then((response) => {
           this.$toast.success("Exam successfully Added!");
          this.listExam();
+         $( ".sss" ).trigger( "click" );
 
        });
       },
@@ -632,6 +633,7 @@ name: 'exam',
        auth.post('v1/remove_exam',obj).then((response) => {
          this.$toast.success("Exam successfully Removed!");
          this.listExam();
+         $( ".sss" ).trigger( "click" );
        });
 
        

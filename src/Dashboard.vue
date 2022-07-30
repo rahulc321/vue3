@@ -92,7 +92,7 @@
 				<!-- Basic Information -->
 				<div class="mt-10 w-full relative" x-data="{ showForm : true }">
 					<h2 class="text-base text-dark-blue font-medium mb-7 desktop:text-xl">Basic Information  </h2>
-					<button class="absolute top-0 right-0" v-on:click="click">
+					<button class="absolute top-0 right-0 dd1" v-on:click="click">
 						<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 							<circle cx="12" cy="12" r="11.5" fill="#DCF6FF" stroke="#95DCF4" stroke-linecap="round"/>
 							<path d="M10.5038 15.5028L14.7278 11.2787L12.7215 9.27238L8.4974 13.4965C8.43924 13.5547 8.39793 13.6276 8.37785 13.7074L7.90967 16.0906L10.2924 15.6224C10.3724 15.6024 10.4456 15.561 10.5038 15.5028ZM16.0915 9.91511C16.2619 9.74463 16.3577 9.51344 16.3577 9.27238C16.3577 9.03133 16.2619 8.80014 16.0915 8.62966L15.3706 7.90875C15.2001 7.73832 14.9689 7.64258 14.7278 7.64258C14.4868 7.64258 14.2556 7.73832 14.0851 7.90875L13.3642 8.62966L15.3706 10.636L16.0915 9.91511Z" fill="#003A9B"/>
@@ -122,7 +122,7 @@
 
 						<div class="flex flex-col w-1/3 gap-y-1">
 								<label for="profile_type"> Date of Birth <span class="text-red-600">*</span></label>
-								<Field class="rounded border-gray-300" type="date" name="date_of_birth" :max="max" placeholder="DOB" v-model="post.date_of_birth" id="txtDate"></Field>
+								<Field class="rounded border-gray-300" type="text" name="date_of_birth"   placeholder="DOB" v-model="post.date_of_birth" id="txtDate"></Field>
 								<div class="invalid-feedback">{{errors.date_of_birth}}</div>
 							</div>
 
@@ -258,7 +258,7 @@
 
 						<div class="grid grid-cols-2 text-xs pb-3 pt-3.5 desktop:text-base">
 							<dt class="font-light text-gray-400">Location</dt>
-							<dd class="font-normal text-gray-500">{{user.location_state}}</dd>
+							<dd class="font-normal text-gray-500"><span class="location"></span></dd>
 						</div>
 						
 
@@ -664,8 +664,8 @@ export default {
             email: Yup.string()
                 .required('Email is required')
                 .email('Email is invalid').nullable(),
-            date_of_birth: Yup.string()
-                .required('Date of Birth is required').nullable(), 
+            // date_of_birth: Yup.string()
+            //     .required('Date of Birth is required').nullable(), 
 
              profile_type: Yup.string()
                 .required('Profile type is required').nullable(),
@@ -753,7 +753,7 @@ export default {
   		"courses":"",
   		"formDetail1":true,
   		"nationalities":"",
-  		"locations":"",
+  		 
   		"quota":"",
   		"user":'',
   		"user":'',
@@ -809,8 +809,13 @@ created () {
   	},
   	onSubmit(values){
   			this.loaderOne = true;
+  			var x = localStorage.getItem("dob");
   			// const image = e.target.files[0];
-  			// console.log(image); return false;
+  			//this.post.date_of_birth = x;
+
+
+			values['date_of_birth'] = x;
+  			// console.log(values); return false;
 
   	 		auth.post('v1/update_basic_step',values).then((response) => {
   	 			//console.log(response);
@@ -823,7 +828,22 @@ created () {
 
 					if(this.user.date_of_birth != null){
 					//this.dob = user.date_of_birth;
-					this.dob = moment(response.data.data[0].date_of_birth).format('YYYY-MM-DD');
+					var x = localStorage.getItem("dob");
+					this.dob = x;
+
+					this.post.location_id = response.data.data[0].location_id;
+		             auth.get('v1/states').then((response) => {
+		            	this.locations = response.data.data;
+
+		            	for (let j = 0; j < this.locations.length; j++) {	
+		            		if(this.post.location_id == this.locations[j].id){
+		            			$('.location').text(this.locations[j].state);
+		            		}
+		            	}
+		             
+		             
+		        	})
+
 					}
 		        })
 
@@ -887,6 +907,8 @@ created () {
   	},
 
   	click(){
+  		 $( "#txtDate" ).datepicker({ maxDate: '0'});
+  		 
   		this.allapiData();
    		this.form1 = !this.form1;
    		//this.formDetail1 = false;
@@ -913,6 +935,21 @@ created () {
 
 
   	allapiData(){
+
+
+
+  		auth.get('v1/user').then((response) => {
+        	 
+             if(response.data.data[0].date_of_birth !=null){
+             	 
+              this.post.date_of_birth = moment(response.data.data[0].date_of_birth).format('DD-MM-YYYY');
+             
+         	}
+ 
+        })
+
+  		
+  		
   		// nationalities
         auth.get('v1/nationalities').then((response) => {
             this.nationalities = response.data.data;
@@ -924,9 +961,9 @@ created () {
             this.certifications = response.data.data;
         })
         // Get location
-        auth.get('v1/locations').then((response) => {
-            this.locations = response.data.data;
-        })
+        // auth.get('v1/locations').then((response) => {
+        //     this.locations = response.data.data;
+        // })
 
         // Get Quota
         auth.get('v1/quota').then((response) => {
@@ -1062,23 +1099,11 @@ created () {
   ,mounted() {
   		 
   		 // $('.selec1').select2({maximumSelectionLength: 2});
-  		
+  		 $( "#txtDate" ).datepicker({ maxDate: '0'});
 		 
 
 
-		var today = new Date();
-		var dd = today.getDate();
-		var mm = today.getMonth()+1; //January is 0!
-		var yyyy = today.getFullYear();
-		if(dd<10){
-		dd='0'+dd
-		} 
-		if(mm<10){
-		mm='0'+mm
-		} 
-
-		today = yyyy+'-'+mm+'-'+dd;
-		this.max = today;
+		 
 		//$('#txtDate').attr("max", 123);
 		//document.getElementById("txtDate").setAttribute("max", today);
 
@@ -1089,12 +1114,15 @@ created () {
              this.post.name = response.data.data[0].name;
              this.post.email = response.data.data[0].email;
              if(response.data.data[0].date_of_birth !=null){
-             this.post.date_of_birth = response.data.data[0].date_of_birth.substring(0, 10);
+              
+              this.post.date_of_birth = moment(response.data.data[0].date_of_birth).format('DD-MM-YYYY');
+             
          	}
 
          	if(this.user.date_of_birth != null){
          		//this.dob = user.date_of_birth;
          		this.dob = moment(response.data.data[0].date_of_birth).format('DD-MM-YYYY');
+         		 
          	}
 
              this.post.gender = response.data.data[0].gender;
@@ -1106,6 +1134,21 @@ created () {
              this.post.is_current_12ex = response.data.data[0].is_current_12ex;
              this.image = 'https://app.thecareertrail.com/images/'+response.data.data[0].image;
 
+
+             auth.get('v1/states').then((response) => {
+            	this.locations = response.data.data;
+
+            	for (let j = 0; j < this.locations.length; j++) {	
+            		if(this.post.location_id == this.locations[j].id){
+            			$('.location').text(this.locations[j].state);
+            		}
+            	}
+             
+             
+        	})
+
+
+
             this.abc();
              this.loaderOne= false;
  
@@ -1113,9 +1156,7 @@ created () {
   		
 
          
-         // Hide loader
-         
-
+    
 		
     }
 }
