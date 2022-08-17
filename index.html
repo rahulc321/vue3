@@ -14,12 +14,26 @@
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
+<link href='https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/ui-lightness/jquery-ui.css'
+          rel='stylesheet'>
+      
+     
+      
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js" >
+    </script>
+
+    <!-- Date picker -->
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">
+    
+    <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
+
 
 
 
 
   </head>
   <body class="antialiased font-roboto bg-blue-50">
+   
     <div id="app"></div>
     <script type="module" src="/src/main.js"></script>
     <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
@@ -45,10 +59,16 @@ input, select, textarea{
   </style>
 <!-- <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js" defer></script> -->
   <script type="text/javascript">
-  $(document).ready(function(){
-    
-   // $('#example').DataTable();
-    
+  $(document).click('.dd1',function(){
+ //$( "#txtDate" ).datepicker({  format: 'd-m-Y'});
+
+ var date = $('#txtDate').datepicker({ dateFormat: 'dd-mm-yy' }).val();
+ //alert(date);
+ $( "#txtDate" ).datepicker({ maxDate: '0'});
+  localStorage.setItem('dob', date);
+ 
+
+   
   });
 </script>
 </html>
